@@ -188,11 +188,15 @@
 }
 
 .home-service-grid img {
-	transition: transform 900ms var(--ease);
+	position: relative;
+	top: -10%;
+	height: 120%;
+	transition: scale 900ms var(--ease);
 }
 
+/* Hover uses the scale property, because the scroll parallax owns transform. */
 .home-service-grid article:hover img {
-	transform: scale(1.05);
+	scale: 1.05;
 }
 
 .home-service-grid h3 {
@@ -254,7 +258,28 @@
 }
 
 .home-faq-photo {
+	position: relative;
 	aspect-ratio: 1;
+}
+
+.home-faq-photo img {
+	position: relative;
+}
+
+.home-ring {
+	position: absolute;
+	inset: -11%;
+	overflow: visible;
+	fill: var(--burnt);
+	font-family: var(--body);
+	font-size: 9px;
+	font-weight: 800;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.home-ring path {
+	fill: none;
 }
 
 .home-faq-photo img {
@@ -281,6 +306,13 @@
 	color: var(--cream);
 	text-align: center;
 	--focus: var(--amber);
+}
+
+.home-lava {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
 }
 
 .home-book h2 {
@@ -325,6 +357,20 @@
 	font-weight: 700;
 }
 
+/* ===== Motion ===== */
+
+@media (prefers-reduced-motion: no-preference) {
+	.home-ring {
+		animation: home-spin 40s linear infinite;
+	}
+}
+
+@keyframes home-spin {
+	to {
+		rotate: 1turn;
+	}
+}
+
 /* ===== Responsive ===== */
 
 @media (max-width: 900px) {
@@ -339,8 +385,9 @@
 		border-radius: 12rem 12rem 1.5rem 1.5rem;
 	}
 
+	/* The text ring extends past the photo, so the photo leaves room for it. */
 	.home-faq-photo {
-		width: min(100%, 26rem);
+		width: min(100% - 4rem, 26rem);
 		justify-self: center;
 	}
 }

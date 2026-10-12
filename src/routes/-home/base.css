@@ -179,53 +179,24 @@ a.gv-pill:hover {
 	border-radius: var(--tile-radius, 1rem);
 }
 
-/* ===== Reveal ===== */
+/* ===== Grain ===== */
 
-[data-reveal-ready] [data-reveal] {
-	opacity: 0;
-	filter: blur(6px);
-	transform: translateY(1.5rem);
-	transition:
-		opacity 900ms var(--ease),
-		filter 900ms var(--ease),
-		transform 900ms var(--ease);
-}
-
-[data-reveal-ready] [data-reveal][data-visible] {
-	opacity: 1;
-	filter: none;
-	transform: none;
+/* A fixed film-grain layer gives the flat colors an analog texture. */
+.gv-grain {
+	position: fixed;
+	inset: -50%;
+	z-index: 100;
+	background: url('/images/grain.svg');
+	opacity: 0.09;
+	pointer-events: none;
+	mix-blend-mode: overlay;
 }
 
 /* ===== Motion ===== */
 
 @media (prefers-reduced-motion: no-preference) {
-	.gv-row {
-		animation: gv-marquee 80s linear infinite;
-	}
-
-	.gv-row.is-reverse {
-		animation-direction: reverse;
-	}
-
-	.gv-rows:hover .gv-row {
-		animation-play-state: paused;
-	}
-
-	.gv-record {
-		animation: gv-spin 6s linear infinite;
-	}
-}
-
-@keyframes gv-marquee {
-	to {
-		transform: translateX(calc(-50% - 0.5rem));
-	}
-}
-
-@keyframes gv-spin {
-	to {
-		transform: rotate(1turn);
+	.gv-grain {
+		animation: gv-grain 1s steps(6) infinite;
 	}
 }
 
@@ -235,21 +206,33 @@ a.gv-pill:hover {
 	}
 }
 
-@keyframes gv-rise {
-	from {
-		opacity: 0;
-		transform: translateY(2.5rem);
+@keyframes gv-grain {
+	0% {
+		transform: translate(0, 0);
+	}
+
+	20% {
+		transform: translate(-8%, 6%);
+	}
+
+	40% {
+		transform: translate(5%, -9%);
+	}
+
+	60% {
+		transform: translate(-6%, -4%);
+	}
+
+	80% {
+		transform: translate(9%, 7%);
+	}
+
+	100% {
+		transform: translate(-3%, 3%);
 	}
 }
 
 @media (prefers-reduced-motion: reduce) {
-	[data-reveal-ready] [data-reveal] {
-		opacity: 1;
-		filter: none;
-		transform: none;
-		transition: none;
-	}
-
 	.gv-rows {
 		overflow-x: auto;
 	}

@@ -1,6 +1,10 @@
+import { useRef } from 'react'
+
+import { gsap, motionQuery, useGSAP } from '@/lib/motion'
 import { cn } from '@/lib/utils/ui'
 
 import { expectations, guides, services } from './content'
+import { LavaLamp } from './lava-lamp'
 import { EmailPill, FaqList, GalleryRows, Record } from './parts'
 
 import './sections.css'
@@ -36,6 +40,8 @@ function Rainbow() {
 						d={`M ${200 - radius} 200 A ${radius} ${radius} 0 0 1 ${200 + radius} 200`}
 						fill="none"
 						key={color}
+						pathLength="1"
+						strokeDasharray="1"
 						stroke={color}
 						strokeWidth="26"
 					/>
@@ -45,21 +51,112 @@ function Rainbow() {
 	)
 }
 
-export function Sections() {
+const ringText = 'Before you book · Virtual care · Warm approach · '
+
+/** Circular text that circles the FAQ photo. */
+function TextRing() {
 	return (
-		<>
+		<svg aria-hidden="true" className="home-ring" viewBox="0 0 200 200">
+			<path
+				d="M100 100 m-92 0 a92 92 0 1 1 184 0 a92 92 0 1 1 -184 0"
+				id="home-ring-path"
+			/>
+			<text>
+				<textPath href="#home-ring-path" textLength="575">
+					{ringText.repeat(2)}
+				</textPath>
+			</text>
+		</svg>
+	)
+}
+
+function useSectionMotion() {
+	const ref = useRef<HTMLDivElement>(null)
+
+	useGSAP(
+		() => {
+			const mm = gsap.matchMedia()
+
+			mm.add(motionQuery, () => {
+				gsap.from('.home-badge', {
+					duration: 1.4,
+					ease: 'back.out(1.4)',
+					rotation: -90,
+					scale: 0.55,
+					stagger: 0.15,
+					y: 120,
+					scrollTrigger: {
+						trigger: '.home-expect-grid',
+						start: 'top 85%',
+						once: true,
+					},
+				})
+
+				for (const figure of gsap.utils.toArray<HTMLElement>(
+					'.home-service-grid figure',
+				)) {
+					gsap.from(figure, {
+						clipPath: 'inset(100% 0% 0% 0% round 999px 999px 1.25rem 1.25rem)',
+						duration: 1.6,
+						ease: 'expo.out',
+						scrollTrigger: { trigger: figure, start: 'top 85%', once: true },
+					})
+					gsap.fromTo(
+						figure.querySelector('img'),
+						{ yPercent: -8 },
+						{
+							ease: 'none',
+							yPercent: 8,
+							scrollTrigger: { trigger: figure, scrub: true },
+						},
+					)
+				}
+
+				gsap.from('.home-faq-photo img', {
+					ease: 'none',
+					rotation: -12,
+					scale: 1.15,
+					scrollTrigger: {
+						trigger: '.home-faq',
+						scrub: true,
+						end: 'center center',
+					},
+				})
+
+				gsap.from('.home-rainbow path', {
+					duration: 1.8,
+					ease: 'expo.inOut',
+					stagger: 0.12,
+					strokeDashoffset: 1,
+					scrollTrigger: {
+						trigger: '.home-book',
+						start: 'top 60%',
+						once: true,
+					},
+				})
+			})
+		},
+		{ scope: ref },
+	)
+
+	return ref
+}
+
+export function Sections() {
+	const ref = useSectionMotion()
+
+	return (
+		<div ref={ref}>
 			<section className="home-meet" aria-labelledby="home-meet-title">
-				<div className="home-meet-head" data-reveal>
+				<div className="home-meet-head">
 					<Record className="home-meet-record" />
-					<h2 id="home-meet-title">Meet Skin Groove</h2>
+					<h2 id="home-meet-title" data-split>
+						Meet Skin Groove
+					</h2>
 				</div>
 				<div className="home-meet-cards">
-					{guides.map((guide, index) => (
-						<article
-							data-reveal
-							key={guide.title}
-							style={{ transitionDelay: `${index * 90}ms` }}
-						>
+					{guides.map((guide) => (
+						<article data-reveal key={guide.title}>
 							<h3>{guide.title}</h3>
 							{guide.body.map((paragraph) => (
 								<p key={paragraph}>{paragraph}</p>
@@ -72,16 +169,12 @@ export function Sections() {
 			<section className="home-expect" aria-labelledby="home-expect-title">
 				<Wave className="is-top" />
 				<div className="home-expect-inner">
-					<h2 id="home-expect-title" data-reveal>
+					<h2 id="home-expect-title" data-split>
 						What you can expect
 					</h2>
 					<div className="home-expect-grid">
-						{expectations.map((item, index) => (
-							<article
-								data-reveal
-								key={item.title}
-								style={{ transitionDelay: `${index * 90}ms` }}
-							>
+						{expectations.map((item) => (
+							<article data-reveal key={item.title}>
 								<div className="home-badge">
 									<Record />
 									<h3>{item.title}</h3>
@@ -99,16 +192,12 @@ export function Sections() {
 				className="home-services"
 				aria-labelledby="home-services-title"
 			>
-				<h2 id="home-services-title" data-reveal>
+				<h2 id="home-services-title" data-split>
 					Services
 				</h2>
 				<div className="home-service-grid">
-					{services.map((service, index) => (
-						<article
-							data-reveal
-							key={service.name}
-							style={{ transitionDelay: `${index * 90}ms` }}
-						>
+					{services.map((service) => (
+						<article data-reveal key={service.name}>
 							<figure>
 								<img
 									alt=""
@@ -127,9 +216,11 @@ export function Sections() {
 			</section>
 
 			<section className="home-room" aria-labelledby="home-room-title">
-				<div className="home-room-head" data-reveal>
-					<h2 id="home-room-title">The Groove Room</h2>
-					<p>
+				<div className="home-room-head">
+					<h2 id="home-room-title" data-split>
+						The Groove Room
+					</h2>
+					<p data-reveal>
 						Warm light, soft shapes, and spaces that feel like an exhale. A
 						curated shelf of skincare and home finds is coming soon.
 					</p>
@@ -139,6 +230,7 @@ export function Sections() {
 
 			<section id="faq" className="home-faq" aria-labelledby="home-faq-title">
 				<figure className="home-faq-photo" data-reveal>
+					<TextRing />
 					<img
 						alt="A row of glowing lava lamps"
 						height="1277"
@@ -158,8 +250,14 @@ export function Sections() {
 				className="home-book"
 				aria-labelledby="home-book-title"
 			>
+				<LavaLamp
+					base="#56622a"
+					className="home-lava"
+					hot="#f2b54a"
+					wax="#b8461b"
+				/>
 				<Rainbow />
-				<h2 id="home-book-title" data-reveal>
+				<h2 id="home-book-title" data-split>
 					Your next skin chapter starts here
 				</h2>
 				<p data-reveal>Virtual · From home</p>
@@ -175,6 +273,6 @@ export function Sections() {
 				</p>
 				<p>Virtual care. Warm approach.</p>
 			</footer>
-		</>
+		</div>
 	)
 }

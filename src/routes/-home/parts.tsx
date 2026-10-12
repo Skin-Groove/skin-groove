@@ -1,6 +1,13 @@
 import { ArrowUpRightIcon, PlusIcon } from '@phosphor-icons/react'
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 
+import {
+	followScrollSpeed,
+	gsap,
+	motionQuery,
+	ScrollTrigger,
+	useGSAP,
+} from '@/lib/motion'
 import { cn } from '@/lib/utils/ui'
 
 import { galleryRows, questions } from './content'
@@ -84,9 +91,54 @@ export function FaqList() {
 	)
 }
 
+/** Two endless photo rows that drift in opposite directions and speed up or reverse with the scroll. */
 export function GalleryRows() {
+	const ref = useRef<HTMLDivElement>(null)
+
+	useGSAP(
+		() => {
+			const mm = gsap.matchMedia()
+
+			mm.add(motionQuery, () => {
+				const loops = gsap.utils.toArray<HTMLElement>('.gv-row').map((row) => {
+					// Each row holds its photos twice. Half the row plus half a gap is one full lap.
+					const lap = () =>
+						-(
+							row.scrollWidth +
+							Number.parseFloat(getComputedStyle(row).columnGap)
+						) / 2
+					const reverse = row.classList.contains('is-reverse')
+					return gsap.fromTo(
+						row,
+						{ x: () => (reverse ? lap() : 0) },
+						{
+							duration: 80,
+							ease: 'none',
+							repeat: -1,
+							x: () => (reverse ? 0 : lap()),
+						},
+					)
+				})
+
+				const remeasure = () => {
+					for (const loop of loops) loop.invalidate()
+				}
+				ScrollTrigger.addEventListener('refresh', remeasure)
+				const stopFollowing = followScrollSpeed((speed) => {
+					for (const loop of loops) loop.timeScale(speed * 1.5)
+				})
+
+				return () => {
+					ScrollTrigger.removeEventListener('refresh', remeasure)
+					stopFollowing()
+				}
+			})
+		},
+		{ scope: ref },
+	)
+
 	return (
-		<div className="gv-rows" aria-hidden="true">
+		<div ref={ref} className="gv-rows" aria-hidden="true">
 			{galleryRows.map((row, rowIndex) => (
 				<div
 					className={cn('gv-row', rowIndex % 2 === 1 && 'is-reverse')}
@@ -106,34 +158,4 @@ export function GalleryRows() {
 			))}
 		</div>
 	)
-}
-
-/** Flags each `[data-reveal]` child once it scrolls into view. */
-export function useReveal() {
-	const ref = useRef<HTMLElement>(null)
-
-	useEffect(() => {
-		const root = ref.current
-		if (!root) return
-
-		const observer = new IntersectionObserver(
-			(entries) => {
-				for (const entry of entries) {
-					if (!entry.isIntersecting) continue
-					entry.target.setAttribute('data-visible', '')
-					observer.unobserve(entry.target)
-				}
-			},
-			{ rootMargin: '0px 0px -10% 0px' },
-		)
-
-		for (const target of root.querySelectorAll('[data-reveal]')) {
-			observer.observe(target)
-		}
-		root.setAttribute('data-reveal-ready', '')
-
-		return () => observer.disconnect()
-	}, [])
-
-	return ref
 }
