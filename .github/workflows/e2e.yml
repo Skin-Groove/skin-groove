@@ -19,40 +19,35 @@ concurrency:
 
 jobs:
   e2e:
-    # Railway PR environments are named like "<branch>-pr-<n>"
+    # Railway PR environment names end in "-pr-<n>".
     if: >-
       github.event_name == 'workflow_dispatch' ||
       (github.event.deployment_status.state == 'success' &&
       contains(github.event.deployment.environment, 'pr-'))
     runs-on: ubuntu-24.04
     steps:
-      # Railway reports dashboard URLs in deployment_status URL fields. The
-      # public service URL follows <service>-<environment>.up.railway.app.
-      # The service was renamed to "app"; deployment payloads from before the
-      # rename still carry the old service name, so try both candidates.
+      # Railway reports dashboard URLs in deployment_status URL fields, and
+      # the environment as "<project> / <environment>". The generated service
+      # domain follows <service>-<environment>.up.railway.app.
       - name: Resolve deployment URL
         env:
           DEPLOYMENT_ENVIRONMENT: ${{ github.event.deployment.environment }}
           MANUAL_BASE_URL: ${{ inputs.base_url }}
+          RAILWAY_SERVICE: skin-groove
         run: |
           if [ -n "$MANUAL_BASE_URL" ]; then
-            candidates="${MANUAL_BASE_URL%/}"
+            url="${MANUAL_BASE_URL%/}"
           else
-            service="${DEPLOYMENT_ENVIRONMENT%%/*}"
             environment="${DEPLOYMENT_ENVIRONMENT##*/}"
-            service="${service//[[:space:]]/}"
             environment="${environment//[[:space:]]/}"
             if [ -z "$environment" ]; then
               echo "No deployment environment was reported." >&2
               exit 1
             fi
-            candidates="https://${service}-${environment}.up.railway.app"
-            if [ "$service" != "app" ]; then
-              candidates="$candidates https://app-${environment}.up.railway.app"
-            fi
+            url="https://${RAILWAY_SERVICE}-${environment}.up.railway.app"
           fi
-          echo "CANDIDATES=$candidates" >> "$GITHUB_ENV"
-          echo "Will try: $candidates"
+          echo "BASE_URL=$url" >> "$GITHUB_ENV"
+          echo "Will test $url"
       - name: checkout
         uses: actions/checkout@v6
         with:
@@ -66,23 +61,19 @@ jobs:
           node-version: '24'
       - name: Install Playwright Browsers
         run: vpx playwright install --with-deps --only-shell
-      # sleepApplication is enabled on Railway, so the first request has to
-      # wake the app; retry until it responds.
+      # Railway reports success before the edge routes the new domain.
       - name: Wait for deployment to be reachable
         run: |
           for attempt in $(seq 1 30); do
-            for url in $CANDIDATES; do
-              status=$(curl -sL -o /dev/null -w '%{http_code}' --max-time 20 "$url" || true)
-              if [ "$status" = "200" ]; then
-                echo "BASE_URL=$url" >> "$GITHUB_ENV"
-                echo "Deployment is up at $url (attempt $attempt)"
-                exit 0
-              fi
-              echo "attempt $attempt: $url returned HTTP $status"
-            done
+            status=$(curl -sL -o /dev/null -w '%{http_code}' --max-time 20 "$BASE_URL" || true)
+            if [ "$status" = "200" ]; then
+              echo "Deployment is up (attempt $attempt)"
+              exit 0
+            fi
+            echo "attempt $attempt: HTTP $status"
             sleep 10
           done
-          echo "Deployment never became reachable at any of: $CANDIDATES" >&2
+          echo "Deployment never became reachable at $BASE_URL" >&2
           exit 1
       - name: Run Playwright tests
         run: vpx playwright test
