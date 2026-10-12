@@ -68,7 +68,7 @@ export function BookPill({ className }: { className?: string }) {
 
 export function EmailPill() {
 	return (
-		<a className="gv-pill" href="mailto:hello@skingroove.studio">
+		<a className="gv-pill" href="mailto:sammy@skingroove.studio">
 			Email Skin Groove
 			<ArrowUpRightIcon aria-hidden="true" weight="bold" />
 		</a>

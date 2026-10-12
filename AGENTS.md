@@ -1,10 +1,13 @@
-# TanStack application template
+# Skin Groove
 
 This is a TanStack Start application using React 19, Vite+, Tailwind v4, and
 shadcn. The dev server runs as a pitchfork daemon (see `pitchfork.toml`) that
-auto-starts/stops when entering or leaving the directory; each Git worktree gets
-unique ports via `mise-tasks/setup` (run by `mise run bootstrap`; re-run anytime
-with `mise run setup`).
+auto-starts/stops when entering or leaving the directory. Run
+`mise run bootstrap` after a fresh clone.
+
+Railway hosts production and PR environments. Varlock manages environment
+variables; `.env.schema` documents each one. See `README.md` for hosting and
+integration details, and `PRODUCT.md` for product context.
 
 ## Commands
 

@@ -32,11 +32,14 @@ may purchase recommended skincare online.
 
 ## Capabilities and Constraints
 
-- Virtual initial consultations are planned.
-- Curated online retail is planned.
-- Booking and commerce integrations are not yet selected or implemented.
-- Booking and shop controls remain placeholders until those systems are chosen.
-- Vercel is the current hosting platform.
+- Virtual consultations cost $50. Clients book and pay through Cal.com, which
+  takes payment with its Stripe app.
+- After a completed consultation, the client gets a $50 Shopify discount code
+  for recommended products.
+- Curated online retail runs on Shopify. The store is not set up yet.
+- Booking and shop controls remain placeholders until those integrations go
+  live.
+- Railway hosts the site.
 
 ## Brand Commitments
 
@@ -47,21 +50,22 @@ may purchase recommended skincare online.
 - The approved palette centers on apricot, deep brown, burnt orange, avocado
   green, and warm cream.
 - The approved type system uses Righteous, DM Serif Display, and Manrope.
-- The current production domain is https://skin-groove.vercel.app/.
+- The production domain is https://skingroove.studio.
+- The contact email is sammy@skingroove.studio.
 
 ## Evidence on Hand
 
 - A user-supplied vision board is stored in `docs/esti_vision_board/`.
 - Existing site photography is stored in `public/images/`.
-- No testimonials, clinical outcome claims, pricing, product catalog, or founder
-  biography have been provided. Future work must not fabricate them.
+- No testimonials, clinical outcome claims, product catalog, product pricing, or
+  founder biography have been provided. Future work must not fabricate them.
 
 ## Product Principles
 
 - Make professional guidance feel approachable and personal.
 - Prefer useful routines over crowded product shelves.
 - Explain the virtual-care model clearly.
-- Keep commerce and booking modular until their integrations are selected.
+- Keep commerce and booking behind their own service boundaries.
 - Treat skincare education as care, not correction.
 
 ## Accessibility & Inclusion
