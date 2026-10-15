@@ -9,6 +9,12 @@ test('home page renders its primary content', async ({ page }) => {
 		page.getByRole('heading', { name: 'What you can expect' }),
 	).toBeAttached()
 	await expect(
-		page.getByRole('link', { name: 'Email Skin Groove' }),
+		page.getByRole('heading', { name: 'How it works' }),
+	).toBeAttached()
+	await expect(
+		page.getByRole('link', { name: /Book a consult/ }).first(),
+	).toHaveAttribute('href', /cal\.com\/sammymintzer/)
+	await expect(
+		page.getByRole('link', { name: 'Or email sammy@skingroove.studio' }),
 	).toBeAttached()
 })

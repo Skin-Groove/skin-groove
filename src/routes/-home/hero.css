@@ -1,4 +1,4 @@
-/* Homepage hero: three photo doorways that the visitor zooms through, then a row of cream arches. */
+/* Homepage hero: three photo doorways that the visitor zooms through into the journey, then a row of cream arches. */
 
 /* ===== Hero ===== */
 
@@ -79,6 +79,11 @@
 	line-height: 1.55;
 }
 
+.hero-foot strong {
+	color: var(--amber);
+	font-weight: 700;
+}
+
 .hero-tagline {
 	font-family: var(--display);
 	font-size: 1.35rem;
@@ -91,7 +96,7 @@
 
 /* ===== Zoom ===== */
 
-/* The scroll timeline in hero.tsx fades in the veil and the manifesto once the middle doorway fills the screen. */
+/* The scroll timeline in hero.tsx fades in the veil once the middle doorway fills the screen, then shows the journey on top. */
 .hero-veil {
 	position: absolute;
 	inset: 0;
@@ -102,30 +107,6 @@
 		rgb(8 20 15 / 88%)
 	);
 	opacity: 0;
-}
-
-.hero-manifesto {
-	position: absolute;
-	inset: 0;
-	z-index: 2;
-	display: flex;
-	flex-wrap: wrap;
-	align-content: center;
-	justify-content: center;
-	gap: 0 0.28em;
-	padding: 0 clamp(1.5rem, 8vw, 8rem);
-	visibility: hidden;
-	color: var(--cream);
-	font-family: var(--display);
-	font-size: clamp(2.6rem, 7vw, 6.5rem);
-	line-height: 1;
-	text-align: center;
-	text-shadow: 0 0 3rem rgb(242 181 74 / 40%);
-	text-wrap: balance;
-}
-
-.hero-manifesto span {
-	display: inline-block;
 }
 
 /* ===== Colonnade ===== */
@@ -167,7 +148,7 @@
 
 @media (min-width: 721px) and (prefers-reduced-motion: no-preference) {
 	.hero-doorways figure {
-		animation: hero-open 1600ms var(--ease) backwards;
+		animation: hero-open 1800ms var(--ease) backwards;
 	}
 
 	.hero-doorways figure:nth-child(2) {
@@ -179,21 +160,18 @@
 	}
 }
 
+/* Intro keyframes use only transform and opacity. The compositor runs them, so they stay smooth while the page hydrates. */
 @keyframes hero-letter {
 	from {
 		opacity: 0;
-		filter: blur(10px);
 		transform: translateY(0.45em) rotate(8deg);
 	}
 }
 
 @keyframes hero-open {
 	from {
-		clip-path: inset(100% -6rem -6rem round 999px 999px 0 0);
-	}
-
-	to {
-		clip-path: inset(-6rem round 999px 999px 0 0);
+		opacity: 0;
+		transform: translateY(70%);
 	}
 }
 

@@ -3,9 +3,16 @@ import { useRef } from 'react'
 import { gsap, motionQuery, useGSAP } from '@/lib/motion'
 import { cn } from '@/lib/utils/ui'
 
-import { expectations, guides, services } from './content'
+import { esthetician, expectations, services } from './content'
 import { LavaLamp } from './lava-lamp'
-import { EmailPill, FaqList, GalleryRows, Record } from './parts'
+import {
+	BookPill,
+	EmailLink,
+	FaqList,
+	GalleryRows,
+	InstagramLink,
+	Record,
+} from './parts'
 
 import './sections.css'
 
@@ -147,22 +154,37 @@ export function Sections() {
 
 	return (
 		<div ref={ref}>
-			<section className="home-meet" aria-labelledby="home-meet-title">
-				<div className="home-meet-head">
+			<section
+				id="about"
+				className="home-meet"
+				aria-labelledby="home-meet-title"
+			>
+				<figure className="home-meet-photo" data-reveal>
+					<img
+						alt={esthetician.name}
+						height="1104"
+						loading="lazy"
+						src={esthetician.image}
+						width="736"
+					/>
 					<Record className="home-meet-record" />
+				</figure>
+				<div className="home-meet-copy">
+					<p className="home-eyebrow" data-reveal>
+						Meet your esthetician
+					</p>
 					<h2 id="home-meet-title" data-split>
-						Meet Skin Groove
+						Hi, I am Sammy.
 					</h2>
-				</div>
-				<div className="home-meet-cards">
-					{guides.map((guide) => (
-						<article data-reveal key={guide.title}>
-							<h3>{guide.title}</h3>
-							{guide.body.map((paragraph) => (
-								<p key={paragraph}>{paragraph}</p>
-							))}
-						</article>
+					{esthetician.bio.map((paragraph) => (
+						<p data-reveal key={paragraph}>
+							{paragraph}
+						</p>
 					))}
+					<blockquote data-reveal>{esthetician.quote}</blockquote>
+					<div data-reveal>
+						<InstagramLink />
+					</div>
 				</div>
 			</section>
 
@@ -213,6 +235,9 @@ export function Sections() {
 						</article>
 					))}
 				</div>
+				<div className="home-services-cta" data-reveal>
+					<BookPill />
+				</div>
 			</section>
 
 			<section className="home-room" aria-labelledby="home-room-title">
@@ -224,6 +249,9 @@ export function Sections() {
 						Warm light, soft shapes, and spaces that feel like an exhale. A
 						curated shelf of skincare and home finds is coming soon.
 					</p>
+					<div data-reveal>
+						<InstagramLink />
+					</div>
 				</div>
 				<GalleryRows />
 			</section>
@@ -260,9 +288,10 @@ export function Sections() {
 				<h2 id="home-book-title" data-split>
 					Your next skin chapter starts here
 				</h2>
-				<p data-reveal>Virtual · From home</p>
-				<div data-reveal>
-					<EmailPill />
+				<p data-reveal>Virtual · 45 minutes · $50 back in credit</p>
+				<div className="home-book-actions" data-reveal>
+					<BookPill />
+					<EmailLink />
 				</div>
 			</section>
 

@@ -11,7 +11,7 @@ import { queryClient } from '@/lib/utils/query'
 import appCss from '../styles.css?url'
 
 const description =
-	'Virtual skin consultations and curated retail from Skin Groove.'
+	'One-to-one virtual skin consultations with New Orleans esthetician Sammy Mintzer. $50, returned as shop credit.'
 
 export const Route = createRootRoute({
 	head: () => ({

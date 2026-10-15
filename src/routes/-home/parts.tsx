@@ -10,7 +10,13 @@ import {
 } from '@/lib/motion'
 import { cn } from '@/lib/utils/ui'
 
-import { galleryRows, questions } from './content'
+import {
+	bookingUrl,
+	contactEmail,
+	galleryRows,
+	instagramUrl,
+	questions,
+} from './content'
 
 import './base.css'
 
@@ -59,17 +65,28 @@ export function Record({ className }: { className?: string }) {
 
 export function BookPill({ className }: { className?: string }) {
 	return (
-		<button className={cn('gv-pill', className)} disabled type="button">
-			Book now
-			<span>Coming soon</span>
-		</button>
+		<a className={cn('gv-pill', className)} href={bookingUrl}>
+			Book a consult
+			<span>$50</span>
+		</a>
 	)
 }
 
-export function EmailPill() {
+export function EmailLink({ className }: { className?: string }) {
 	return (
-		<a className="gv-pill" href="mailto:sammy@skingroove.studio">
-			Email Skin Groove
+		<a
+			className={cn('gv-text-link', className)}
+			href={`mailto:${contactEmail}`}
+		>
+			Or email {contactEmail}
+		</a>
+	)
+}
+
+export function InstagramLink({ className }: { className?: string }) {
+	return (
+		<a className={cn('gv-text-link', className)} href={instagramUrl}>
+			Follow @beautybysmintz
 			<ArrowUpRightIcon aria-hidden="true" weight="bold" />
 		</a>
 	)

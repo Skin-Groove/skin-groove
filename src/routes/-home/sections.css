@@ -18,57 +18,67 @@
 /* ===== Meet ===== */
 
 .home-meet {
-	width: min(100% - 3rem, 72rem);
+	display: grid;
+	width: min(100% - 3rem, 68rem);
+	grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+	gap: clamp(2.5rem, 7vw, 6rem);
+	align-items: center;
 	margin-inline: auto;
 	padding-block: clamp(5rem, 10vw, 8rem);
-	text-align: center;
 }
 
-.home-meet-head {
-	display: grid;
-	justify-items: center;
-	gap: 1.25rem;
+.home-meet-photo {
+	position: relative;
+	aspect-ratio: 3 / 4;
+}
+
+.home-meet-photo img {
+	border-radius: 999px 999px 1.5rem 1.5rem;
+	box-shadow: 0 0 0 0.75rem #fff8ec;
 }
 
 .home-meet-record {
-	width: 4.5rem;
-	height: 4.5rem;
+	position: absolute;
+	right: -1.5rem;
+	bottom: -1.5rem;
+	width: clamp(5rem, 10vw, 7rem);
+	height: clamp(5rem, 10vw, 7rem);
 	color: var(--burnt);
+	filter: drop-shadow(0 0.75rem 1.25rem rgb(43 17 13 / 30%));
+}
+
+.home-eyebrow {
+	color: var(--burnt);
+	font-size: 0.8rem;
+	font-weight: 800;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
 }
 
 .home-meet h2 {
+	margin-block: 0.75rem 1.75rem;
 	font-size: clamp(3rem, 7vw, 5.5rem);
 }
 
-.home-meet-cards {
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	gap: 1.25rem;
-	margin-top: clamp(3rem, 6vw, 4.5rem);
-}
-
-.home-meet-cards article {
-	padding: clamp(2.25rem, 4vw, 3.25rem) 1.75rem 2rem;
-	border-radius: 999px 999px 1.5rem 1.5rem;
-	background: #fff8ec;
-	box-shadow: inset 0 0 0 1px rgb(58 26 18 / 8%);
-}
-
-.home-meet-cards h3 {
-	margin: 2.5rem 0 1rem;
-	font-family: var(--display);
-	font-size: 1.4rem;
-	font-weight: 400;
-}
-
-.home-meet-cards p {
+.home-meet-copy > p:not(.home-eyebrow) {
+	max-width: 32rem;
 	color: var(--muted);
-	font-size: 0.97rem;
+	font-size: 1.05rem;
 	line-height: 1.7;
 }
 
-.home-meet-cards p + p {
-	margin-top: 0.9rem;
+.home-meet-copy > p + p {
+	margin-top: 1rem;
+}
+
+.home-meet blockquote {
+	margin: 2rem 0 1.75rem;
+	padding-left: 1.25rem;
+	border-left: 3px solid var(--amber);
+	color: var(--burnt);
+	font-family: var(--display);
+	font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+	line-height: 1.2;
 }
 
 /* ===== Expect ===== */
@@ -214,6 +224,12 @@
 	text-transform: uppercase;
 }
 
+.home-services-cta {
+	display: flex;
+	justify-content: center;
+	margin-top: clamp(3rem, 6vw, 4.5rem);
+}
+
 .home-service-grid p:last-child {
 	color: var(--muted);
 	line-height: 1.65;
@@ -237,6 +253,11 @@
 .home-room h2 {
 	color: var(--amber);
 	font-size: clamp(2.75rem, 6vw, 4.75rem);
+}
+
+.home-room-head .gv-text-link {
+	margin-top: 1.25rem;
+	color: var(--amber);
 }
 
 .home-room-head p {
@@ -326,6 +347,12 @@
 	position: relative;
 }
 
+.home-book-actions {
+	display: grid;
+	justify-items: center;
+	gap: 1rem;
+}
+
 .home-book > p {
 	font-weight: 800;
 	letter-spacing: 0.16em;
@@ -374,15 +401,16 @@
 /* ===== Responsive ===== */
 
 @media (max-width: 900px) {
-	.home-meet-cards,
+	.home-meet,
 	.home-expect-grid,
 	.home-service-grid,
 	.home-faq {
 		grid-template-columns: 1fr;
 	}
 
-	.home-meet-cards article {
-		border-radius: 12rem 12rem 1.5rem 1.5rem;
+	.home-meet-photo {
+		width: min(100% - 2rem, 24rem);
+		justify-self: center;
 	}
 
 	/* The text ring extends past the photo, so the photo leaves room for it. */

@@ -37,6 +37,7 @@ export function SiteNav() {
 					<Record className="site-nav-record" />
 				</a>
 				<div className="site-nav-links">
+					<a href="#about">About</a>
 					<a href="#services">Services</a>
 					<a href="#faq">FAQ</a>
 					<a href="#contact">Contact</a>

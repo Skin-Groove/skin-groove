@@ -1,26 +1,33 @@
-export const guides = [
+export const bookingUrl =
+	'https://cal.com/sammymintzer/virtual-skin-consultation'
+export const contactEmail = 'sammy@skingroove.studio'
+export const instagramUrl = 'https://www.instagram.com/beautybysmintz/'
+
+export const journey = [
 	{
-		title: 'Hi, we are Skin Groove.',
-		body: [
-			'A virtual esthetics practice for people who want professional skincare guidance without visiting a treatment room.',
-			'We help you understand your skin, simplify your routine, and choose products with more confidence.',
-		],
+		title: 'Book',
+		body: 'Pick a 45-minute video slot and pay $50 online.',
 	},
 	{
-		title: 'What guides the practice',
-		body: [
-			'Healthy skin is not built in a single appointment. It is built through consistency, honest guidance, and a plan designed around you.',
-			'Skincare education is care, not correction.',
-		],
+		title: 'Meet',
+		body: 'Talk through your skin, your goals, and your current shelf with Sammy, from home.',
 	},
 	{
-		title: 'The experience',
-		body: [
-			'Every consultation begins with listening and ends with a routine that makes sense for real life.',
-			'No rushed protocols. No crowded shelves. Just informed care and a plan you can actually follow.',
-		],
+		title: 'Glow',
+		body: 'Leave with a routine that fits real life, plus a $50 code for the Skin Groove shop.',
 	},
 ]
+
+// Placeholder bio and photo. Replace both with Sammy's own words and portrait before launch.
+export const esthetician = {
+	name: 'Sammy Mintzer',
+	image: '/images/groove/41-lg.webp',
+	bio: [
+		'I am an esthetician in New Orleans, and I started Skin Groove for people who want real skincare guidance without a treatment room.',
+		'We talk through your skin, your routine, and your goals, then build a plan you can actually follow. No rushed protocols. No crowded shelves.',
+	],
+	quote: 'Skincare education is care, not correction.',
+}
 
 export const expectations = [
 	{
@@ -41,19 +48,19 @@ export const services = [
 	{
 		name: 'The consult',
 		image: '/images/groove/37-lg.webp',
-		kind: 'Virtual consultation',
-		body: 'A one-to-one video appointment about your skin, your goals, and the products you already own.',
+		kind: '$50 · 45-minute video call',
+		body: 'A one-to-one conversation about your skin, your goals, and the products you already own.',
 	},
 	{
-		name: 'The routine edit',
+		name: 'Your routine',
 		image: '/images/groove/43-lg.webp',
-		kind: 'Routine tune-up',
+		kind: 'Included with every consult',
 		body: 'A practical plan that keeps what works, removes what does not, and explains every step.',
 	},
 	{
-		name: 'The shelf',
+		name: 'The shop',
 		image: '/images/groove/06-lg.webp',
-		kind: 'Curated retail · Coming soon',
+		kind: '$50 credit after your consult · Opening soon',
 		body: 'A small, considered product edit chosen to support your routine without adding clutter.',
 	},
 ]
@@ -62,7 +69,12 @@ export const questions = [
 	{
 		question: 'How does a virtual consultation work?',
 		answer:
-			'You meet by video from wherever you are. We talk through your skin, your current routine, and your goals, then shape a plan around what we learn.',
+			'Book a 45-minute slot online, then meet Sammy by video from wherever you are. You talk through your skin, your current routine, and your goals, and shape a plan around what you learn.',
+	},
+	{
+		question: 'How much does it cost?',
+		answer:
+			'A consult is $50. Afterward, you get a $50 code for the Skin Groove shop, so the consult pays for itself when you stock your routine.',
 	},
 	{
 		question: 'Do I need to overhaul my entire routine?',
@@ -72,12 +84,7 @@ export const questions = [
 	{
 		question: 'What do I leave with?',
 		answer:
-			'A clear routine you can follow at home, with an explanation for every step.',
-	},
-	{
-		question: 'When can I book?',
-		answer:
-			'Booking and the online shop are coming soon. Until then, email Skin Groove to start the conversation.',
+			'A clear routine you can follow at home, an explanation for every step, and a $50 shop code.',
 	},
 ]
 
