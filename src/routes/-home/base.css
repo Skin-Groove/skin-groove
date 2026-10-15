@@ -190,9 +190,10 @@
 }
 
 .gv-row {
+	--row-gap: 1rem;
 	display: flex;
 	width: max-content;
-	gap: 1rem;
+	gap: var(--row-gap);
 }
 
 .gv-row img {
@@ -226,6 +227,38 @@
 @media (prefers-reduced-motion: no-preference) {
 	.gv-grain {
 		animation: gv-grain 1s steps(6) infinite;
+	}
+}
+
+/* Touch screens run these loops with CSS. Mouse screens use GSAP, so the loops follow the scroll speed (parts.tsx, page-motion.ts). */
+@media (prefers-reduced-motion: no-preference) and (hover: none) {
+	.gv-record {
+		animation: gv-spin 6s linear infinite;
+	}
+
+	.gv-row {
+		animation: gv-row 53s linear infinite;
+	}
+
+	.gv-row.is-reverse {
+		animation-direction: reverse;
+	}
+
+	.gv-rows[data-paused] .gv-row {
+		animation-play-state: paused;
+	}
+}
+
+@keyframes gv-spin {
+	to {
+		rotate: 1turn;
+	}
+}
+
+/* Each row holds its photos twice. Half the row plus half a gap is one full lap. */
+@keyframes gv-row {
+	to {
+		transform: translateX(calc(-50% - var(--row-gap) / 2));
 	}
 }
 

@@ -11,7 +11,7 @@ import {
 
 /**
  * Animates shared page patterns inside the returned ref:
- * records spin with the scroll, `[data-reveal]` elements rise in,
+ * records spin faster with the scroll, `[data-reveal]` elements rise in,
  * and `[data-split]` headings slide up line by line.
  */
 export function usePageMotion() {
@@ -21,7 +21,8 @@ export function usePageMotion() {
 		() => {
 			const mm = gsap.matchMedia()
 
-			mm.add(motionQuery, () => {
+			// Touch screens spin records with CSS (base.css), because a JavaScript loop on every frame slows their scrolling.
+			mm.add(`${motionQuery} and (hover: hover)`, () => {
 				const spins = gsap.utils
 					.toArray<SVGSVGElement>('.gv-record')
 					.map((record) =>
@@ -33,10 +34,12 @@ export function usePageMotion() {
 							transformOrigin: '50% 50%',
 						}),
 					)
-				const stopSpin = followScrollSpeed((speed) => {
+				return followScrollSpeed((speed) => {
 					for (const spin of spins) spin.timeScale(speed)
 				})
+			})
 
+			mm.add(motionQuery, () => {
 				gsap.set('[data-reveal]', { autoAlpha: 0, y: 48 })
 				ScrollTrigger.batch('[data-reveal]', {
 					start: 'top 90%',
@@ -70,8 +73,6 @@ export function usePageMotion() {
 							}),
 					})
 				}
-
-				return stopSpin
 			})
 		},
 		{ scope: ref },

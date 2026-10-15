@@ -306,6 +306,106 @@
 	line-height: 1.5;
 }
 
+/* ===== Steps ===== */
+
+/*
+ * Touch screens: hero.tsx sets data-steps, then marks the open journey, the
+ * active slide, and the done progress fills. These transitions animate each
+ * change, so the animation does not wait for JavaScript frames.
+ */
+.hero-track[data-steps] {
+	--step: 600ms;
+}
+
+.hero-track[data-steps]
+	:is(
+		.hero-copy,
+		.hero-veil,
+		.journey-title,
+		.journey-progress,
+		.journey-step,
+		.journey-payoff
+	) {
+	transition:
+		opacity var(--step) var(--ease),
+		transform var(--step) var(--ease),
+		visibility 0s var(--step);
+}
+
+.hero-track[data-steps]
+	:is(.journey-title, .journey-progress, .journey-step, .journey-payoff) {
+	visibility: hidden;
+	opacity: 0;
+}
+
+.hero-track[data-steps] :is(.journey-title, .journey-progress) {
+	transform: translateY(20px);
+}
+
+.hero-track[data-steps] :is(.journey-step, .journey-payoff) {
+	transform: translateY(60px);
+}
+
+.hero-track[data-steps] :is(.journey-step, .journey-payoff)[data-past] {
+	transform: translateY(-60px);
+}
+
+.hero-track[data-steps][data-open] .hero-copy {
+	visibility: hidden;
+	opacity: 0;
+	transform: translateY(-12%);
+}
+
+.hero-track[data-steps][data-open]
+	:is(.hero-veil, .journey-title, .journey-progress),
+.hero-track[data-steps] :is(.journey-step, .journey-payoff)[data-active] {
+	visibility: visible;
+	opacity: 1;
+	transform: none;
+	transition-delay: 0s;
+}
+
+.hero-track[data-steps] .journey-progress-fill {
+	transform: scaleX(0);
+	transition: transform var(--step) var(--ease);
+}
+
+.hero-track[data-steps] .journey-progress-fill[data-done] {
+	transform: scaleX(1);
+}
+
+/* The hero photos are hidden under the veil, so they stop cross-fading. */
+.hero-track[data-open] .hero-doorways figure {
+	animation-play-state: paused;
+}
+
+/* Wide touch screens zoom through the middle doorway. hero.tsx measures --cover-scale. */
+@media (min-width: 721px) {
+	.hero-track[data-steps] .hero-doorways figure {
+		transition:
+			opacity 900ms var(--ease),
+			transform 900ms var(--ease);
+	}
+
+	.hero-track[data-steps] .hero-doorways figure:nth-child(2) {
+		transform-origin: 50% 100%;
+	}
+
+	.hero-track[data-steps][data-open] .hero-doorways figure:nth-child(1) {
+		opacity: 0;
+		transform: translateX(-60%);
+	}
+
+	.hero-track[data-steps][data-open] .hero-doorways figure:nth-child(2) {
+		transform: scale(var(--cover-scale, 1));
+	}
+
+	.hero-track[data-steps][data-open] .hero-doorways figure:nth-child(3) {
+		opacity: 0;
+		transform: translateX(60%);
+	}
+}
+
 /* Phones skip the doorway zoom, so a dense veil hides the cycling hero photos. */
 @media (max-width: 720px) {
 	.hero-track[data-zoom] .hero-veil {
