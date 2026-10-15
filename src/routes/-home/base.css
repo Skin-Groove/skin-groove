@@ -38,6 +38,11 @@
 
 /* ===== Building blocks ===== */
 
+/* Records spin forever. A GPU layer rotates them without a repaint on every frame. */
+.gv-record {
+	will-change: transform;
+}
+
 .gv-record-vinyl {
 	fill: #1f0d09;
 }

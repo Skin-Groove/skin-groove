@@ -213,6 +213,22 @@
 	top: 0;
 }
 
+/*
+ * The timeline fades these elements on every scroll frame. Their own GPU
+ * layers stop the browser from repainting the whole page, which is slow on phones.
+ */
+.hero-track[data-zoom]
+	:is(
+		.hero-copy,
+		.hero-veil,
+		.journey-title,
+		.journey-progress,
+		.journey-step,
+		.journey-payoff
+	) {
+	will-change: transform, opacity;
+}
+
 .hero-track[data-zoom] .journey {
 	position: absolute;
 	inset: 0;

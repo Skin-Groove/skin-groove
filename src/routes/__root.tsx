@@ -1,3 +1,5 @@
+import bodyFont from '@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2?url'
+import displayFont from '@fontsource/caprasimo/files/caprasimo-latin-400-normal.woff2?url'
 import { QueryClientProvider } from '@tanstack/react-query'
 import {
 	HeadContent,
@@ -27,6 +29,21 @@ export const Route = createRootRoute({
 			{ name: 'theme-color', content: '#08140f' },
 		],
 		links: [
+			// Preloads start the font downloads with the HTML, not after the CSS, so the first paint uses them.
+			{
+				as: 'font',
+				crossOrigin: 'anonymous',
+				href: displayFont,
+				rel: 'preload',
+				type: 'font/woff2',
+			},
+			{
+				as: 'font',
+				crossOrigin: 'anonymous',
+				href: bodyFont,
+				rel: 'preload',
+				type: 'font/woff2',
+			},
 			{ rel: 'stylesheet', href: appCss },
 			{ rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' },
 		],
