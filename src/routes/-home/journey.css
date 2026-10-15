@@ -1,0 +1,318 @@
+/* How it works: three numbered steps, then the offer. */
+
+.journey {
+	--focus: var(--amber);
+	position: relative;
+	z-index: 3;
+	display: grid;
+	align-content: center;
+	justify-items: center;
+	gap: clamp(2rem, 5vh, 3.5rem);
+	padding: clamp(5rem, 10vw, 7rem) clamp(1.5rem, 4vw, 3rem);
+	background: var(--night-deep);
+	color: var(--cream);
+	text-align: center;
+}
+
+.journey .journey-title {
+	color: var(--amber);
+	font-family: var(--body);
+	line-height: 1.4;
+	font-size: 0.85rem;
+	font-weight: 800;
+	letter-spacing: 0.2em;
+	text-transform: uppercase;
+}
+
+.journey-slides {
+	display: grid;
+	width: 100%;
+	justify-items: center;
+	gap: clamp(2rem, 5vh, 3.5rem);
+}
+
+.journey-progress {
+	display: none;
+}
+
+.journey-path {
+	position: relative;
+	width: min(100%, 68rem);
+}
+
+.journey-track {
+	position: absolute;
+	top: 1.75rem;
+	right: calc(100% / 6);
+	left: calc(100% / 6);
+	height: 2px;
+	background: rgb(251 241 225 / 18%);
+}
+
+.journey-track-fill {
+	height: 100%;
+	background: var(--amber);
+	transform-origin: 0 50%;
+}
+
+.journey-steps {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 2rem;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.journey-number {
+	position: relative;
+	display: grid;
+	width: 3.5rem;
+	aspect-ratio: 1;
+	place-items: center;
+	margin: 0 auto 1.25rem;
+	border-radius: 50%;
+	background: var(--night-deep);
+	box-shadow: inset 0 0 0 2px var(--amber);
+	color: var(--amber);
+	font-family: var(--display);
+	font-size: 1.1rem;
+}
+
+.journey-step h3 {
+	margin: 0;
+	font-family: var(--display);
+	font-size: clamp(2rem, 4vw, 3.25rem);
+	font-weight: 400;
+	line-height: 1;
+}
+
+.journey-step p {
+	max-width: 19rem;
+	margin: 0.75rem auto 0;
+	line-height: 1.6;
+	opacity: 0.86;
+}
+
+/* Phones show the connecting line between steps. Wide screens use the track. */
+.journey-link {
+	display: none;
+}
+
+.journey-payoff {
+	display: grid;
+	justify-items: center;
+	gap: 0.9rem;
+}
+
+.journey-payoff p {
+	margin: 0;
+}
+
+.journey-payoff-line {
+	color: var(--amber);
+	font-family: var(--display);
+	font-size: clamp(2.2rem, 5vw, 4.25rem);
+	line-height: 1;
+	text-shadow: 0 0 3rem rgb(242 181 74 / 35%);
+	text-wrap: balance;
+}
+
+.journey-payoff .gv-pill {
+	margin-top: 0.6rem;
+}
+
+/* ===== Responsive ===== */
+
+@media (max-width: 720px) {
+	.journey {
+		gap: 2rem;
+		padding-block: 4.5rem 4rem;
+	}
+
+	.journey-track {
+		display: none;
+	}
+
+	.journey-steps {
+		grid-template-columns: 1fr;
+		gap: 1.1rem;
+		text-align: left;
+	}
+
+	.journey-step {
+		position: relative;
+		display: grid;
+		grid-template-columns: auto 1fr;
+		gap: 0 1rem;
+		align-items: center;
+	}
+
+	/* A line runs from each number down to the next step. */
+	.journey-link {
+		position: absolute;
+		top: 2.75rem;
+		bottom: -1.1rem;
+		left: calc(1.375rem - 1px);
+		display: block;
+		width: 2px;
+		background: rgb(242 181 74 / 55%);
+		transform-origin: 50% 0;
+	}
+
+	.journey-step:last-child .journey-link {
+		display: none;
+	}
+
+	.journey-number {
+		width: 2.75rem;
+		grid-row: span 2;
+		align-self: start;
+		margin: 0;
+		font-size: 0.95rem;
+	}
+
+	.journey-step h3 {
+		font-size: 1.6rem;
+	}
+
+	.journey-step p {
+		max-width: none;
+		margin-top: 0.3rem;
+		font-size: 0.92rem;
+		line-height: 1.5;
+	}
+
+	.journey-payoff-line {
+		font-size: 2rem;
+	}
+
+	.journey-payoff p:not(.journey-payoff-line) {
+		font-size: 0.92rem;
+	}
+}
+
+/* ===== Slides ===== */
+
+/*
+ * hero.tsx sets data-zoom while motion runs. The track adds scroll distance,
+ * the stage sticks to the top, and the journey covers the hero. Every step and
+ * the payoff share one grid cell, so the timeline shows one slide at a time.
+ */
+.hero-stage {
+	position: relative;
+}
+
+.hero-track[data-zoom] {
+	/* svh stays fixed while the phone address bar hides, so the scroll length does not change. */
+	height: calc(100svh + 440vh);
+}
+
+.hero-track[data-zoom] .hero-stage {
+	position: sticky;
+	top: 0;
+}
+
+/*
+ * The timeline fades these elements on every scroll frame. Their own GPU
+ * layers stop the browser from repainting the whole page, which is slow on phones.
+ */
+.hero-track[data-zoom]
+	:is(
+		.hero-copy,
+		.hero-veil,
+		.journey-title,
+		.journey-progress,
+		.journey-step,
+		.journey-payoff
+	) {
+	will-change: transform, opacity;
+}
+
+.hero-track[data-zoom] .journey {
+	position: absolute;
+	inset: 0;
+	grid-template-rows: auto auto 1fr;
+	padding-block: 6.5rem 3rem;
+	background: none;
+}
+
+.hero-track[data-zoom] .journey-progress {
+	display: flex;
+	gap: 0.5rem;
+}
+
+.journey-progress > span {
+	width: 3rem;
+	height: 3px;
+	overflow: hidden;
+	border-radius: 999px;
+	background: rgb(251 241 225 / 22%);
+}
+
+.journey-progress-fill {
+	display: block;
+	height: 100%;
+	background: var(--amber);
+	transform-origin: 0 50%;
+}
+
+.hero-track[data-zoom] .journey-slides,
+.hero-track[data-zoom] .journey-steps {
+	display: grid;
+	align-items: center;
+	grid-template-columns: 1fr;
+	width: min(100%, 40rem);
+}
+
+.hero-track[data-zoom] .journey-slides > *,
+.hero-track[data-zoom] .journey-steps > * {
+	grid-area: 1 / 1;
+}
+
+.hero-track[data-zoom] .journey-path {
+	width: 100%;
+}
+
+.hero-track[data-zoom] .journey-track,
+.hero-track[data-zoom] .journey-link {
+	display: none;
+}
+
+.hero-track[data-zoom] .journey-step {
+	display: grid;
+	grid-template-columns: 1fr;
+	justify-items: center;
+	gap: 0;
+	text-align: center;
+}
+
+.hero-track[data-zoom] .journey-number {
+	grid-row: auto;
+	align-self: auto;
+	width: 4.5rem;
+	margin: 0 0 1.5rem;
+	font-size: 1.4rem;
+}
+
+.hero-track[data-zoom] .journey-step h3 {
+	font-size: clamp(3.5rem, 11vw, 7rem);
+}
+
+.hero-track[data-zoom] .journey-step p {
+	max-width: 30rem;
+	margin-top: 1.25rem;
+	font-size: clamp(1.1rem, 2.4vw, 1.4rem);
+	line-height: 1.5;
+}
+
+/* Phones skip the doorway zoom, so a dense veil hides the cycling hero photos. */
+@media (max-width: 720px) {
+	.hero-track[data-zoom] .hero-veil {
+		background: rgb(8 20 15 / 94%);
+	}
+
+	.hero-track[data-zoom] .journey {
+		padding-block: 5.5rem 2rem;
+	}
+}

@@ -18,10 +18,11 @@
 		format('woff2');
 }
 
+/* block: the wordmark stays hidden for a moment instead of flashing a fallback serif. */
 @font-face {
 	font-family: 'Caprasimo';
 	font-style: normal;
-	font-display: swap;
+	font-display: block;
 	font-weight: 400;
 	src: url('@fontsource/caprasimo/files/caprasimo-latin-400-normal.woff2')
 		format('woff2');
