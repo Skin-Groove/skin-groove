@@ -1,20 +1,5 @@
 /* Homepage sections below the hero. */
 
-.home-mark {
-	display: inline-flex;
-	white-space: nowrap;
-	align-items: center;
-	gap: 0.6rem;
-	font-family: var(--display);
-	font-size: 1.25rem;
-}
-
-.home-mark svg {
-	width: 1.9rem;
-	height: 1.9rem;
-	color: var(--burnt);
-}
-
 /* ===== Meet ===== */
 
 .home-meet {
@@ -317,22 +302,17 @@
 
 /* ===== Book ===== */
 
-/* The lava lamp runs behind both the booking section and the footer. */
-.home-finale {
-	position: relative;
-	overflow: hidden;
-	background: var(--avocado);
-	color: var(--cream);
-	--focus: var(--amber);
-}
-
 .home-book {
 	position: relative;
 	display: grid;
 	justify-items: center;
 	gap: 1.5rem;
 	padding: clamp(6rem, 12vw, 9rem) 1.5rem calc(min(90vw, 40rem) / 2 + 3rem);
+	overflow: hidden;
+	background: var(--avocado);
+	color: var(--cream);
 	text-align: center;
+	--focus: var(--amber);
 }
 
 .home-lava {
@@ -371,30 +351,6 @@
 	left: 50%;
 	width: min(90vw, 40rem);
 	transform: translateX(-50%);
-}
-
-/* ===== Footer ===== */
-
-/* The rainbow rests on the footer's top edge. */
-.home-footer {
-	position: relative;
-	display: flex;
-	flex-wrap: wrap;
-	align-items: center;
-	justify-content: space-between;
-	gap: 1rem 2rem;
-	padding: 1.25rem clamp(1.5rem, 4vw, 3rem);
-	border-top: 1px solid rgb(251 241 225 / 25%);
-	background: rgb(43 50 20 / 55%);
-	font-size: 0.9rem;
-}
-
-.home-footer .home-mark svg {
-	color: var(--amber);
-}
-
-.home-footer p:last-child {
-	opacity: 0.8;
 }
 
 /* ===== Motion ===== */

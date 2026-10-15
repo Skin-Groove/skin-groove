@@ -273,38 +273,27 @@ export function Sections() {
 				</div>
 			</section>
 
-			<div className="home-finale">
+			<section
+				id="contact"
+				className="home-book"
+				aria-labelledby="home-book-title"
+			>
 				<LavaLamp
 					base="#56622a"
 					className="home-lava"
 					hot="#f2b54a"
 					wax="#b8461b"
 				/>
-				<section
-					id="contact"
-					className="home-book"
-					aria-labelledby="home-book-title"
-				>
-					<Rainbow />
-					<h2 id="home-book-title" data-split>
-						Your next skin chapter starts here
-					</h2>
-					<p data-reveal>Virtual · 45 minutes · $50 back in credit</p>
-					<div className="home-book-actions" data-reveal>
-						<BookPill />
-						<EmailLink />
-					</div>
-				</section>
-
-				<footer className="home-footer">
-					<p className="home-mark">
-						<Record />
-						Skin Groove
-					</p>
-					<InstagramLink />
-					<p>© {new Date().getFullYear()} Skin Groove</p>
-				</footer>
-			</div>
+				<Rainbow />
+				<h2 id="home-book-title" data-split>
+					Your next skin chapter starts here
+				</h2>
+				<p data-reveal>Virtual · 45 minutes · $50 back in credit</p>
+				<div className="home-book-actions" data-reveal>
+					<BookPill />
+					<EmailLink />
+				</div>
+			</section>
 		</div>
 	)
 }

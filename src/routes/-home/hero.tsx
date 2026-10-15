@@ -57,10 +57,13 @@ function coverScale(arch: HTMLElement) {
 	return scale
 }
 
+/** Scroll units each journey slide holds the screen before the next one replaces it. */
+const slideLength = 1
+
 /**
- * Wide screens zoom through the middle doorway into the journey.
- * Phones show the journey as a normal section and reveal its steps in turn,
- * because a full-screen scroll scene is cramped and jumpy on small screens.
+ * Pins the hero with sticky positioning, then shows the journey one slide at a
+ * time. Wide screens first zoom through the middle doorway. Phones skip the
+ * zoom and cover the hero with a dense veil.
  */
 function useHeroMotion() {
 	const ref = useRef<HTMLDivElement>(null)
@@ -69,100 +72,82 @@ function useHeroMotion() {
 		() => {
 			const mm = gsap.matchMedia()
 
-			mm.add(`${motionQuery} and (min-width: 721px)`, () => {
-				const [left, middle, right] = gsap.utils.toArray<HTMLElement>(
-					'.hero-doorways figure',
-				)
+			mm.add({ motion: motionQuery, wide: '(min-width: 721px)' }, (context) => {
 				const track = ref.current
-				if (!left || !middle || !right || !track) return
+				if (!track || !context.conditions?.motion) return
 
 				// data-zoom makes the track tall and the stage sticky (journey.css).
 				// Sticky replaces a GSAP pin, because a pin moves the stage into a
 				// new wrapper, and the move restarts the CSS intro animations.
 				track.setAttribute('data-zoom', '')
 
-				gsap
-					.timeline({
-						defaults: { ease: 'none' },
-						scrollTrigger: {
-							end: 'bottom bottom',
-							invalidateOnRefresh: true,
-							scrub: 0.6,
-							start: 'top top',
-							trigger: track,
-						},
-					})
+				const timeline = gsap.timeline({
+					defaults: { ease: 'none' },
+					scrollTrigger: {
+						end: 'bottom bottom',
+						invalidateOnRefresh: true,
+						scrub: 0.6,
+						start: 'top top',
+						trigger: track,
+					},
+				})
+
+				timeline
 					.to('.hero-copy', { autoAlpha: 0, duration: 0.25, yPercent: -12 }, 0)
-					.to(left, { autoAlpha: 0, duration: 0.4, xPercent: -60 }, 0)
-					.to(right, { autoAlpha: 0, duration: 0.4, xPercent: 60 }, 0)
-					.to(
-						middle,
-						{
-							duration: 0.7,
-							ease: 'power2.inOut',
-							scale: () => coverScale(middle),
-							transformOrigin: '50% 100%',
-						},
-						0,
-					)
-					.to('.hero-veil', { autoAlpha: 1, duration: 0.3 }, 0.4)
-					.from('.journey', { autoAlpha: 0, duration: 0.15 }, 0.55)
-					.from('.journey-title', { duration: 0.2, y: 30 }, 0.55)
+					.to('.hero-veil', { autoAlpha: 1, duration: 0.3 }, 0.3)
 					.from(
-						'.journey-step',
-						{ autoAlpha: 0, duration: 0.25, stagger: 0.3, y: 50 },
-						0.7,
+						['.journey-title', '.journey-progress'],
+						{ autoAlpha: 0, duration: 0.2, y: 20 },
+						0.5,
 					)
-					.from('.journey-track-fill', { duration: 0.6, scaleX: 0 }, 0.75)
-					.from(
-						'.journey-payoff',
-						{ autoAlpha: 0, duration: 0.25, y: 40 },
-						1.45,
+
+				const [left, middle, right] = gsap.utils.toArray<HTMLElement>(
+					'.hero-doorways figure',
+				)
+				if (context.conditions.wide && left && middle && right) {
+					timeline
+						.to(left, { autoAlpha: 0, duration: 0.4, xPercent: -60 }, 0)
+						.to(right, { autoAlpha: 0, duration: 0.4, xPercent: 60 }, 0)
+						.to(
+							middle,
+							{
+								duration: 0.7,
+								ease: 'power2.inOut',
+								scale: () => coverScale(middle),
+								transformOrigin: '50% 100%',
+							},
+							0,
+						)
+				}
+
+				const slides = gsap.utils.toArray<HTMLElement>(
+					'.journey-step, .journey-payoff',
+				)
+				const fills = gsap.utils.toArray<HTMLElement>('.journey-progress-fill')
+				gsap.set(fills, { scaleX: 0 })
+
+				slides.forEach((slide, index) => {
+					const enter = 0.7 + index * slideLength
+					timeline.fromTo(
+						slide,
+						{ autoAlpha: 0, y: 60 },
+						{ autoAlpha: 1, duration: 0.3, y: 0 },
+						enter,
 					)
-					// Holds the finished journey on screen before the stage scrolls away.
-					.to({}, { duration: 0.35 })
+					const fill = fills[index]
+					if (fill) timeline.to(fill, { duration: 0.3, scaleX: 1 }, enter)
+					if (index < slides.length - 1) {
+						timeline.to(
+							slide,
+							{ autoAlpha: 0, duration: 0.25, y: -60 },
+							enter + slideLength - 0.3,
+						)
+					}
+				})
+				// Holds the payoff on screen before the stage scrolls away.
+				timeline.to({}, { duration: 0.5 })
 
 				return () => track.removeAttribute('data-zoom')
-			})
-
-			mm.add(`${motionQuery} and (max-width: 720px)`, () => {
-				// Each step lights up as it scrolls into view, then its line draws to the next step.
-				for (const step of gsap.utils.toArray<HTMLElement>('.journey-step')) {
-					gsap.from(step, {
-						ease: 'none',
-						opacity: 0.12,
-						y: 32,
-						scrollTrigger: {
-							end: 'top 55%',
-							scrub: 0.5,
-							start: 'top 88%',
-							trigger: step,
-						},
-					})
-					gsap.from(step.querySelector('.journey-link'), {
-						ease: 'none',
-						scaleY: 0,
-						scrollTrigger: {
-							end: 'bottom 50%',
-							scrub: 0.5,
-							start: 'top 60%',
-							trigger: step,
-						},
-					})
-				}
-
-				for (const target of gsap.utils.toArray<HTMLElement>([
-					'.journey-title',
-					'.journey-payoff',
-				])) {
-					gsap.from(target, {
-						autoAlpha: 0,
-						duration: 1,
-						ease: 'expo.out',
-						y: 36,
-						scrollTrigger: { start: 'top 85%', trigger: target, once: true },
-					})
-				}
 			})
 		},
 		{ scope: ref },
