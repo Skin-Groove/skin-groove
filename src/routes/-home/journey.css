@@ -107,6 +107,11 @@
 	opacity: 0.86;
 }
 
+/* Phones show the connecting line between steps. Wide screens use the track. */
+.journey-link {
+	display: none;
+}
+
 .journey-payoff {
 	display: grid;
 	justify-items: center;
@@ -157,14 +162,19 @@
 	}
 
 	/* A line runs from each number down to the next step. */
-	.journey-step:not(:last-child)::after {
+	.journey-link {
 		position: absolute;
 		top: 2.75rem;
 		bottom: -1.1rem;
 		left: calc(1.375rem - 1px);
+		display: block;
 		width: 2px;
-		background: rgb(242 181 74 / 45%);
-		content: '';
+		background: rgb(242 181 74 / 55%);
+		transform-origin: 50% 0;
+	}
+
+	.journey-step:last-child .journey-link {
+		display: none;
 	}
 
 	.journey-number {

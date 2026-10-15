@@ -174,7 +174,7 @@ export function Sections() {
 						Meet your esthetician
 					</p>
 					<h2 id="home-meet-title" data-split>
-						Hi, I am Sammy.
+						Hi, I’m Sammy.
 					</h2>
 					{esthetician.bio.map((paragraph) => (
 						<p data-reveal key={paragraph}>
@@ -273,35 +273,38 @@ export function Sections() {
 				</div>
 			</section>
 
-			<section
-				id="contact"
-				className="home-book"
-				aria-labelledby="home-book-title"
-			>
+			<div className="home-finale">
 				<LavaLamp
 					base="#56622a"
 					className="home-lava"
 					hot="#f2b54a"
 					wax="#b8461b"
 				/>
-				<Rainbow />
-				<h2 id="home-book-title" data-split>
-					Your next skin chapter starts here
-				</h2>
-				<p data-reveal>Virtual · 45 minutes · $50 back in credit</p>
-				<div className="home-book-actions" data-reveal>
-					<BookPill />
-					<EmailLink />
-				</div>
-			</section>
+				<section
+					id="contact"
+					className="home-book"
+					aria-labelledby="home-book-title"
+				>
+					<Rainbow />
+					<h2 id="home-book-title" data-split>
+						Your next skin chapter starts here
+					</h2>
+					<p data-reveal>Virtual · 45 minutes · $50 back in credit</p>
+					<div className="home-book-actions" data-reveal>
+						<BookPill />
+						<EmailLink />
+					</div>
+				</section>
 
-			<footer className="home-footer">
-				<p className="home-mark">
-					<Record />
-					Skin Groove
-				</p>
-				<p>Virtual care. Warm approach.</p>
-			</footer>
+				<footer className="home-footer">
+					<p className="home-mark">
+						<Record />
+						Skin Groove
+					</p>
+					<InstagramLink />
+					<p>© {new Date().getFullYear()} Skin Groove</p>
+				</footer>
+			</div>
 		</div>
 	)
 }

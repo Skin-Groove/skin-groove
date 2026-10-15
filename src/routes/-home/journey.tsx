@@ -26,6 +26,7 @@ export function Journey() {
 							</span>
 							<h3>{step.title}</h3>
 							<p>{step.body}</p>
+							<span aria-hidden="true" className="journey-link" />
 						</li>
 					))}
 				</ol>

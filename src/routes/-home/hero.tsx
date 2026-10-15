@@ -126,19 +126,43 @@ function useHeroMotion() {
 			})
 
 			mm.add(`${motionQuery} and (max-width: 720px)`, () => {
-				const reveal = (targets: string, trigger: string) =>
-					gsap.from(targets, {
+				// Each step lights up as it scrolls into view, then its line draws to the next step.
+				for (const step of gsap.utils.toArray<HTMLElement>('.journey-step')) {
+					gsap.from(step, {
+						ease: 'none',
+						opacity: 0.12,
+						y: 32,
+						scrollTrigger: {
+							end: 'top 55%',
+							scrub: 0.5,
+							start: 'top 88%',
+							trigger: step,
+						},
+					})
+					gsap.from(step.querySelector('.journey-link'), {
+						ease: 'none',
+						scaleY: 0,
+						scrollTrigger: {
+							end: 'bottom 50%',
+							scrub: 0.5,
+							start: 'top 60%',
+							trigger: step,
+						},
+					})
+				}
+
+				for (const target of gsap.utils.toArray<HTMLElement>([
+					'.journey-title',
+					'.journey-payoff',
+				])) {
+					gsap.from(target, {
 						autoAlpha: 0,
 						duration: 1,
 						ease: 'expo.out',
-						stagger: 0.18,
 						y: 36,
-						scrollTrigger: { trigger, start: 'top 82%', once: true },
+						scrollTrigger: { start: 'top 85%', trigger: target, once: true },
 					})
-
-				reveal('.journey-title', '.journey')
-				reveal('.journey-step', '.journey-steps')
-				reveal('.journey-payoff', '.journey-payoff')
+				}
 			})
 		},
 		{ scope: ref },
