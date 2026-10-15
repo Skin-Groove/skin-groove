@@ -133,10 +133,9 @@
 /* ===== Responsive ===== */
 
 @media (max-width: 720px) {
-	.journey,
-	.hero-track[data-zoom] .journey {
-		gap: 1.5rem;
-		padding-block: 5.5rem 1.5rem;
+	.journey {
+		gap: 2rem;
+		padding-block: 4.5rem 4rem;
 	}
 
 	.journey-track {
@@ -150,10 +149,22 @@
 	}
 
 	.journey-step {
+		position: relative;
 		display: grid;
 		grid-template-columns: auto 1fr;
 		gap: 0 1rem;
 		align-items: center;
+	}
+
+	/* A line runs from each number down to the next step. */
+	.journey-step:not(:last-child)::after {
+		position: absolute;
+		top: 2.75rem;
+		bottom: -1.1rem;
+		left: calc(1.375rem - 1px);
+		width: 2px;
+		background: rgb(242 181 74 / 45%);
+		content: '';
 	}
 
 	.journey-number {

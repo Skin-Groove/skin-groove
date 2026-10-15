@@ -57,34 +57,32 @@ function coverScale(arch: HTMLElement) {
 	return scale
 }
 
-function useDoorwayZoom() {
+/**
+ * Wide screens zoom through the middle doorway into the journey.
+ * Phones show the journey as a normal section and reveal its steps in turn,
+ * because a full-screen scroll scene is cramped and jumpy on small screens.
+ */
+function useHeroMotion() {
 	const ref = useRef<HTMLDivElement>(null)
 
 	useGSAP(
 		() => {
 			const mm = gsap.matchMedia()
 
-			mm.add(
-				{
-					wide: `${motionQuery} and (min-width: 721px)`,
-					narrow: `${motionQuery} and (max-width: 720px)`,
-				},
-				(context) => {
-					const [left, middle, right] = gsap.utils.toArray<HTMLElement>(
-						'.hero-doorways figure',
-					)
-					const doorways =
-						ref.current?.querySelector<HTMLElement>('.hero-doorways')
-					if (!left || !middle || !right || !doorways) return
-					const zoomTarget = context.conditions?.wide ? middle : doorways
+			mm.add(`${motionQuery} and (min-width: 721px)`, () => {
+				const [left, middle, right] = gsap.utils.toArray<HTMLElement>(
+					'.hero-doorways figure',
+				)
+				const track = ref.current
+				if (!left || !middle || !right || !track) return
 
-					// data-zoom makes the track tall and the stage sticky (journey.css).
-					// Sticky replaces a GSAP pin, because a pin moves the stage into a
-					// new wrapper, and the move restarts the CSS intro animations.
-					const track = ref.current
-					track?.setAttribute('data-zoom', '')
+				// data-zoom makes the track tall and the stage sticky (journey.css).
+				// Sticky replaces a GSAP pin, because a pin moves the stage into a
+				// new wrapper, and the move restarts the CSS intro animations.
+				track.setAttribute('data-zoom', '')
 
-					const timeline = gsap.timeline({
+				gsap
+					.timeline({
 						defaults: { ease: 'none' },
 						scrollTrigger: {
 							end: 'bottom bottom',
@@ -94,49 +92,54 @@ function useDoorwayZoom() {
 							trigger: track,
 						},
 					})
+					.to('.hero-copy', { autoAlpha: 0, duration: 0.25, yPercent: -12 }, 0)
+					.to(left, { autoAlpha: 0, duration: 0.4, xPercent: -60 }, 0)
+					.to(right, { autoAlpha: 0, duration: 0.4, xPercent: 60 }, 0)
+					.to(
+						middle,
+						{
+							duration: 0.7,
+							ease: 'power2.inOut',
+							scale: () => coverScale(middle),
+							transformOrigin: '50% 100%',
+						},
+						0,
+					)
+					.to('.hero-veil', { autoAlpha: 1, duration: 0.3 }, 0.4)
+					.from('.journey', { autoAlpha: 0, duration: 0.15 }, 0.55)
+					.from('.journey-title', { duration: 0.2, y: 30 }, 0.55)
+					.from(
+						'.journey-step',
+						{ autoAlpha: 0, duration: 0.25, stagger: 0.3, y: 50 },
+						0.7,
+					)
+					.from('.journey-track-fill', { duration: 0.6, scaleX: 0 }, 0.75)
+					.from(
+						'.journey-payoff',
+						{ autoAlpha: 0, duration: 0.25, y: 40 },
+						1.45,
+					)
+					// Holds the finished journey on screen before the stage scrolls away.
+					.to({}, { duration: 0.35 })
 
-					timeline
-						.to(
-							'.hero-copy',
-							{ autoAlpha: 0, duration: 0.25, yPercent: -12 },
-							0,
-						)
-						.to(
-							zoomTarget,
-							{
-								duration: 0.7,
-								ease: 'power2.inOut',
-								scale: () => coverScale(zoomTarget),
-								transformOrigin: '50% 100%',
-							},
-							0,
-						)
-						.to('.hero-veil', { autoAlpha: 1, duration: 0.3 }, 0.4)
-						.from('.journey', { autoAlpha: 0, duration: 0.15 }, 0.55)
-						.from('.journey-title', { duration: 0.2, y: 30 }, 0.55)
-						.from(
-							'.journey-step',
-							{ autoAlpha: 0, duration: 0.25, stagger: 0.3, y: 50 },
-							0.7,
-						)
-						.from('.journey-track-fill', { duration: 0.6, scaleX: 0 }, 0.75)
-						.from(
-							'.journey-payoff',
-							{ autoAlpha: 0, duration: 0.25, y: 40 },
-							1.45,
-						)
-						// Holds the finished journey on screen before the stage scrolls away.
-						.to({}, { duration: 0.35 })
+				return () => track.removeAttribute('data-zoom')
+			})
 
-					if (context.conditions?.wide) {
-						timeline
-							.to(left, { autoAlpha: 0, duration: 0.4, xPercent: -60 }, 0)
-							.to(right, { autoAlpha: 0, duration: 0.4, xPercent: 60 }, 0)
-					}
+			mm.add(`${motionQuery} and (max-width: 720px)`, () => {
+				const reveal = (targets: string, trigger: string) =>
+					gsap.from(targets, {
+						autoAlpha: 0,
+						duration: 1,
+						ease: 'expo.out',
+						stagger: 0.18,
+						y: 36,
+						scrollTrigger: { trigger, start: 'top 82%', once: true },
+					})
 
-					return () => track?.removeAttribute('data-zoom')
-				},
-			)
+				reveal('.journey-title', '.journey')
+				reveal('.journey-step', '.journey-steps')
+				reveal('.journey-payoff', '.journey-payoff')
+			})
 		},
 		{ scope: ref },
 	)
@@ -145,7 +148,7 @@ function useDoorwayZoom() {
 }
 
 export function Hero() {
-	const ref = useDoorwayZoom()
+	const ref = useHeroMotion()
 
 	return (
 		<>
