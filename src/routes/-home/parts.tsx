@@ -108,7 +108,7 @@ export function FaqList() {
 	)
 }
 
-/** Two endless photo rows that drift in opposite directions and speed up or reverse with the scroll. */
+/** Two endless photo rows that drift in opposite directions. With a mouse, they speed up or reverse with the scroll. */
 export function GalleryRows() {
 	const ref = useRef<HTMLDivElement>(null)
 
@@ -116,7 +116,21 @@ export function GalleryRows() {
 		() => {
 			const mm = gsap.matchMedia()
 
-			mm.add(motionQuery, () => {
+			// Touch screens move the rows with CSS (base.css) and pause them off screen.
+			mm.add(`${motionQuery} and (hover: none)`, () => {
+				const rows = ref.current
+				if (!rows) return
+				const watch = new IntersectionObserver(([entry]) => {
+					rows.toggleAttribute('data-paused', !entry?.isIntersecting)
+				})
+				watch.observe(rows)
+				return () => {
+					watch.disconnect()
+					rows.removeAttribute('data-paused')
+				}
+			})
+
+			mm.add(`${motionQuery} and (hover: hover)`, () => {
 				const loops = gsap.utils.toArray<HTMLElement>('.gv-row').map((row) => {
 					// Each row holds its photos twice. Half the row plus half a gap is one full lap.
 					const lap = () =>

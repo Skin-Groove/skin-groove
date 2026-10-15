@@ -368,6 +368,13 @@
 	}
 }
 
+/* A drop shadow on a spinning record costs extra GPU work on phones. */
+@media (hover: none) {
+	.home-meet-record {
+		filter: none;
+	}
+}
+
 /* ===== Responsive ===== */
 
 @media (max-width: 900px) {
