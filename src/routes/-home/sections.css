@@ -276,17 +276,12 @@
 .home-ring {
 	position: absolute;
 	inset: -11%;
-	overflow: visible;
 	fill: var(--burnt);
 	font-family: var(--body);
 	font-size: 9px;
 	font-weight: 800;
 	letter-spacing: 0.08em;
 	text-transform: uppercase;
-}
-
-.home-ring path {
-	fill: none;
 }
 
 .home-faq-photo img {

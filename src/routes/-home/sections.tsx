@@ -58,21 +58,32 @@ function Rainbow() {
 	)
 }
 
-const ringText = 'Before you book · Virtual care · Warm approach · '
+const ringLetters = 'Before you book · Virtual care · Warm approach · '
+	.repeat(2)
+	.split('')
+	.map((letter, index, letters) => ({
+		letter,
+		angle: (index / letters.length) * 360,
+	}))
 
-/** Circular text that circles the FAQ photo. */
+/**
+ * Circular text that circles the FAQ photo. Each letter is rotated into place,
+ * because iOS Safari clips a `textPath` inside a rotating SVG.
+ */
 function TextRing() {
 	return (
 		<svg aria-hidden="true" className="home-ring" viewBox="0 0 200 200">
-			<path
-				d="M100 100 m-92 0 a92 92 0 1 1 184 0 a92 92 0 1 1 -184 0"
-				id="home-ring-path"
-			/>
-			<text>
-				<textPath href="#home-ring-path" textLength="575">
-					{ringText.repeat(2)}
-				</textPath>
-			</text>
+			{ringLetters.map(({ letter, angle }) => (
+				<text
+					key={angle}
+					textAnchor="middle"
+					transform={`rotate(${angle} 100 100)`}
+					x="100"
+					y="9"
+				>
+					{letter}
+				</text>
+			))}
 		</svg>
 	)
 }
