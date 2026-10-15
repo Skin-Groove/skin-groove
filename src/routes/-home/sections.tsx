@@ -119,12 +119,14 @@ function useSectionMotion() {
 					)
 				}
 
+				// The photo grows into place, so it never covers the text ring.
+				// The figure is the trigger, because the stacked phone layout makes the section very tall.
 				gsap.from('.home-faq-photo img', {
 					ease: 'none',
 					rotation: -12,
-					scale: 1.15,
+					scale: 0.85,
 					scrollTrigger: {
-						trigger: '.home-faq',
+						trigger: '.home-faq-photo',
 						scrub: true,
 						end: 'center center',
 					},
@@ -162,10 +164,10 @@ export function Sections() {
 				<figure className="home-meet-photo" data-reveal>
 					<img
 						alt={esthetician.name}
-						height="1104"
+						height={esthetician.image.height}
 						loading="lazy"
-						src={esthetician.image}
-						width="736"
+						src={esthetician.image.src}
+						width={esthetician.image.width}
 					/>
 					<Record className="home-meet-record" />
 				</figure>

@@ -18,10 +18,10 @@ export const journey = [
 	},
 ]
 
-// Placeholder bio and photo. Replace both with Sammy's own words and portrait before launch.
+// Placeholder bio. Replace it with Sammy's own words before launch.
 export const esthetician = {
 	name: 'Sammy Mintzer',
-	image: '/images/groove/41-lg.webp',
+	image: { src: '/images/sammy.webp', width: 810, height: 1080 },
 	bio: [
 		'I am an esthetician in New Orleans, and I started Skin Groove for people who want real skincare guidance without a treatment room.',
 		'We talk through your skin, your routine, and your goals, then build a plan you can actually follow. No rushed protocols. No crowded shelves.',
