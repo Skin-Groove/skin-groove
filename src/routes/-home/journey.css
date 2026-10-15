@@ -204,7 +204,8 @@
 }
 
 .hero-track[data-zoom] {
-	height: calc(100dvh + 440vh);
+	/* svh stays fixed while the phone address bar hides, so the scroll length does not change. */
+	height: calc(100svh + 440vh);
 }
 
 .hero-track[data-zoom] .hero-stage {

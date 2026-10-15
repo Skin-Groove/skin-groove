@@ -209,6 +209,13 @@
 	mix-blend-mode: overlay;
 }
 
+/* A blended full-screen layer makes touch scrolling choppy on phones. */
+@media (hover: none) {
+	.gv-grain {
+		display: none;
+	}
+}
+
 /* ===== Motion ===== */
 
 @media (prefers-reduced-motion: no-preference) {

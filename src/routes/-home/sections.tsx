@@ -66,25 +66,25 @@ const ringLetters = 'Before you book · Virtual care · Warm approach · '
 		angle: (index / letters.length) * 360,
 	}))
 
-/**
- * Circular text that circles the FAQ photo. Each letter is rotated into place,
- * because iOS Safari clips a `textPath` inside a rotating SVG.
- */
+/** Circular text that circles the FAQ photo. Each letter is rotated into place. */
 function TextRing() {
 	return (
-		<svg aria-hidden="true" className="home-ring" viewBox="0 0 200 200">
-			{ringLetters.map(({ letter, angle }) => (
-				<text
-					key={angle}
-					textAnchor="middle"
-					transform={`rotate(${angle} 100 100)`}
-					x="100"
-					y="9"
-				>
-					{letter}
-				</text>
-			))}
-		</svg>
+		// The wrapper spins, not the SVG, because iOS Safari clips a rotating SVG.
+		<div aria-hidden="true" className="home-ring">
+			<svg viewBox="0 0 200 200">
+				{ringLetters.map(({ letter, angle }) => (
+					<text
+						key={angle}
+						textAnchor="middle"
+						transform={`rotate(${angle} 100 100)`}
+						x="100"
+						y="9"
+					>
+						{letter}
+					</text>
+				))}
+			</svg>
+		</div>
 	)
 }
 

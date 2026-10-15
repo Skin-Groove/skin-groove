@@ -130,3 +130,11 @@
 		transition: none;
 	}
 }
+
+/* Backdrop blur repaints on every scroll frame, which is slow on phones. */
+@media (hover: none) {
+	.site-nav[data-solid] .site-nav-bar {
+		background: rgb(8 20 15 / 92%);
+		backdrop-filter: none;
+	}
+}
