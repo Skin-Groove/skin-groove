@@ -42,17 +42,12 @@
 }
 
 .about-hero-photo {
-	aspect-ratio: 2 / 3;
+	aspect-ratio: 3 / 4;
 	overflow: hidden;
 	border-radius: 999px 999px 1.5rem 1.5rem;
 	outline: 1px solid rgb(242 181 74 / 45%);
 	outline-offset: 0.4rem;
 	box-shadow: 0 0 5rem rgb(242 181 74 / 18%);
-}
-
-/* The source photo carries a camera date stamp on its left edge. */
-.about-hero-photo img {
-	object-position: 85% center;
 }
 
 /* ===== Story ===== */

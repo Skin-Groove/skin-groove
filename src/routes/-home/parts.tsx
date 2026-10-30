@@ -1,4 +1,5 @@
 import { PlusIcon } from '@phosphor-icons/react'
+import { useState } from 'react'
 
 import { cn } from '@/lib/utils/ui'
 
@@ -21,8 +22,14 @@ export function FaqList() {
 }
 
 export function GalleryRows() {
+	const [paused, setPaused] = useState(false)
+
 	return (
-		<div className="gv-rows" aria-hidden="true">
+		<div
+			aria-hidden="true"
+			className={cn('gv-rows', paused && 'is-paused')}
+			onClick={() => setPaused((value) => !value)}
+		>
 			{galleryRows.map((row, rowIndex) => (
 				<div
 					className={cn('gv-row', rowIndex % 2 === 1 && 'is-reverse')}
@@ -31,6 +38,7 @@ export function GalleryRows() {
 					{[...row, ...row].map((image, index) => (
 						<img
 							alt=""
+							decoding="async"
 							height="360"
 							key={index}
 							loading="lazy"

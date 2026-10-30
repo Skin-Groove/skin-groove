@@ -1,8 +1,9 @@
 import { ArrowRightIcon } from '@phosphor-icons/react'
 import { Link } from '@tanstack/react-router'
 
+import { BookPill } from '../-site/booking'
 import { Closing } from '../-site/closing'
-import { Record, Wave } from '../-site/parts'
+import { InstagramLink, Record, Wave } from '../-site/parts'
 import { expectations, pillars, sammyIntro, services } from './content'
 import { FaqList, GalleryRows } from './parts'
 
@@ -11,6 +12,20 @@ import './sections.css'
 export function Sections() {
 	return (
 		<>
+			<section className="home-offer" aria-labelledby="home-offer-title">
+				<div className="home-offer-ticket" data-reveal>
+					<div>
+						<h2 id="home-offer-title">
+							<span>$50 consult.</span> <span>$50 shop credit.</span>
+						</h2>
+						<p>
+							After your consult, you get a $50 code for the shop, opening soon.
+						</p>
+					</div>
+					<BookPill />
+				</div>
+			</section>
+
 			<section className="home-meet" aria-labelledby="home-meet-title">
 				<div className="home-meet-head" data-reveal>
 					<Record className="home-meet-record" />
@@ -58,12 +73,14 @@ export function Sections() {
 			<section className="home-sammy" aria-labelledby="home-sammy-title">
 				<figure className="home-sammy-photo" data-reveal>
 					<img
-						alt="A wavy green mirror with a soft glow beside a globe floor lamp"
-						height="720"
+						alt="Sammy, the founder of Skin Groove, smiling in a black uniform"
+						decoding="async"
+						height="1080"
 						loading="lazy"
-						src="/images/groove/53.webp"
-						width="480"
+						src="/images/sammy.webp"
+						width="810"
 					/>
+					<Record className="home-sammy-record" />
 				</figure>
 				<div className="home-sammy-copy" data-reveal>
 					<p className="gv-kicker">The founder</p>
@@ -71,10 +88,13 @@ export function Sections() {
 					{sammyIntro.map((paragraph, index) => (
 						<p key={index}>{paragraph}</p>
 					))}
-					<Link className="gv-pill" to="/about">
-						Meet the founder
-						<ArrowRightIcon aria-hidden="true" weight="bold" />
-					</Link>
+					<div className="home-sammy-actions">
+						<Link className="gv-pill" to="/about">
+							Meet the founder
+							<ArrowRightIcon aria-hidden="true" weight="bold" />
+						</Link>
+						<InstagramLink />
+					</div>
 				</div>
 			</section>
 
@@ -96,6 +116,7 @@ export function Sections() {
 							<figure>
 								<img
 									alt=""
+									decoding="async"
 									height="1400"
 									loading="lazy"
 									src={service.image}
@@ -108,12 +129,16 @@ export function Sections() {
 						</article>
 					))}
 				</div>
+				<div className="home-services-cta" data-reveal>
+					<BookPill />
+				</div>
 			</section>
 
 			<section className="home-room" aria-labelledby="home-room-title">
 				<div className="home-room-head" data-reveal>
 					<h2 id="home-room-title">The Groove Room</h2>
 					<p>Warm light, soft shapes, and spaces that feel like an exhale.</p>
+					<InstagramLink />
 				</div>
 				<GalleryRows />
 			</section>

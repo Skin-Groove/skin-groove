@@ -74,6 +74,7 @@
 	border: 0;
 	border-radius: 999px;
 	background: var(--pill-bg);
+	white-space: nowrap;
 	color: var(--pill-fg);
 	font: inherit;
 	font-size: 0.92rem;
@@ -84,13 +85,15 @@
 		transform 300ms var(--ease);
 }
 
-.gv-pill:disabled {
-	cursor: not-allowed;
-}
-
 a.gv-pill:hover {
 	filter: brightness(1.08);
 	transform: translateY(-2px);
+}
+
+.gv-book b,
+.gv-book i {
+	font-style: normal;
+	font-weight: inherit;
 }
 
 .gv-pill span {
@@ -110,17 +113,14 @@ a.gv-pill:hover {
 
 [data-reveal-ready] [data-reveal] {
 	opacity: 0;
-	filter: blur(6px);
 	transform: translateY(1.5rem);
 	transition:
 		opacity 900ms var(--ease),
-		filter 900ms var(--ease),
 		transform 900ms var(--ease);
 }
 
 [data-reveal-ready] [data-reveal][data-visible] {
 	opacity: 1;
-	filter: none;
 	transform: none;
 }
 
@@ -154,7 +154,6 @@ a.gv-pill:hover {
 @media (prefers-reduced-motion: reduce) {
 	[data-reveal-ready] [data-reveal] {
 		opacity: 1;
-		filter: none;
 		transform: none;
 		transition: none;
 	}

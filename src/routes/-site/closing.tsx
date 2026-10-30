@@ -1,5 +1,11 @@
+import { ArrowUpIcon } from '@phosphor-icons/react'
+
+import { scrollToTop } from '@/lib/utils/scroll'
+
+import { BookPill } from './booking'
+import { LavaLamp } from './lava-lamp'
 import { SiteLinks } from './nav'
-import { EmailPill, Record } from './parts'
+import { EmailLink, InstagramLink, Record } from './parts'
 
 import './site.css'
 
@@ -13,7 +19,12 @@ const rainbowBands = [
 
 function Rainbow() {
 	return (
-		<svg aria-hidden="true" className="gv-rainbow" viewBox="0 0 400 200">
+		<svg
+			aria-hidden="true"
+			className="gv-rainbow"
+			data-reveal
+			viewBox="0 0 400 200"
+		>
 			{rainbowBands.map((color, index) => {
 				const radius = 185 - index * 30
 				return (
@@ -21,7 +32,9 @@ function Rainbow() {
 						d={`M ${200 - radius} 200 A ${radius} ${radius} 0 0 1 ${200 + radius} 200`}
 						fill="none"
 						key={color}
+						pathLength="1"
 						stroke={color}
+						strokeDasharray="1"
 						strokeWidth="26"
 					/>
 				)
@@ -39,13 +52,19 @@ export function Closing() {
 				className="gv-closing"
 				aria-labelledby="gv-closing-title"
 			>
+				<LavaLamp
+					base="#56622a"
+					className="gv-lava"
+					hot="#f2b54a"
+					wax="#b8461b"
+				/>
 				<Rainbow />
-				<h2 id="gv-closing-title" data-reveal>
-					Your best skin era starts here.
-				</h2>
-				<p data-reveal>Virtual · From wherever you are</p>
-				<div data-reveal>
-					<EmailPill />
+				<div className="gv-closing-arch" data-reveal>
+					<h2 id="gv-closing-title">Your best skin era starts here.</h2>
+					<p>Virtual · 45 minutes · $50 shop credit</p>
+					<BookPill />
+					<EmailLink />
+					<InstagramLink />
 				</div>
 			</section>
 
@@ -57,7 +76,17 @@ export function Closing() {
 				<nav aria-label="Footer navigation">
 					<SiteLinks />
 				</nav>
-				<p className="gv-footer-tagline">Find your skincare rhythm.</p>
+				<div className="gv-footer-end">
+					<InstagramLink />
+					<button
+						aria-label="Back to top"
+						className="gv-top"
+						onClick={scrollToTop}
+						type="button"
+					>
+						<ArrowUpIcon aria-hidden="true" weight="bold" />
+					</button>
+				</div>
 			</footer>
 		</>
 	)

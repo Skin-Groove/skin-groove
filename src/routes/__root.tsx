@@ -8,6 +8,8 @@ import {
 
 import { queryClient } from '@/lib/utils/query'
 
+import { siteOrigin } from './-site/meta'
+
 import appCss from '../styles.css?url'
 
 const description =
@@ -23,6 +25,7 @@ export const Route = createRootRoute({
 			{ property: 'og:title', content: 'Skin Groove' },
 			{ property: 'og:description', content: description },
 			{ property: 'og:type', content: 'website' },
+			{ property: 'og:image', content: `${siteOrigin}/images/og.jpg` },
 			{ name: 'twitter:card', content: 'summary_large_image' },
 			{ name: 'theme-color', content: '#08140f' },
 		],

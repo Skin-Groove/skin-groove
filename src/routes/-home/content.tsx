@@ -64,28 +64,33 @@ export const services = [
 	{
 		name: 'The consult',
 		image: '/images/groove/37-lg.webp',
-		kind: 'Virtual consultation',
+		kind: '$50 · 45-minute virtual consult',
 		body: 'A one-on-one virtual consultation about your skin, your current routine, your history, and your goals.',
 	},
 	{
 		name: 'The routine edit',
 		image: '/images/groove/43-lg.webp',
-		kind: 'Routine tune-up',
+		kind: 'Included with every consult',
 		body: 'A practical plan that keeps what works, rethinks what doesn’t, and explains every step.',
 	},
 	{
 		name: 'The shelf',
 		image: '/images/groove/06-lg.webp',
-		kind: 'Curated retail · Coming soon',
+		kind: '$50 shop credit after your consult · Opening soon',
 		body: 'A small, considered product edit chosen to support your routine without adding clutter.',
 	},
 ]
 
 export const questions = [
 	{
+		question: 'How much does it cost?',
+		answer:
+			'A consultation is $50. Afterward, you get a $50 code for the Skin Groove shop. The shop opens soon.',
+	},
+	{
 		question: 'How does a virtual consultation work?',
 		answer:
-			'We meet virtually, from wherever you are. We’ll look closely and thoroughly at your skin, your current routine, your history, your concerns, and what you actually want to accomplish.',
+			'Book a 45-minute time online, and we’ll meet virtually from wherever you are. We’ll look closely and thoroughly at your skin, your current routine, your history, your concerns, and what you actually want to accomplish.',
 	},
 	{
 		question: 'Do I need to overhaul my entire routine?',
@@ -96,11 +101,6 @@ export const questions = [
 		question: 'What do I leave with?',
 		answer:
 			'A routine you can feel confident in, plus an understanding of what each product is doing and why it’s there.',
-	},
-	{
-		question: 'When can I book?',
-		answer:
-			'Booking and the online shop are coming soon. Until then, email me to start the conversation.',
 	},
 ]
 
@@ -113,9 +113,7 @@ export const galleryRows = [
 		'05',
 		'41',
 		'49',
-		'18',
 		'43',
-		'62',
 		'02',
 		'50',
 		'27',

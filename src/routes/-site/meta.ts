@@ -1,4 +1,4 @@
-const siteOrigin = 'https://skingroove.studio'
+export const siteOrigin = 'https://skingroove.studio'
 
 /** Canonical URL tags for a page. PR environments point at production on purpose. */
 export function canonical(path: string) {

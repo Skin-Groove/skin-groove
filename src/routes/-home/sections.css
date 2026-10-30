@@ -1,11 +1,73 @@
 /* Homepage sections below the hero. */
 
+/* ===== Offer ===== */
+
+.home-offer {
+	width: min(100% - 3rem, 62rem);
+	margin-inline: auto;
+	padding-top: clamp(3rem, 6vw, 4.5rem);
+}
+
+/* A slim coupon: two punched notches and a dashed inner edge. */
+.home-offer-ticket {
+	--pill-bg: var(--chestnut);
+	--pill-fg: var(--cream);
+	position: relative;
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto;
+	gap: 1rem clamp(1.25rem, 3vw, 2.25rem);
+	align-items: center;
+	overflow: hidden;
+	padding: 1.25rem clamp(2.25rem, 4vw, 3rem);
+	border-radius: 1.25rem;
+	background: var(--amber);
+	color: var(--chestnut);
+	outline: 2px dashed rgb(43 17 13 / 35%);
+	outline-offset: -0.5rem;
+}
+
+.home-offer-ticket::before,
+.home-offer-ticket::after {
+	position: absolute;
+	top: 50%;
+	width: 1.8rem;
+	height: 1.8rem;
+	border-radius: 50%;
+	background: var(--cream);
+	content: '';
+	transform: translateY(-50%);
+}
+
+.home-offer-ticket::before {
+	left: -0.9rem;
+}
+
+.home-offer-ticket::after {
+	right: -0.9rem;
+}
+
+.home-offer h2 {
+	font-size: clamp(1.5rem, 2.8vw, 2.1rem);
+	line-height: 1.05;
+}
+
+.home-offer h2 span {
+	display: inline-block;
+}
+
+.home-offer-ticket p {
+	margin-top: 0.35rem;
+	font-size: 0.95rem;
+	font-weight: 600;
+	line-height: 1.45;
+}
+
 /* ===== Meet ===== */
 
 .home-meet {
 	width: min(100% - 3rem, 72rem);
 	margin-inline: auto;
-	padding-block: clamp(5rem, 10vw, 8rem);
+	padding-block: clamp(4rem, 8vw, 6rem) clamp(5rem, 10vw, 8rem);
 	text-align: center;
 }
 
@@ -128,10 +190,22 @@
 }
 
 .home-sammy-photo {
-	aspect-ratio: 2 / 3;
-	overflow: hidden;
+	position: relative;
+	aspect-ratio: 3 / 4;
+}
+
+.home-sammy-photo img {
 	border-radius: 999px 999px 1.5rem 1.5rem;
 	box-shadow: 0 0 0 0.75rem var(--apricot);
+}
+
+.home-sammy-record {
+	position: absolute;
+	right: -1.25rem;
+	bottom: -1.25rem;
+	width: clamp(5rem, 9vw, 7rem);
+	height: clamp(5rem, 9vw, 7rem);
+	color: var(--burnt);
 }
 
 .home-sammy h2 {
@@ -151,7 +225,11 @@
 	margin-top: 1rem;
 }
 
-.home-sammy-copy .gv-pill {
+.home-sammy-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem 1.75rem;
+	align-items: center;
 	margin-top: 2.25rem;
 }
 
@@ -206,6 +284,12 @@
 	text-transform: uppercase;
 }
 
+.home-services-cta {
+	display: flex;
+	justify-content: center;
+	margin-top: clamp(2.5rem, 5vw, 3.5rem);
+}
+
 .home-service-grid p:last-child {
 	color: var(--muted);
 	line-height: 1.65;
@@ -229,6 +313,10 @@
 .home-room h2 {
 	color: var(--amber);
 	font-size: clamp(2.75rem, 6vw, 4.75rem);
+}
+
+.home-room-head .gv-text-link {
+	margin-top: 1rem;
 }
 
 .home-room-head p {
@@ -348,8 +436,21 @@
 		animation-direction: reverse;
 	}
 
-	.gv-rows:hover .gv-row {
-		animation-play-state: paused;
+	@media (hover: hover) {
+		.gv-rows:hover .gv-row {
+			animation-play-state: paused;
+		}
+	}
+
+	/* A touch screen keeps :hover after a tap, so a tap sets the pause instead. */
+	@media (hover: none) {
+		.gv-rows {
+			-webkit-tap-highlight-color: transparent;
+		}
+
+		.gv-rows.is-paused .gv-row {
+			animation-play-state: paused;
+		}
 	}
 }
 
@@ -366,6 +467,22 @@
 }
 
 /* ===== Responsive ===== */
+
+/* A shadow on a spinning record costs extra GPU work on phones. */
+@media (hover: none) {
+	.home-expect-record {
+		filter: none;
+	}
+}
+
+@media (max-width: 760px) {
+	.home-offer-ticket {
+		grid-template-columns: 1fr;
+		justify-items: center;
+		padding-block: 1.5rem;
+		text-align: center;
+	}
+}
 
 @media (max-width: 900px) {
 	.home-meet-cards,

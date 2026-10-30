@@ -1,5 +1,6 @@
+import { BookPill } from '../-site/booking'
 import { SiteNav } from '../-site/nav'
-import { BookPill, Record, Wave } from '../-site/parts'
+import { Record, Wave } from '../-site/parts'
 import { principles, storyAfter, storyBefore, storyTurn } from './content'
 
 import './about.css'
@@ -20,11 +21,11 @@ export function AboutHeader() {
 					</div>
 					<figure className="about-hero-photo">
 						<img
-							alt="A salon chair in front of a wavy orange and pink wall"
+							alt="Sammy, the founder of Skin Groove, smiling in a black uniform"
 							fetchPriority="high"
-							height="720"
-							src="/images/groove/52.webp"
-							width="540"
+							height="1080"
+							src="/images/sammy.webp"
+							width="810"
 						/>
 					</figure>
 				</div>
@@ -69,6 +70,7 @@ export function Principles() {
 				<h2 id="about-principles-title" data-reveal>
 					What guides the practice
 				</h2>
+				{/* Safari drops list semantics under `list-style: none`. */}
 				<ol>
 					{principles.map((principle, index) => (
 						<li data-reveal key={principle.title}>

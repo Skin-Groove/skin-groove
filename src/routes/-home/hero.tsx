@@ -1,5 +1,5 @@
+import { BookPill } from '../-site/booking'
 import { SiteNav } from '../-site/nav'
-import { BookPill } from '../-site/parts'
 
 import './hero.css'
 
@@ -24,6 +24,30 @@ const doorways = [
 	},
 ]
 
+const scallopAngles = Array.from({ length: 16 }, (_, index) => index * 22.5)
+
+function OfferSticker() {
+	return (
+		<div aria-hidden="true" className="hero-sticker">
+			<svg viewBox="0 0 100 100">
+				<circle cx="50" cy="50" r="40" />
+				{scallopAngles.map((angle) => (
+					<circle
+						cx="50"
+						cy="9.5"
+						key={angle}
+						r="9"
+						transform={`rotate(${angle} 50 50)`}
+					/>
+				))}
+			</svg>
+			<p>
+				$50<span>shop credit</span>
+			</p>
+		</div>
+	)
+}
+
 export function Hero() {
 	return (
 		<>
@@ -45,6 +69,8 @@ export function Hero() {
 				<SiteNav />
 
 				<div className="hero-copy">
+					<p className="sr-only">$50 shop credit with every consult.</p>
+					<OfferSticker />
 					<h1 className="hero-wordmark">Skin Groove</h1>
 					<div className="hero-foot">
 						<p className="hero-tagline">Find your skincare rhythm.</p>

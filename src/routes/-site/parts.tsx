@@ -1,11 +1,17 @@
-import { ArrowUpRightIcon } from '@phosphor-icons/react'
+import {
+	ArrowUpRightIcon,
+	EnvelopeSimpleIcon,
+	InstagramLogoIcon,
+} from '@phosphor-icons/react'
 import { useEffect, useRef } from 'react'
 
 import { cn } from '@/lib/utils/ui'
 
+import { contactEmail, instagramHandle, instagramUrl } from './links'
+
 import './base.css'
 
-const petalAngles = [0, 45, 90, 135]
+const petalAngles = [0, 72, 144, 216, 288]
 
 /** A spinning vinyl record with a flower label. The label takes the current text color. */
 export function Record({ className }: { className?: string }) {
@@ -33,13 +39,12 @@ export function Record({ className }: { className?: string }) {
 			<path className="gv-record-sheen" d="M50 50 L16 84 A48 48 0 0 1 4 66 Z" />
 			<circle className="gv-record-label" cx="50" cy="50" r="19" />
 			{petalAngles.map((angle) => (
-				<ellipse
+				<circle
 					className="gv-record-vinyl"
 					cx="50"
-					cy="50"
+					cy="41"
 					key={angle}
-					rx="4"
-					ry="13"
+					r="6.5"
 					transform={`rotate(${angle} 50 50)`}
 				/>
 			))}
@@ -48,19 +53,24 @@ export function Record({ className }: { className?: string }) {
 	)
 }
 
-export function BookPill({ className }: { className?: string }) {
+export function EmailLink() {
 	return (
-		<button className={cn('gv-pill', className)} disabled type="button">
-			Book now
-			<span>Coming soon</span>
-		</button>
+		<a className="gv-text-link" href={`mailto:${contactEmail}`}>
+			<EnvelopeSimpleIcon aria-hidden="true" weight="bold" />
+			{contactEmail}
+		</a>
 	)
 }
 
-export function EmailPill() {
+export function InstagramLink() {
 	return (
-		<a className="gv-pill" href="mailto:sammy@skingroove.studio">
-			Email Skin Groove
+		<a
+			className="gv-text-link"
+			href={instagramUrl}
+			rel="noreferrer"
+			target="_blank"
+		>
+			<InstagramLogoIcon aria-hidden="true" weight="bold" />@{instagramHandle}
 			<ArrowUpRightIcon aria-hidden="true" weight="bold" />
 		</a>
 	)
