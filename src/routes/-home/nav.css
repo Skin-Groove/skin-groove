@@ -1,0 +1,140 @@
+/* Fixed site navigation: clear over the hero, a floating dark bar after the first scroll. */
+
+.site-nav {
+	--focus: var(--amber);
+	position: fixed;
+	top: 0;
+	right: 0;
+	left: 0;
+	z-index: 50;
+	padding: 1.5rem clamp(1.5rem, 4vw, 3rem);
+	color: var(--cream);
+	pointer-events: none;
+	transition:
+		padding 600ms var(--ease),
+		transform 600ms var(--ease);
+}
+
+.site-nav[data-solid] {
+	padding-block: 0.9rem;
+}
+
+.site-nav[data-hidden] {
+	transform: translateY(-200%);
+}
+
+.site-nav-bar {
+	display: flex;
+	max-width: 100%;
+	align-items: center;
+	justify-content: space-between;
+	margin-inline: auto;
+	padding: 0;
+	border-radius: 999px;
+	pointer-events: auto;
+	transition:
+		background-color 600ms var(--ease),
+		box-shadow 600ms var(--ease),
+		max-width 600ms var(--ease),
+		padding 600ms var(--ease);
+}
+
+.site-nav[data-solid] .site-nav-links {
+	margin-right: auto;
+}
+
+.site-nav[data-solid] .site-nav-bar {
+	max-width: 46rem;
+	padding: 0.45rem 0.45rem 0.45rem 0.6rem;
+	background: rgb(8 20 15 / 72%);
+	box-shadow:
+		inset 0 0 0 1px rgb(242 181 74 / 22%),
+		0 1rem 2.5rem rgb(8 20 15 / 30%);
+	backdrop-filter: blur(14px) saturate(1.4);
+}
+
+.site-nav-record {
+	width: 2.75rem;
+	height: 2.75rem;
+	color: var(--amber);
+}
+
+.site-nav-links {
+	display: flex;
+	margin-left: auto;
+	gap: 2rem;
+	font-size: 0.88rem;
+	font-weight: 700;
+}
+
+.site-nav-links a {
+	padding-block: 0.5rem;
+	background: linear-gradient(currentcolor, currentcolor) 0 100% / 0 2px
+		no-repeat;
+	transition: background-size 400ms var(--ease);
+}
+
+.site-nav-links a:hover {
+	background-size: 100% 2px;
+}
+
+/* The hero foot holds the booking pill on wide screens. The bar shows it once the hero scrolls away. */
+.site-nav-pill.gv-pill {
+	min-height: 2.6rem;
+	padding-inline: 1.3rem;
+	font-size: 0.82rem;
+}
+
+.site-nav-pill {
+	max-width: 14rem;
+	margin-left: 1.5rem;
+	overflow: hidden;
+	white-space: nowrap;
+	transition:
+		max-width 600ms var(--ease),
+		opacity 600ms var(--ease),
+		padding 600ms var(--ease),
+		visibility 600ms allow-discrete;
+}
+
+.site-nav:not([data-solid]) .site-nav-pill {
+	max-width: 0;
+	margin-left: 0;
+	padding-inline: 0;
+	visibility: hidden;
+	opacity: 0;
+}
+
+@media (max-width: 720px) {
+	.site-nav-links,
+	.site-nav-pill span {
+		display: none;
+	}
+
+	.site-nav .site-nav-pill {
+		margin-left: auto;
+	}
+
+	.site-nav:not([data-solid]) .site-nav-pill {
+		max-width: 14rem;
+		margin-left: auto;
+		padding-inline: 1.3rem;
+		visibility: visible;
+		opacity: 1;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.site-nav,
+	.site-nav-bar {
+		transition: none;
+	}
+}
+
+/* Backdrop blur repaints on every scroll frame, which is slow on phones. */
+@media (hover: none) {
+	.site-nav[data-solid] .site-nav-bar {
+		background: rgb(8 20 15 / 92%);
+		backdrop-filter: none;
+	}
+}

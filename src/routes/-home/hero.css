@@ -1,4 +1,4 @@
-/* Homepage hero: three photo doorways under a dark nav, then a row of cream arches. */
+/* Homepage hero: three photo doorways that the visitor zooms through into the journey, then a row of cream arches. */
 
 /* ===== Hero ===== */
 
@@ -43,42 +43,6 @@
 	content: '';
 }
 
-.hero-nav {
-	position: absolute;
-	top: 0;
-	right: 0;
-	left: 0;
-	z-index: 2;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	padding: 1.5rem clamp(1.5rem, 4vw, 3rem);
-}
-
-.hero-nav-record {
-	width: 2.75rem;
-	height: 2.75rem;
-	color: var(--amber);
-}
-
-.hero-nav-links {
-	display: flex;
-	gap: 2rem;
-	font-size: 0.88rem;
-	font-weight: 700;
-}
-
-.hero-nav-links a {
-	padding-block: 0.5rem;
-	background: linear-gradient(currentcolor, currentcolor) 0 100% / 0 2px
-		no-repeat;
-	transition: background-size 400ms var(--ease);
-}
-
-.hero-nav-links a:hover {
-	background-size: 100% 2px;
-}
-
 .hero-copy {
 	position: relative;
 	z-index: 1;
@@ -95,6 +59,15 @@
 	text-shadow: 0 0 4rem rgb(242 181 74 / 35%);
 }
 
+.hero-word {
+	display: inline-block;
+	white-space: nowrap;
+}
+
+.hero-word span {
+	display: inline-block;
+}
+
 .hero-foot {
 	display: grid;
 	grid-template-columns: auto minmax(0, 26rem) 1fr;
@@ -104,6 +77,11 @@
 	padding-top: 1.5rem;
 	border-top: 1px solid var(--line);
 	line-height: 1.55;
+}
+
+.hero-foot strong {
+	color: var(--amber);
+	font-weight: 700;
 }
 
 .hero-tagline {
@@ -116,9 +94,19 @@
 	justify-self: end;
 }
 
-/* Phones move the booking pill from the hero foot into the nav. */
-.hero-nav-pill {
-	display: none;
+/* ===== Zoom ===== */
+
+/* The scroll timeline in hero.tsx fades in the veil once the middle doorway fills the screen, then shows the journey on top. */
+.hero-veil {
+	position: absolute;
+	inset: 0;
+	visibility: hidden;
+	background: radial-gradient(
+		circle at 50% 55%,
+		rgb(43 17 13 / 55%),
+		rgb(8 20 15 / 88%)
+	);
+	opacity: 0;
 }
 
 /* ===== Colonnade ===== */
@@ -152,8 +140,38 @@
 		animation-delay: 240ms;
 	}
 
-	.hero-wordmark {
-		animation: gv-rise 1200ms 200ms var(--ease) both;
+	/* hero.tsx staggers each letter with an inline animation-delay. */
+	.hero-word span {
+		animation: hero-letter 1300ms var(--ease) both;
+	}
+}
+
+@media (min-width: 721px) and (prefers-reduced-motion: no-preference) {
+	.hero-doorways figure {
+		animation: hero-open 1800ms var(--ease) backwards;
+	}
+
+	.hero-doorways figure:nth-child(2) {
+		animation-delay: 120ms;
+	}
+
+	.hero-doorways figure:nth-child(3) {
+		animation-delay: 240ms;
+	}
+}
+
+/* Intro keyframes use only transform and opacity. The compositor runs them, so they stay smooth while the page hydrates. */
+@keyframes hero-letter {
+	from {
+		opacity: 0;
+		transform: translateY(0.45em) rotate(8deg);
+	}
+}
+
+@keyframes hero-open {
+	from {
+		opacity: 0;
+		transform: translateY(70%);
 	}
 }
 
@@ -180,17 +198,8 @@
 		grid-area: 1 / 1;
 	}
 
-	.hero-nav-links,
-	.hero-foot .gv-pill,
-	.hero-nav-pill span {
+	.hero-foot .gv-pill {
 		display: none;
-	}
-
-	.hero-nav .hero-nav-pill {
-		display: inline-flex;
-		min-height: 2.6rem;
-		padding-inline: 1.3rem;
-		font-size: 0.82rem;
 	}
 
 	.hero-foot {

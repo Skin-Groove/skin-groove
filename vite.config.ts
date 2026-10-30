@@ -135,7 +135,19 @@ export default defineConfig({
 			? []
 			: [
 					devtools({ injectSource: { enabled: false } }),
-					nitro({ sourcemap: true, experimental: { sourcemapMinify: false } }),
+					nitro({
+						sourcemap: true,
+						experimental: { sourcemapMinify: false },
+						// Public images have no content hash, so they get a shorter cache than /assets.
+						routeRules: {
+							'/images/**': {
+								headers: {
+									'cache-control':
+										'public, max-age=86400, stale-while-revalidate=604800',
+								},
+							},
+						},
+					}),
 				]),
 		tailwindcss(),
 		viteReact(),
