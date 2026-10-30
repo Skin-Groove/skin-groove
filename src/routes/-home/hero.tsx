@@ -1,4 +1,5 @@
-import { BookPill, Record } from './parts'
+import { SiteNav } from '../-site/nav'
+import { BookPill } from '../-site/parts'
 
 import './hero.css'
 
@@ -41,35 +42,21 @@ export function Hero() {
 					))}
 				</div>
 
-				<nav className="hero-nav" aria-label="Primary navigation">
-					<a aria-label="Skin Groove home" href="#top">
-						<Record className="hero-nav-record" />
-					</a>
-					<div className="hero-nav-links">
-						<a href="#services">Services</a>
-						<a href="#faq">FAQ</a>
-						<a href="#contact">Contact</a>
-					</div>
-					<BookPill className="hero-nav-pill" />
-				</nav>
+				<SiteNav />
 
 				<div className="hero-copy">
 					<h1 className="hero-wordmark">Skin Groove</h1>
 					<div className="hero-foot">
-						<p className="hero-tagline">
-							Virtual care.
-							<br />
-							Warm approach.
-						</p>
+						<p className="hero-tagline">Find your skincare rhythm.</p>
 						<p>
-							Virtual esthetics rooted in skin health and routines that fit real
-							life.
+							Thoughtful, curated skincare guidance to help you understand your
+							skin, simplify your routine, and finally find what works for you.
 						</p>
 						<BookPill />
 					</div>
 				</div>
 			</header>
-			<div aria-hidden="true" className="hero-colonnade" />
+			<div aria-hidden="true" className="gv-colonnade" />
 		</>
 	)
 }

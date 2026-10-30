@@ -1,4 +1,4 @@
-/* Homepage foundation: tokens, shared parts, and motion. */
+/* Site foundation for each page: tokens, shared parts, and motion. */
 
 /* ===== Tokens ===== */
 
@@ -106,79 +106,6 @@ a.gv-pill:hover {
 	height: 1rem;
 }
 
-.gv-faq details {
-	border-bottom: 1px solid var(--line);
-}
-
-.gv-faq details:first-child {
-	border-top: 1px solid var(--line);
-}
-
-.gv-faq summary {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	gap: 1.5rem;
-	padding-block: 1.3rem;
-	cursor: pointer;
-	font-size: 1.02rem;
-	font-weight: 600;
-	list-style: none;
-}
-
-.gv-faq summary::-webkit-details-marker {
-	display: none;
-}
-
-.gv-faq summary svg {
-	width: 1.1rem;
-	height: 1.1rem;
-	flex: none;
-	transition: transform 500ms var(--ease);
-}
-
-.gv-faq details[open] summary svg {
-	transform: rotate(45deg);
-}
-
-/* Browsers that support ::details-content animate the panel open and closed. */
-.gv-faq details::details-content {
-	height: 0;
-	overflow: clip;
-	transition:
-		height 500ms var(--ease),
-		content-visibility 500ms allow-discrete;
-}
-
-.gv-faq details[open]::details-content {
-	height: auto;
-}
-
-.gv-faq details p {
-	max-width: 32rem;
-	padding-bottom: 1.4rem;
-	line-height: 1.7;
-	opacity: 0.82;
-}
-
-.gv-rows {
-	display: grid;
-	gap: 1rem;
-	overflow: hidden;
-}
-
-.gv-row {
-	display: flex;
-	width: max-content;
-	gap: 1rem;
-}
-
-.gv-row img {
-	width: clamp(10rem, 16vw, 14rem);
-	height: clamp(13rem, 21vw, 18.5rem);
-	border-radius: var(--tile-radius, 1rem);
-}
-
 /* ===== Reveal ===== */
 
 [data-reveal-ready] [data-reveal] {
@@ -200,26 +127,8 @@ a.gv-pill:hover {
 /* ===== Motion ===== */
 
 @media (prefers-reduced-motion: no-preference) {
-	.gv-row {
-		animation: gv-marquee 80s linear infinite;
-	}
-
-	.gv-row.is-reverse {
-		animation-direction: reverse;
-	}
-
-	.gv-rows:hover .gv-row {
-		animation-play-state: paused;
-	}
-
 	.gv-record {
 		animation: gv-spin 6s linear infinite;
-	}
-}
-
-@keyframes gv-marquee {
-	to {
-		transform: translateX(calc(-50% - 0.5rem));
 	}
 }
 
@@ -248,9 +157,5 @@ a.gv-pill:hover {
 		filter: none;
 		transform: none;
 		transition: none;
-	}
-
-	.gv-rows {
-		overflow-x: auto;
 	}
 }

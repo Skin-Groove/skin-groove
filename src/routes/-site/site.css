@@ -1,0 +1,262 @@
+/* Site chrome shared by each page: nav, waves, closing call to action, and footer. */
+
+.gv-kicker {
+	color: var(--kicker, var(--burnt));
+	font-size: 0.78rem;
+	font-weight: 800;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+}
+
+.gv-mark {
+	display: inline-flex;
+	white-space: nowrap;
+	align-items: center;
+	gap: 0.6rem;
+	font-family: var(--display);
+	font-size: 1.25rem;
+}
+
+.gv-mark svg {
+	width: 1.9rem;
+	height: 1.9rem;
+	color: var(--burnt);
+}
+
+/* ===== Nav ===== */
+
+.gv-nav {
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+	z-index: 2;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	padding: 1.5rem clamp(1.5rem, 4vw, 3rem);
+}
+
+.gv-nav-record {
+	width: 2.75rem;
+	height: 2.75rem;
+	color: var(--amber);
+}
+
+.gv-links {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.25rem 2rem;
+	font-size: 0.88rem;
+	font-weight: 700;
+}
+
+.gv-links a {
+	padding-block: 0.5rem;
+	background: linear-gradient(currentcolor, currentcolor) 0 100% / 0 2px
+		no-repeat;
+	transition: background-size 400ms var(--ease);
+}
+
+.gv-links a:hover,
+.gv-links a[aria-current='page'] {
+	background-size: 100% 2px;
+}
+
+.gv-nav-toggle,
+.gv-nav-menu,
+.gv-nav-pill {
+	display: none;
+}
+
+.gv-nav-toggle {
+	align-items: center;
+	gap: 0.45rem;
+	min-height: 2.6rem;
+	margin-left: auto;
+	padding: 0 0.9rem;
+	border: 1px solid rgb(251 241 225 / 35%);
+	border-radius: 999px;
+	background: transparent;
+	color: inherit;
+	font: inherit;
+	font-size: 0.82rem;
+	font-weight: 700;
+	cursor: pointer;
+}
+
+.gv-nav-toggle svg {
+	width: 1rem;
+	height: 1rem;
+}
+
+.gv-nav-menu {
+	position: absolute;
+	top: 100%;
+	right: clamp(1.5rem, 4vw, 3rem);
+	left: clamp(1.5rem, 4vw, 3rem);
+	padding: 0.75rem 1.5rem;
+	border: 1px solid rgb(242 181 74 / 45%);
+	border-radius: 1.5rem;
+	background: var(--night-deep);
+	box-shadow: 0 1.5rem 3rem rgb(0 0 0 / 45%);
+}
+
+.gv-nav-menu .gv-links {
+	display: grid;
+	gap: 0;
+	font-family: var(--display);
+	font-size: 1.6rem;
+	font-weight: 400;
+}
+
+.gv-nav-menu .gv-links a {
+	padding-block: 0.75rem;
+	background: none;
+}
+
+.gv-nav-menu .gv-links a + a {
+	border-top: 1px solid rgb(251 241 225 / 14%);
+}
+
+.gv-nav-menu .gv-links a[aria-current='page'] {
+	color: var(--amber);
+}
+
+/* ===== Wave ===== */
+
+/* The wave paints over the next section, so it stacks above it. */
+.gv-wave {
+	position: absolute;
+	z-index: 1;
+	left: 0;
+	width: 100%;
+	height: clamp(2rem, 5vw, 4rem);
+	fill: var(--rust);
+}
+
+.gv-wave.is-top {
+	bottom: calc(100% - 1px);
+	transform: scaleY(-1);
+}
+
+.gv-wave.is-bottom {
+	top: calc(100% - 1px);
+}
+
+/* ===== Colonnade ===== */
+
+/* Cream arches rise out of a dark header, so the header meets the cream page on an arched edge. */
+.gv-colonnade {
+	--arch: clamp(4.5rem, 9vw, 8rem);
+	height: calc(var(--arch) / 2);
+	background:
+		radial-gradient(
+				circle at 50% 100%,
+				var(--cream) calc(var(--arch) / 2 - 1px),
+				transparent calc(var(--arch) / 2)
+			)
+			50% 100% / var(--arch) calc(var(--arch) / 2) repeat-x,
+		var(--night-deep);
+}
+
+/* ===== Closing ===== */
+
+.gv-closing {
+	--focus: var(--amber);
+	position: relative;
+	display: grid;
+	justify-items: center;
+	gap: 1.5rem;
+	padding: clamp(6rem, 12vw, 9rem) 1.5rem calc(min(90vw, 40rem) / 2 + 3rem);
+	overflow: hidden;
+	background: var(--avocado);
+	color: var(--cream);
+	text-align: center;
+}
+
+.gv-closing h2 {
+	position: relative;
+	max-width: 52rem;
+	font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+}
+
+.gv-closing > p,
+.gv-closing > div {
+	position: relative;
+}
+
+.gv-closing > p {
+	font-weight: 800;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+}
+
+.gv-rainbow {
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	width: min(90vw, 40rem);
+	transform: translateX(-50%);
+}
+
+/* ===== Footer ===== */
+
+.gv-footer {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem 2rem;
+	padding: 1.5rem clamp(1.5rem, 4vw, 3rem);
+	background: var(--cream);
+}
+
+.gv-footer .gv-links {
+	color: var(--muted);
+}
+
+.gv-footer-tagline {
+	color: var(--muted);
+	font-weight: 700;
+}
+
+/* ===== Responsive ===== */
+
+/* Phones fold the links into a menu and move the booking pill into the nav. */
+@media (max-width: 720px) {
+	.gv-nav-links {
+		display: none;
+	}
+
+	.gv-nav-toggle {
+		display: inline-flex;
+	}
+
+	.gv-nav.is-open .gv-nav-menu {
+		display: block;
+	}
+
+	.gv-nav .gv-nav-pill {
+		display: inline-flex;
+		min-height: 2.6rem;
+		padding-inline: 1.1rem;
+		font-size: 0.82rem;
+	}
+
+	/* The pill has no room for its note on phones. Screen readers still announce it. */
+	.gv-nav-pill span {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+		white-space: nowrap;
+	}
+
+	.gv-footer {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+}
