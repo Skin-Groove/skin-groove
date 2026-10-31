@@ -5,9 +5,8 @@
 		"@fontsource/caprasimo",
 		"@fontsource/dm-serif-display",
 		"@fontsource/righteous",
-		// The production build needs these, so they stay in dependencies for
-		// Railway. fallow counts astro.config.ts as a dev file.
-		"@astrojs/node",
+		// The production build needs these, so they stay in dependencies. fallow
+		// counts astro.config.ts as a dev file.
 		"@tailwindcss/vite",
 		"@varlock/astro-integration",
 		"astro",
