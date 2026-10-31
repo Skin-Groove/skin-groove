@@ -93,9 +93,11 @@ test('scrolling before the page finishes loading keeps the position', async ({
 	page,
 }) => {
 	let releaseScripts = () => {}
+
 	const scriptsHeld = new Promise<void>((resolve) => {
 		releaseScripts = resolve
 	})
+
 	await page.route(
 		(url) => /\.(js|tsx?)$/.test(url.pathname),
 		async (route) => {
@@ -127,11 +129,13 @@ test.describe('on a touch screen', () => {
 			.first()
 			.waitFor({ state: 'attached' })
 		const gallery = page.locator('.gv-rows')
+
 		const playState = () =>
 			gallery
 				.locator('.gv-row')
 				.first()
 				.evaluate((row) => getComputedStyle(row).animationPlayState)
+
 		await gallery.scrollIntoViewIfNeeded()
 		await expect.poll(playState).toBe('running')
 		await gallery.tap()

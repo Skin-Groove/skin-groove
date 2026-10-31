@@ -1,0 +1,23 @@
+---
+import { cn } from '@/lib/utils/ui'
+
+import DoorwayArches from './doorway-arches.astro'
+import { fill } from './tones'
+---
+
+<svg aria-hidden="true" viewBox="0 0 900 320">
+	<DoorwayArches />
+	<text class={cn('lg-display', fill.ink)} font-size="96" x="304" y="196">
+		Skin Groove
+	</text>
+	<text
+		class="lg-accent"
+		font-size="22"
+		font-weight="800"
+		letter-spacing="8"
+		x="310"
+		y="250"
+	>
+		VIRTUAL ESTHETICS
+	</text>
+</svg>

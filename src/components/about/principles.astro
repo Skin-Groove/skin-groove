@@ -1,0 +1,29 @@
+---
+import Wave from '@/components/site/wave.astro'
+
+import { principles } from './content'
+
+import './about.css'
+---
+
+<section class="about-principles" aria-labelledby="about-principles-title">
+	<Wave class="is-top" />
+	<div class="about-principles-inner">
+		<h2 id="about-principles-title" data-reveal>
+			What guides the practice
+		</h2>
+		<!-- Safari drops list semantics under `list-style: none`. -->
+		<ol>
+			{principles.map((principle, index) => (
+				<li data-reveal>
+					<span aria-hidden="true" class="about-principle-number">
+						{String(index + 1).padStart(2, '0')}
+					</span>
+					<h3>{principle.title}</h3>
+					<p set:html={principle.body} />
+				</li>
+			))}
+		</ol>
+	</div>
+	<Wave class="is-bottom" />
+</section>

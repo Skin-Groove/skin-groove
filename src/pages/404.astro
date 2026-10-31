@@ -1,0 +1,31 @@
+---
+import Base from '@/layouts/base.astro'
+import Icon from '@/components/site/icon.astro'
+---
+
+<Base>
+	<div class="flex flex-1 flex-col items-center justify-center px-6 py-24">
+		<div class="mx-auto flex max-w-xl flex-col gap-6 overflow-hidden rounded-xl border py-6 text-center text-sm">
+			<div class="px-6">
+				<div class="mx-auto mb-8 flex h-16 w-16 items-center justify-center">
+					<Icon class="h-8 w-8" name="compass" />
+				</div>
+				<div class="mb-4 text-sm">Error 404</div>
+				<h1 class="mb-6 text-4xl md:text-5xl">Page Not Found</h1>
+				<p class="mx-auto mb-10 max-w-md text-lg leading-relaxed">
+					The page you're looking for doesn't exist or has been moved. Let's get
+					you back on track.
+				</p>
+				<div class="flex flex-col items-center justify-center gap-3 sm:flex-row">
+					<a
+						class="inline-flex h-9 shrink-0 items-center justify-center gap-1.5 rounded-md border border-transparent bg-clip-padding px-3 text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-foreground focus-visible:ring-3 focus-visible:ring-foreground/50"
+						href="/"
+					>
+						<Icon class="h-4 w-4" name="arrowLeft" />
+						Back to Home
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</Base>

@@ -1,0 +1,17 @@
+---
+import Icon from '@/components/site/icon.astro'
+
+import { questions } from './content'
+---
+
+<div class="gv-faq">
+	{questions.map((item) => (
+		<details>
+			<summary>
+				{item.question}
+				<Icon name="plus" />
+			</summary>
+			<p>{item.answer}</p>
+		</details>
+	))}
+</div>

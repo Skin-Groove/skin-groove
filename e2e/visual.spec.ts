@@ -17,6 +17,7 @@ for (const { name, path } of pages) {
 		await page.goto(path, { waitUntil: 'networkidle' })
 		await page.evaluate(async () => {
 			const images = [...document.images]
+
 			for (const image of images) image.loading = 'eager'
 			await Promise.all(images.map((image) => image.decode()))
 		})

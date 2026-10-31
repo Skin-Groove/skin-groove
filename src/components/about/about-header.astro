@@ -1,0 +1,28 @@
+---
+import BookPill from '@/components/site/book-pill.astro'
+import SiteNav from '@/components/site/site-nav.astro'
+
+import './about.css'
+---
+
+<header class="about-hero">
+	<SiteNav />
+	<div class="about-hero-inner">
+		<div class="about-hero-copy">
+			<p class="gv-kicker">About</p>
+			<h1>Meet the founder</h1>
+			<p class="about-hero-lead">Sammy · Esthetician and cosmetologist</p>
+			<BookPill />
+		</div>
+		<figure class="about-hero-photo">
+			<img
+				alt="Sammy, the founder of Skin Groove, smiling in a black uniform"
+				fetchpriority="high"
+				height="1080"
+				src="/images/sammy.webp"
+				width="810"
+			/>
+		</figure>
+	</div>
+</header>
+<div aria-hidden="true" class="gv-colonnade"></div>

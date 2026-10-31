@@ -1,0 +1,15 @@
+---
+import Base from '@/layouts/base.astro'
+import Hero from '@/components/home/hero.astro'
+import Sections from '@/components/home/sections.astro'
+---
+
+<Base canonicalPath="/">
+	<main class="gv">
+		<Hero />
+		<Sections />
+	</main>
+	<script>
+		import '@/scripts/reveal'
+	</script>
+</Base>

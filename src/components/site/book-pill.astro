@@ -1,0 +1,27 @@
+---
+import { cn } from '@/lib/utils/ui'
+
+import { bookingUrl } from './links'
+
+interface Props {
+	class?: string
+}
+
+const { class: className } = Astro.props
+---
+
+<!-- Opens the Cal.com popup. The link still works in a new tab or without JavaScript. -->
+<a
+	aria-haspopup="dialog"
+	class={cn('gv-pill', 'gv-book', className)}
+	href={bookingUrl}
+>
+	<b>
+		Book<i> a consult</i>
+	</b>
+	<span>$50</span>
+</a>
+
+<script>
+	import '@/scripts/booking'
+</script>

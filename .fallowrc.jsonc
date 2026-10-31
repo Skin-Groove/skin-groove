@@ -1,32 +1,15 @@
 {
-	"ignoreExports": [
-		{
-			"file": "src/components/ui/**",
-			"exports": ["*"],
-		},
-	],
-	// shadcn component library + its support files: reachable only from each
-	// other until an app route imports them
-	"ignorePatterns": [
-		"src/components/ui/**",
-		"src/hooks/use-mobile.ts",
-		"src/lib/utils/ui/**",
-	],
 	"ignoreDependencies": [
-		// only imported by the fallow-ignored shadcn ui components
-		"@radix-ui/react-dialog",
-		"@radix-ui/react-label",
-		"@radix-ui/react-popover",
-		"@radix-ui/react-radio-group",
-		"@radix-ui/react-separator",
-		"@radix-ui/react-slider",
-		"@radix-ui/react-slot",
-		"@radix-ui/react-tooltip",
-		"@remixicon/react",
-		"class-variance-authority",
-		"cmdk",
-		"radix-ui",
-		"clsx",
-		"tailwind-merge",
+		// CSS imports these font files with url(), and fallow reads only JS imports.
+		"@fontsource-variable/manrope",
+		"@fontsource/caprasimo",
+		"@fontsource/dm-serif-display",
+		"@fontsource/righteous",
+		// The production build needs these, so they stay in dependencies for
+		// Railway. fallow counts astro.config.ts as a dev file.
+		"@astrojs/node",
+		"@tailwindcss/vite",
+		"@varlock/astro-integration",
+		"astro",
 	],
 }

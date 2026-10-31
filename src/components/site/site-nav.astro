@@ -1,0 +1,40 @@
+---
+import BookPill from './book-pill.astro'
+import Icon from './icon.astro'
+import Record from './record.astro'
+import SiteLinks from './site-links.astro'
+
+const menuId = 'gv-nav-menu'
+---
+
+<!-- The site navigation. It sits over the dark header at the top of each page. -->
+<div aria-hidden="true" class="gv-nav-sentinel"></div>
+<nav class="gv-nav" aria-label="Primary navigation">
+	<a
+		aria-current={Astro.url.pathname === '/' ? 'page' : undefined}
+		aria-label="Skin Groove home"
+		data-home-link
+		href="/"
+	>
+		<Record class="gv-nav-record" />
+	</a>
+	<SiteLinks class="gv-nav-links" />
+	<button
+		aria-controls={menuId}
+		aria-expanded="false"
+		class="gv-nav-toggle"
+		type="button"
+	>
+		<Icon name="list" />
+		<Icon hidden name="x" />
+		Menu
+	</button>
+	<div class="gv-nav-menu" id={menuId}>
+		<SiteLinks />
+	</div>
+	<BookPill class="gv-nav-pill" />
+</nav>
+
+<script>
+	import '@/scripts/site-nav'
+</script>

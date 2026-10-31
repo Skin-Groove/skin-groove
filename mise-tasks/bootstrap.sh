@@ -9,4 +9,4 @@ mise install
 vp i
 
 echo
-echo "Bootstrap complete. Run 'vp dev' to start the app."
+echo "Bootstrap complete. Run 'vp run dev' to start the app."
