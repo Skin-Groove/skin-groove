@@ -24,12 +24,14 @@ Useful commands:
 vp run check
 vp run test:unit
 vp run build
-vp run start
+vp run preview
 BASE_URL=<site url> vp run e2e
 BASE_URL=<site url> vp run test:visual
 ```
 
 Playwright starts no server, so each Playwright command needs `BASE_URL`.
+`vp run preview` serves `dist/` at http://localhost:8787 with the Workers
+routing rules.
 
 ## Visual baselines
 
@@ -51,33 +53,50 @@ If the change is intentional, extract `visual-baselines` into
 
 [Varlock](https://varlock.dev) manages environment variables. `.env.schema`
 declares every variable and documents its purpose. Local secrets live in
-`.env.local`, encrypted with `varlock encrypt`. Production values live in
-Railway service variables.
+`.env.local`, encrypted with `varlock encrypt`. The build needs no variables, so
+Workers Builds sets none. CI and Workers Builds run without
+`CLOUDFLARE_API_TOKEN`.
 
 ## Hosting
 
-[Railway](https://railway.com) hosts the app in the Skin Groove workspace.
-Railway builds the `skin-groove` service with Railpack. The build runs
-`astro build`, and `pnpm start` runs:
+[Cloudflare Workers](https://developers.cloudflare.com/workers/static-assets/)
+serves `dist/` as static assets. The site has no Worker script, so
+`wrangler.jsonc` has no `main`. Workers Builds uses these commands:
 
-```sh
-HOST=0.0.0.0 varlock run -- node dist/server/entry.mjs
-```
+- Build command: `pnpm run build`
+- Deploy command: `pnpm exec wrangler deploy`
+- Non-production branch deploy command: `pnpm exec wrangler preview`
 
-`dist/server/entry.mjs` is the `@astrojs/node` standalone server. It serves the
-prerendered pages from `dist/client`, and it can run server routes. It reads
-Railway's `PORT`. `HOST` overrides the `127.0.0.1` dev host in
-`astro.config.ts`.
+`main` is the production branch. Each pull request gets a Preview URL. The E2E
+workflow runs the Playwright smoke tests against the Preview, and against the
+production Worker after a merge.
 
-`railpack.json` makes mise ignore `mise.toml` in the container. That file
-declares a development plugin that mise clones from GitHub. Without this
-setting, each container start needs GitHub, and a failed clone stops the start.
+To deploy from your machine, run `pnpm exec varlock run -- vp run deploy`. This
+uses the account token in `.env.local`. Do not use `wrangler login`.
 
-- A push to `main` deploys the `production` environment.
-- Each pull request gets a Railway PR environment. The E2E workflow runs the
-  Playwright smoke tests against it.
-- Porkbun hosts DNS. The apex domain is an `ALIAS` record to the Railway
-  service. Porkbun forwards `www` to the apex domain.
+These files set the routing rules:
+
+- `html_handling` in `wrangler.jsonc` serves `/about` and `/logo` with no
+  redirect.
+- `public/_redirects` sends `/about/` and `/logo/` to the URL with no trailing
+  slash, with a 301. Workers routing alone uses a 307.
+- `not_found_handling` in `wrangler.jsonc` serves `dist/404.html` with a 404.
+- `public/_headers` caches `/_astro/*` for a year. These file names contain a
+  content hash.
+
+Two limits apply:
+
+- `_headers` rules match only on the URL, so a 404 under `/_astro/` also gets
+  the one-year cache header. A browser asks for a missing hash only if it holds
+  HTML from another deployment.
+- Previews return a bare `Not found` for a missing page. The production Worker
+  serves `dist/404.html`.
+
+The live domain stays on Railway until the custom domain moves to the Worker.
+Until then, site changes reach the production Worker but not the live domain.
+
+Porkbun is the registrar and hosts DNS. The apex domain is an `ALIAS` record to
+the Railway service. Porkbun forwards `www` to the apex domain.
 
 ## Integrations
 

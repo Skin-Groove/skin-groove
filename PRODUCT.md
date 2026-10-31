@@ -40,7 +40,7 @@ may purchase recommended skincare online.
   integration does not exist yet, and the store is not open.
 - Booking buttons open the Cal.com event in a popup. Shop controls remain
   placeholders until the Shopify integration goes live.
-- Railway hosts the site.
+- Cloudflare Workers hosts the site.
 
 ## Brand Commitments
 
