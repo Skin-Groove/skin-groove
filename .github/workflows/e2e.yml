@@ -70,8 +70,7 @@ jobs:
           if [ -n "$MANUAL_BASE_URL" ]; then
             url="$MANUAL_BASE_URL"
           elif [ "$EVENT_NAME" = "push" ]; then
-            # The live domain stays on Railway until the cutover.
-            url="https://skin-groove.sahand775.workers.dev"
+            url=$(grep -oE "site: '[^']+'" astro.config.ts | sed -E "s/site: '([^']+)'/\1/")
           else
             # The build for this commit succeeded, so the Preview alias in
             # Cloudflare's PR comment serves it. The comment's per-commit table

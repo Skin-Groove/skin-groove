@@ -9,6 +9,7 @@
 	// needs this block. preview_urls gives each Preview a workers.dev URL.
 	"previews": {},
 	"preview_urls": true,
+	"routes": [{ "pattern": "skingroove.studio", "custom_domain": true }],
 	"assets": {
 		"directory": "./dist",
 		"html_handling": "drop-trailing-slash",
