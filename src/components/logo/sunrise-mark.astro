@@ -1,0 +1,43 @@
+---
+import { cn } from '@/lib/utils/ui'
+
+import { fill, type Tone, uniqueId } from './tones'
+
+const arcId = uniqueId()
+
+const bands: ReadonlyArray<{ tone: Tone; radius: number }> = [
+	{ tone: 'garnet', radius: 130 },
+	{ tone: 'burnt', radius: 104 },
+	{ tone: 'amber', radius: 78 },
+	{ tone: 'apricot', radius: 52 },
+]
+---
+
+<svg aria-hidden="true" viewBox="0 0 400 380">
+	<defs>
+		<path d="M 30 300 A 170 170 0 0 1 370 300" id={arcId}></path>
+	</defs>
+	<text class={cn('lg-display', fill.ink)} font-size="50" text-anchor="middle">
+		<textPath href={'#' + arcId} startOffset="50%">
+			SKIN GROOVE
+		</textPath>
+	</text>
+	{bands.map((band) => (
+		<path
+			class={fill[band.tone]}
+			d={`M ${200 - band.radius} 300 A ${band.radius} ${band.radius} 0 0 1 ${200 + band.radius} 300 Z`}
+		/>
+	))}
+	<rect class={fill.ink} height="6" rx="3" width="320" x="40" y="300"></rect>
+	<text
+		class={fill.ink}
+		font-size="20"
+		font-weight="800"
+		letter-spacing="6"
+		text-anchor="middle"
+		x="203"
+		y="348"
+	>
+		VIRTUAL ESTHETICS
+	</text>
+</svg>

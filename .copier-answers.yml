@@ -1,6 +1,6 @@
 # Changes here will be overwritten by Copier; do not edit manually
-_src_path: /home/sahand.guest/dotfiles/apps/tanstack
-app_name: skin-by-smintz
-google_auth: false
-posthog: false
-sentry: false
+_commit: v0.0.43+sahand.1
+_src_path: https://github.com/sahandamini/tanstack-template
+app_name: skin-groove
+site_url: https://skingroove.studio
+template: astro

@@ -1,0 +1,27 @@
+---
+import Record from '@/components/site/record.astro'
+
+import { storyAfter, storyBefore, storyTurn } from './content'
+
+import './about.css'
+---
+
+<section class="about-story" aria-labelledby="about-story-title">
+	<h2 id="about-story-title" class="sr-only">
+		Sammy’s story
+	</h2>
+	<div class="about-story-body about-story-open" data-reveal>
+		{storyBefore.map((paragraph) => (
+			<p set:html={paragraph} />
+		))}
+	</div>
+	<p class="about-story-turn" data-reveal>
+		<Record />
+		{storyTurn}
+	</p>
+	<div class="about-story-body" data-reveal>
+		{storyAfter.map((paragraph) => (
+			<p set:html={paragraph} />
+		))}
+	</div>
+</section>

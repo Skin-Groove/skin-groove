@@ -4,9 +4,9 @@
 # gets isolated daemons.
 
 [daemons.dev]
-run = "exec vp dev"
-port = 3000
+run = 'APP_PORT="$PORT" exec vp run dev'
+port = { expect = [3000], bump = 10 }
 mise = true
 auto = ["start", "stop"]
 retry = 3
-ready_output = "Local:"
+ready_cmd = { run = 'curl -fsS "http://127.0.0.1:$PORT/" > /dev/null', timeout = "30s" }

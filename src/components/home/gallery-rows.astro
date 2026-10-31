@@ -1,0 +1,28 @@
+---
+import { cn } from '@/lib/utils/ui'
+
+import { galleryRows } from './content'
+---
+
+<div aria-hidden="true" class="gv-rows">
+	{galleryRows.map((row, rowIndex) => (
+		<div class={cn('gv-row', rowIndex % 2 === 1 && 'is-reverse')}>
+			{[...row, ...row].map((image) => (
+				<img
+					alt=""
+					decoding="async"
+					height="360"
+					loading="lazy"
+					src={`/images/groove/${image}.webp`}
+					width="270"
+				/>
+			))}
+		</div>
+	))}
+</div>
+
+<script>
+	const rows = document.querySelector('.gv-rows')
+
+	rows?.addEventListener('click', () => rows.classList.toggle('is-paused'))
+</script>

@@ -1,0 +1,25 @@
+---
+import { cn } from '@/lib/utils/ui'
+
+import { fill, stroke, type Tone } from './tones'
+
+const tones: ReadonlyArray<Tone> = ['apricot', 'amber', 'burnt', 'garnet']
+---
+
+<svg aria-hidden="true" viewBox="0 0 800 300">
+	{tones.map((tone, index) => {
+		const radius = 34 + index * 17
+		return (
+			<path
+				class={stroke[tone]}
+				d={`M 34 ${150 + radius} H 660 A ${radius} ${radius} 0 0 0 ${660 + radius} 150 V 36`}
+				fill="none"
+				stroke-linecap="round"
+				stroke-width="12"
+			/>
+		)
+	})}
+	<text class={cn('lg-display', fill.ink)} font-size="100" x="28" y="150">
+		Skin Groove
+	</text>
+</svg>

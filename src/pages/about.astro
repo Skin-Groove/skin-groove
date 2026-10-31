@@ -1,0 +1,24 @@
+---
+import Base from '@/layouts/base.astro'
+import AboutHeader from '@/components/about/about-header.astro'
+import Principles from '@/components/about/principles.astro'
+import Story from '@/components/about/story.astro'
+import Closing from '@/components/site/closing.astro'
+---
+
+<Base
+	canonicalPath="/about"
+	description="Meet Sammy, the esthetician behind Skin Groove, and the principles that guide her virtual skincare practice."
+	ogTitle="About Sammy | Skin Groove"
+	title="About Sammy | Skin Groove"
+>
+	<main class="gv">
+		<AboutHeader />
+		<Story />
+		<Principles />
+		<Closing />
+	</main>
+	<script>
+		import '@/scripts/reveal'
+	</script>
+</Base>

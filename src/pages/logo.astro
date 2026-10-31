@@ -1,0 +1,130 @@
+---
+import Base from '@/layouts/base.astro'
+import BloomMark from '@/components/logo/bloom-mark.astro'
+import DoorwayIcon from '@/components/logo/doorway-icon.astro'
+import DoorwayMark from '@/components/logo/doorway-mark.astro'
+import EchoMark from '@/components/logo/echo-mark.astro'
+import FlowerOsMark from '@/components/logo/flower-os-mark.astro'
+import RecordMark from '@/components/logo/record-mark.astro'
+import SealMark from '@/components/logo/seal-mark.astro'
+import SunriseMark from '@/components/logo/sunrise-mark.astro'
+import SwooshMark from '@/components/logo/swoosh-mark.astro'
+import { cn } from '@/lib/utils/ui'
+
+import '@/components/logo/logo.css'
+
+const concepts = [
+	{
+		name: 'Doorway',
+		note: 'Nested arches from the sunken lounge photo, beside the Caprasimo wordmark. Matches the Dusk and Doorways pages.',
+		layout: 'wide',
+		Mark: DoorwayMark,
+		Icon: DoorwayIcon,
+	},
+	{
+		name: 'Seal',
+		note: 'A round stamp with the name set around the edge and the site flower in the middle. Works as a sticker and on packaging.',
+		layout: 'badge',
+		Mark: SealMark,
+		Icon: SealMark,
+	},
+	{
+		name: 'Record',
+		note: 'A vinyl record with a flower label. Puts the “groove” in Skin Groove.',
+		layout: 'badge',
+		Mark: RecordMark,
+		Icon: RecordMark,
+	},
+	{
+		name: 'Sunrise',
+		note: 'An arched name over a rising rainbow sun. The most 70s of the set.',
+		layout: 'badge',
+		Mark: SunriseMark,
+		Icon: SunriseMark,
+	},
+	{
+		name: 'Swoosh',
+		note: 'The wordmark riding on four racing stripes that turn up at the end.',
+		layout: 'wide',
+		Mark: SwooshMark,
+		Icon: BloomMark,
+	},
+	{
+		name: 'Echo',
+		note: 'A lowercase wordmark on a wave, with two colour echoes behind it.',
+		layout: 'wide',
+		Mark: EchoMark,
+		Icon: BloomMark,
+	},
+	{
+		name: 'Bloom',
+		note: 'An eight-petal flower around a lowercase “sg” monogram. Strong at small sizes.',
+		layout: 'badge',
+		Mark: BloomMark,
+		Icon: BloomMark,
+	},
+	{
+		name: 'Flower O’s',
+		note: 'A rounded retro wordmark in Righteous, where the two o’s in “groove” are flowers.',
+		layout: 'wide',
+		Mark: FlowerOsMark,
+		Icon: BloomMark,
+	},
+]
+
+const surfaces = [
+	{ name: 'Cream', className: 'lg-on-cream' },
+	{ name: 'Night', className: 'lg-on-night' },
+	{ name: 'Garnet', className: 'lg-on-garnet' },
+]
+
+const iconSizes = [96, 48, 24]
+---
+
+<Base title="Logo studies | Skin Groove">
+	<main class="lg-page">
+		<header class="lg-intro">
+			<p class="lg-eyebrow">Skin Groove</p>
+			<h1>Logo studies</h1>
+			<p>
+				Eight directions in the site palette. Each one shows on cream, night
+				green, and garnet, plus small sizes for a favicon or a profile picture.
+			</p>
+		</header>
+
+		<ol class="lg-list">
+			{concepts.map(({ name, note, layout, Mark, Icon }, index) => (
+				<li class="lg-concept">
+					<div class="lg-concept-head">
+						<span class="lg-number">{String(index + 1).padStart(2, '0')}</span>
+						<h2>{name}</h2>
+						<p>{note}</p>
+					</div>
+
+					<div class={cn('lg-surfaces', layout === 'wide' && 'is-wide')}>
+						{surfaces.map((surface) => (
+							<figure class={cn('lg-surface', surface.className)}>
+								<div class="lg-art">
+									<Mark />
+								</div>
+								<figcaption>
+									<span class="sr-only">{name} logo on </span>
+									{surface.name}
+								</figcaption>
+							</figure>
+						))}
+					</div>
+
+					<div class="lg-sizes lg-on-cream">
+						{iconSizes.map((size) => (
+							<div class="lg-size" style={`width:${size}px;height:${size}px`}>
+								<Icon />
+							</div>
+						))}
+						<span>Icon at 96, 48, and 24 px</span>
+					</div>
+				</li>
+			))}
+		</ol>
+	</main>
+</Base>

@@ -1,0 +1,25 @@
+---
+import { fill, type Tone } from './tones'
+
+const tones: ReadonlyArray<Tone> = [
+	'garnet',
+	'burnt',
+	'amber',
+	'apricot',
+	'paper',
+]
+---
+
+<g>
+	{tones.map((tone, index) => {
+		const left = 20 + index * 24
+		const right = 260 - index * 24
+		const radius = (right - left) / 2
+		return (
+			<path
+				class={fill[tone]}
+				d={`M ${left} 300 V 140 A ${radius} ${radius} 0 0 1 ${right} 140 V 300 Z`}
+			/>
+		)
+	})}
+</g>

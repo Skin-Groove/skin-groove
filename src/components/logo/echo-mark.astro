@@ -1,0 +1,34 @@
+---
+import { cn } from '@/lib/utils/ui'
+
+import { fill, type Tone, uniqueId } from './tones'
+
+const waveId = uniqueId()
+
+const layers: ReadonlyArray<{ tone: Tone; offset: number }> = [
+	{ tone: 'apricot', offset: 12 },
+	{ tone: 'burnt', offset: 6 },
+	{ tone: 'ink', offset: 0 },
+]
+---
+
+<svg aria-hidden="true" viewBox="0 0 800 280">
+	<defs>
+		<path
+			d="M 20 165 C 200 125, 300 125, 400 150 S 600 180, 780 140"
+			id={waveId}
+		></path>
+	</defs>
+	{layers.map((layer) => (
+		<text
+			class={cn('lg-display', fill[layer.tone])}
+			font-size="108"
+			text-anchor="middle"
+			transform={`translate(${layer.offset} ${layer.offset})`}
+		>
+			<textPath href={'#' + waveId} startOffset="50%">
+				skin groove
+			</textPath>
+		</text>
+	))}
+</svg>

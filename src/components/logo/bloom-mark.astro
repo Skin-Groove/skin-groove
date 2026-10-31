@@ -1,0 +1,27 @@
+---
+import { cn } from '@/lib/utils/ui'
+
+import Bloom from './bloom.astro'
+import { fill } from './tones'
+---
+
+<svg aria-hidden="true" viewBox="0 0 400 400">
+	<Bloom
+		center="garnet"
+		petal={['amber', 'apricot']}
+		petals={8}
+		r={192}
+		x={200}
+		y={200}
+	/>
+	<circle class={fill.garnet} cx="200" cy="200" r="98"></circle>
+	<text
+		class={cn('lg-display', 'lg-monogram')}
+		font-size="116"
+		text-anchor="middle"
+		x="200"
+		y="236"
+	>
+		sg
+	</text>
+</svg>

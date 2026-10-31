@@ -1,0 +1,66 @@
+---
+import BookPill from './book-pill.astro'
+import EmailLink from './email-link.astro'
+import Icon from './icon.astro'
+import InstagramLink from './instagram-link.astro'
+import LavaLamp from './lava-lamp.astro'
+import Record from './record.astro'
+import SiteLinks from './site-links.astro'
+
+const rainbowBands = [
+	'var(--garnet)',
+	'var(--burnt)',
+	'var(--amber)',
+	'var(--apricot)',
+	'var(--cream)',
+]
+---
+
+<!-- The contact call to action and footer that end each page. -->
+<section id="contact" class="gv-closing" aria-labelledby="gv-closing-title">
+	<LavaLamp />
+	<svg aria-hidden="true" class="gv-rainbow" data-reveal viewBox="0 0 400 200">
+		{rainbowBands.map((color, index) => {
+			const radius = 185 - index * 30
+			return (
+				<path
+					d={`M ${200 - radius} 200 A ${radius} ${radius} 0 0 1 ${200 + radius} 200`}
+					fill="none"
+					pathLength="1"
+					stroke={color}
+					stroke-dasharray="1"
+					stroke-width="26"
+				/>
+			)
+		})}
+	</svg>
+	<div class="gv-closing-arch" data-reveal>
+		<h2 id="gv-closing-title">Your best skin era starts here.</h2>
+		<p>Virtual · 45 minutes · $50 shop credit</p>
+		<BookPill />
+		<EmailLink />
+		<InstagramLink />
+	</div>
+</section>
+
+<footer class="gv-footer">
+	<p class="gv-mark">
+		<Record />
+		Skin Groove
+	</p>
+	<nav aria-label="Footer navigation">
+		<SiteLinks />
+	</nav>
+	<div class="gv-footer-end">
+		<InstagramLink />
+		<button aria-label="Back to top" class="gv-top" type="button">
+			<Icon name="arrowUp" />
+		</button>
+	</div>
+</footer>
+
+<script>
+	import { scrollToTop } from '@/lib/utils/scroll'
+
+	document.querySelector('.gv-top')?.addEventListener('click', scrollToTop)
+</script>

@@ -1,0 +1,9 @@
+---
+import Icon from './icon.astro'
+import { contactEmail } from './links'
+---
+
+<a class="gv-text-link" href={`mailto:${contactEmail}`}>
+	<Icon name="envelope" />
+	{contactEmail}
+</a>

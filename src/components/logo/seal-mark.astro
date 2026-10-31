@@ -1,0 +1,31 @@
+---
+import Bloom from './bloom.astro'
+import { circlePath, fill, stroke, uniqueId } from './tones'
+
+const ringId = uniqueId()
+---
+
+<svg aria-hidden="true" viewBox="0 0 400 400">
+	<defs>
+		<path d={circlePath(200, 200, 158)} id={ringId}></path>
+	</defs>
+	<circle class={fill.ink} cx="200" cy="200" r="194"></circle>
+	<circle
+		class={stroke.paper}
+		cx="200"
+		cy="200"
+		fill="none"
+		r="140"
+		stroke-width="2"
+	></circle>
+	<text class={fill.paper} font-size="27" font-weight="800">
+		<textPath
+			href={'#' + ringId}
+			lengthAdjust="spacing"
+			textLength={2 * Math.PI * 158 - 20}
+		>
+			SKIN GROOVE • VIRTUAL ESTHETICS •
+		</textPath>
+	</text>
+	<Bloom center="amber" petal={['burnt']} r={105} x={200} y={200} />
+</svg>

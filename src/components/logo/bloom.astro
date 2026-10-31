@@ -1,0 +1,30 @@
+---
+import { fill, type Tone } from './tones'
+
+interface Props {
+	x: number
+	y: number
+	r: number
+	petals?: number
+	petal: ReadonlyArray<Tone>
+	center: Tone
+}
+
+const { x, y, r, petals = 4, petal, center } = Astro.props
+
+const angles = Array.from({ length: petals }, (_, i) => (i * 180) / petals)
+---
+
+<g>
+	{angles.map((angle, index) => (
+		<ellipse
+			class={fill[petal[index % petal.length] ?? 'ink']}
+			cx={x}
+			cy={y}
+			rx={r * 0.32}
+			ry={r}
+			transform={`rotate(${angle} ${x} ${y})`}
+		/>
+	))}
+	<circle class={fill[center]} cx={x} cy={y} r={r * 0.28}></circle>
+</g>

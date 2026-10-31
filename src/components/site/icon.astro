@@ -1,0 +1,47 @@
+---
+import arrowLeft from '@phosphor-icons/core/assets/regular/arrow-left.svg?raw'
+import arrowRight from '@phosphor-icons/core/assets/bold/arrow-right-bold.svg?raw'
+import arrowUp from '@phosphor-icons/core/assets/bold/arrow-up-bold.svg?raw'
+import arrowUpRight from '@phosphor-icons/core/assets/bold/arrow-up-right-bold.svg?raw'
+import compass from '@phosphor-icons/core/assets/regular/compass.svg?raw'
+import envelope from '@phosphor-icons/core/assets/bold/envelope-simple-bold.svg?raw'
+import instagram from '@phosphor-icons/core/assets/bold/instagram-logo-bold.svg?raw'
+import list from '@phosphor-icons/core/assets/bold/list-bold.svg?raw'
+import plus from '@phosphor-icons/core/assets/regular/plus.svg?raw'
+import x from '@phosphor-icons/core/assets/bold/x-bold.svg?raw'
+
+const icons = {
+	arrowLeft,
+	arrowRight,
+	arrowUp,
+	arrowUpRight,
+	compass,
+	envelope,
+	instagram,
+	list,
+	plus,
+	x,
+}
+
+interface Props {
+	name: keyof typeof icons
+	class?: string
+	hidden?: true
+}
+
+const { name, class: className, hidden } = Astro.props
+
+const paths = icons[name].replace(/^<svg[^>]*>|<\/svg>$/g, '')
+---
+
+<svg
+	aria-hidden="true"
+	class={className}
+	fill="currentColor"
+	height="1em"
+	set:html={paths}
+	viewBox="0 0 256 256"
+	width="1em"
+	xmlns="http://www.w3.org/2000/svg"
+	{...(hidden && { hidden })}
+/>
