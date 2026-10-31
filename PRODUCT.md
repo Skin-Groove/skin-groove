@@ -36,9 +36,10 @@ may purchase recommended skincare online.
   takes payment with its Stripe app.
 - After a completed consultation, the client gets a $50 Shopify discount code
   for recommended products.
-- Curated online retail runs on Shopify. The store is not open yet.
+- Curated online retail runs on Shopify. The store exists, but the site
+  integration does not exist yet, and the store is not open.
 - Booking buttons open the Cal.com event in a popup. Shop controls remain
-  placeholders until Shopify goes live.
+  placeholders until the Shopify integration goes live.
 - Railway hosts the site.
 
 ## Brand Commitments
@@ -59,8 +60,8 @@ may purchase recommended skincare online.
 - A user-supplied vision board is stored in `docs/esti_vision_board/`.
 - Existing site photography is stored in `public/images/`.
 - Sammy, the founder, supplied the site copy and her biography. They live in
-  `src/routes/-home/content.tsx` and `src/routes/-about/content.tsx`. Keep her
-  wording, and do not extend her biography beyond what she wrote.
+  `src/components/home/content.ts` and `src/components/about/content.ts`. Keep
+  her wording, and do not extend her biography beyond what she wrote.
 - Sammy's portrait is `public/images/sammy.webp`.
 - No testimonials, clinical outcome claims, product catalog, or product pricing
   have been provided. Future work must not fabricate them.

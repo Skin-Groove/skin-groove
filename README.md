@@ -1,7 +1,7 @@
 # Skin Groove
 
-The website for Skin Groove, a virtual esthetics practice. Built with TanStack
-Start, React 19, Tailwind CSS 4, and Vite+.
+The website for Skin Groove, a virtual esthetics practice. Built with Astro,
+Tailwind CSS 4, and Vite+.
 
 Production: https://skingroove.studio
 
@@ -12,17 +12,24 @@ Prerequisites: [mise](https://mise.jdx.dev/getting-started.html).
 ```sh
 mise trust
 mise run bootstrap
-vp dev
 ```
+
+[Pitchfork](https://pitchfork.jdx.dev) runs the dev server as a daemon. Without
+Pitchfork, run `vp run dev`. `vp run dev` fails if the daemon already holds the
+port.
 
 Useful commands:
 
 ```sh
-vp check
-vp test run
-vp run e2e
-vp build
+vp run check
+vp run test:unit
+vp run build
+vp run start
+BASE_URL=<site url> vp run e2e
+BASE_URL=<site url> vp run test:visual
 ```
+
+Playwright starts no server, so each Playwright command needs `BASE_URL`.
 
 ## Visual baselines
 
@@ -50,8 +57,17 @@ Railway service variables.
 ## Hosting
 
 [Railway](https://railway.com) hosts the app in the Skin Groove workspace.
-Railway builds the `skin-groove` service with Railpack and starts it with
-`pnpm start`.
+Railway builds the `skin-groove` service with Railpack. The build runs
+`astro build`, and `pnpm start` runs:
+
+```sh
+HOST=0.0.0.0 varlock run -- node dist/server/entry.mjs
+```
+
+`dist/server/entry.mjs` is the `@astrojs/node` standalone server. It serves the
+prerendered pages from `dist/client`, and it can run server routes. It reads
+Railway's `PORT`. `HOST` overrides the `127.0.0.1` dev host in
+`astro.config.ts`.
 
 - A push to `main` deploys the `production` environment.
 - Each pull request gets a Railway PR environment. The E2E workflow runs the
@@ -65,5 +81,6 @@ Railway builds the `skin-groove` service with Railpack and starts it with
 - **Booking:**
   [Cal.com](https://cal.com/sammymintzer/virtual-skin-consultation). The Cal.com
   Stripe app takes the $50 consultation payment.
-- **Shop:** Shopify (not set up yet). After a completed consultation, the client
+- **Shop:** Shopify. The store exists at `shop.skingroove.studio`, but the site
+  integration does not exist yet. After a completed consultation, the client
   gets a $50 Shopify discount code. A Cal.com webhook triggers the code.
