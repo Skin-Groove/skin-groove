@@ -69,6 +69,10 @@ prerendered pages from `dist/client`, and it can run server routes. It reads
 Railway's `PORT`. `HOST` overrides the `127.0.0.1` dev host in
 `astro.config.ts`.
 
+`railpack.json` makes mise ignore `mise.toml` in the container. That file
+declares a development plugin that mise clones from GitHub. Without this
+setting, each container start needs GitHub, and a failed clone stops the start.
+
 - A push to `main` deploys the `production` environment.
 - Each pull request gets a Railway PR environment. The E2E workflow runs the
   Playwright smoke tests against it.
