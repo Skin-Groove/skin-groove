@@ -93,7 +93,10 @@ Two limits apply:
   serves `dist/404.html`.
 
 Porkbun is the registrar, and Cloudflare hosts DNS. `routes` in `wrangler.jsonc`
-attaches the apex domain to the Worker. A Cloudflare redirect rule sends `www`
+attaches the apex domain to the Worker. Cloudflare does not let a custom domain
+replace a DNS record. If the hostname has a record, `wrangler deploy` fails with
+error 100117, even when Wrangler sets `override_existing_dns_record`. To attach
+a new hostname, delete its record first. A Cloudflare redirect rule sends `www`
 to the apex domain with a 301, and keeps the path and query string. Always Use
 HTTPS sends http requests to https with a 301. `shop.skingroove.studio` is a DNS
 only record, because Shopify serves it.
