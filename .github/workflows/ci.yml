@@ -23,9 +23,10 @@ jobs:
       - name: setup vite+
         uses: voidzero-dev/setup-vp@v1
         with:
-          version: '0.2.1'
+          version: '1.1.0'
+          node-version-file: .node-version
           cache: true
-      - run: vp check
+      - run: vp run check
       - run: vp run test:unit
 
   test-visual:
@@ -36,10 +37,11 @@ jobs:
       - name: setup vite+
         uses: voidzero-dev/setup-vp@v1
         with:
-          version: '0.2.1'
+          version: '1.1.0'
+          node-version-file: .node-version
           cache: true
       - name: Install Playwright Browsers
-        run: vpx playwright install chromium --with-deps --no-shell
+        run: vp exec playwright install chromium --with-deps --no-shell
       - name: Build the site
         run: vp run build
       - name: Start the production server
