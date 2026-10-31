@@ -1,0 +1,411 @@
+/* Site chrome shared by each page: nav, waves, closing call to action, and footer. */
+
+.gv-kicker {
+	color: var(--kicker, var(--burnt));
+	font-size: 0.78rem;
+	font-weight: 800;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+}
+
+.gv-mark {
+	display: inline-flex;
+	white-space: nowrap;
+	align-items: center;
+	gap: 0.6rem;
+	font-family: var(--display);
+	font-size: 1.25rem;
+}
+
+.gv-mark svg {
+	width: 1.9rem;
+	height: 1.9rem;
+	color: var(--burnt);
+}
+
+/* ===== Nav ===== */
+
+/* The bar keeps one size, and only its backdrop fades in. Resizing it on scroll forces a layout on every frame, which stutters on phones. */
+.gv-nav {
+	--focus: var(--amber);
+	position: fixed;
+	top: 0.75rem;
+	right: 0;
+	left: 0;
+	z-index: 20;
+	display: flex;
+	width: min(100% - 1.5rem, 88rem);
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	margin-inline: auto;
+	padding: 0.45rem 0.6rem 0.45rem 0.75rem;
+	color: var(--cream);
+}
+
+.gv-nav::before {
+	position: absolute;
+	z-index: -1;
+	border-radius: 999px;
+	background: var(--night-deep);
+	box-shadow:
+		0 0 0 1px rgb(242 181 74 / 40%),
+		0 0.75rem 2rem rgb(8 20 15 / 35%);
+	content: '';
+	inset: 0;
+	opacity: 0;
+	transition: opacity 300ms var(--ease);
+}
+
+.gv-nav[data-solid]::before {
+	opacity: 1;
+}
+
+.gv-nav-sentinel {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 1px;
+	height: 5rem;
+	pointer-events: none;
+}
+
+.gv-nav-record {
+	display: block;
+	width: 2.75rem;
+	height: 2.75rem;
+	color: var(--amber);
+}
+
+.gv-links {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.25rem 2rem;
+	font-size: 0.88rem;
+	font-weight: 700;
+}
+
+.gv-links a {
+	padding-block: 0.5rem;
+	background: linear-gradient(currentcolor, currentcolor) 0 100% / 0 2px
+		no-repeat;
+	transition: background-size 400ms var(--ease);
+}
+
+.gv-links a:hover,
+.gv-links a[aria-current='page'] {
+	background-size: 100% 2px;
+}
+
+.gv-nav-toggle,
+.gv-nav-menu {
+	display: none;
+}
+
+/* The hero has its own pill, so the nav pill waits until the hero scrolls away. */
+.gv-nav .gv-nav-pill {
+	min-height: 2.6rem;
+	padding-inline: 1.3rem;
+	font-size: 0.82rem;
+	opacity: 0;
+	visibility: hidden;
+	transition:
+		opacity 300ms var(--ease),
+		visibility 300ms;
+}
+
+.gv-nav[data-solid] .gv-nav-pill {
+	opacity: 1;
+	visibility: visible;
+}
+
+.gv-nav-toggle {
+	align-items: center;
+	gap: 0.45rem;
+	min-height: 2.6rem;
+	margin-left: auto;
+	padding: 0 0.9rem;
+	border: 1px solid rgb(251 241 225 / 35%);
+	border-radius: 999px;
+	background: transparent;
+	color: inherit;
+	font: inherit;
+	font-size: 0.82rem;
+	font-weight: 700;
+	cursor: pointer;
+}
+
+.gv-nav-toggle svg {
+	width: 1rem;
+	height: 1rem;
+}
+
+.gv-nav-menu {
+	position: absolute;
+	top: calc(100% + 0.5rem);
+	right: 0.75rem;
+	left: 0.75rem;
+	padding: 0.75rem 1.5rem;
+	border: 1px solid rgb(242 181 74 / 45%);
+	border-radius: 1.5rem;
+	background: var(--night-deep);
+	box-shadow: 0 1.5rem 3rem rgb(0 0 0 / 45%);
+}
+
+.gv-nav-menu .gv-links {
+	display: grid;
+	gap: 0;
+	font-family: var(--display);
+	font-size: 1.6rem;
+	font-weight: 400;
+}
+
+.gv-nav-menu .gv-links a {
+	padding-block: 0.75rem;
+	background: none;
+}
+
+.gv-nav-menu .gv-links a + a {
+	border-top: 1px solid rgb(251 241 225 / 14%);
+}
+
+.gv-nav-menu .gv-links a[aria-current='page'] {
+	color: var(--amber);
+}
+
+/* ===== Links ===== */
+
+.gv-text-link {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	font-size: 0.92rem;
+	font-weight: 700;
+	text-decoration: underline;
+	text-decoration-thickness: 1px;
+	text-underline-offset: 0.25em;
+}
+
+.gv-text-link svg {
+	width: 1rem;
+	height: 1rem;
+	flex: none;
+}
+
+/* ===== Wave ===== */
+
+/* The wave paints over the next section, so it stacks above it. */
+.gv-wave {
+	position: absolute;
+	z-index: 1;
+	left: 0;
+	width: 100%;
+	height: clamp(2rem, 5vw, 4rem);
+	fill: var(--rust);
+}
+
+.gv-wave.is-top {
+	bottom: calc(100% - 1px);
+}
+
+.gv-wave.is-bottom {
+	top: calc(100% - 1px);
+	transform: scaleY(-1);
+}
+
+/* ===== Colonnade ===== */
+
+/* Cream arches rise out of a dark header, so the header meets the cream page on an arched edge. */
+.gv-colonnade {
+	--arch: clamp(4.5rem, 9vw, 8rem);
+	height: calc(var(--arch) / 2);
+	background:
+		radial-gradient(
+				circle at 50% 100%,
+				var(--cream) calc(var(--arch) / 2 - 1px),
+				transparent calc(var(--arch) / 2)
+			)
+			50% 100% / var(--arch) calc(var(--arch) / 2) repeat-x,
+		var(--night-deep);
+}
+
+/* ===== Closing ===== */
+
+.gv-closing {
+	--focus: var(--amber);
+	position: relative;
+	display: grid;
+	justify-items: center;
+	gap: 1.5rem;
+	padding: clamp(6rem, 12vw, 9rem) 1.5rem calc(min(90vw, 40rem) / 2 + 3rem);
+	overflow: hidden;
+	background: var(--avocado);
+	color: var(--cream);
+	text-align: center;
+}
+
+/* A solid arch keeps the copy readable while the wax drifts behind it. */
+.gv-closing-arch {
+	position: relative;
+	display: grid;
+	width: min(100%, 44rem);
+	justify-items: center;
+	gap: 1rem;
+	padding: clamp(4rem, 9vw, 6rem) clamp(1.25rem, 5vw, 3.5rem) 2.5rem;
+	border-radius: 999px 999px 2rem 2rem;
+	background: var(--chestnut);
+	box-shadow: 0 0 0 0.5rem var(--amber);
+}
+
+.gv-closing-arch h2 {
+	font-size: clamp(2.25rem, 5vw, 4rem);
+}
+
+.gv-closing-arch > p {
+	font-size: 0.82rem;
+	font-weight: 800;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+}
+
+.gv-closing-arch .gv-pill {
+	margin-block: 0.5rem;
+}
+
+.gv-lava {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.gv-rainbow {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	width: min(90vw, 40rem);
+	margin-inline: auto;
+}
+
+/* The bands draw themselves in, outer band first, instead of the usual reveal. */
+[data-reveal-ready] .gv-rainbow[data-reveal] {
+	opacity: 1;
+	transform: none;
+	transition: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	[data-reveal-ready] .gv-rainbow path {
+		stroke-dashoffset: 1;
+		transition: stroke-dashoffset 1800ms var(--ease);
+	}
+
+	[data-reveal-ready] .gv-rainbow[data-visible] path {
+		stroke-dashoffset: 0;
+	}
+
+	.gv-rainbow path:nth-child(2) {
+		transition-delay: 120ms;
+	}
+
+	.gv-rainbow path:nth-child(3) {
+		transition-delay: 240ms;
+	}
+
+	.gv-rainbow path:nth-child(4) {
+		transition-delay: 360ms;
+	}
+
+	.gv-rainbow path:nth-child(5) {
+		transition-delay: 480ms;
+	}
+}
+
+/* ===== Footer ===== */
+
+.gv-footer {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem 2rem;
+	padding: 1.5rem clamp(1.5rem, 4vw, 3rem);
+	background: var(--cream);
+}
+
+.gv-footer .gv-links {
+	color: var(--muted);
+}
+
+.gv-footer-end {
+	display: flex;
+	align-items: center;
+	gap: 1.5rem;
+}
+
+.gv-top {
+	display: grid;
+	width: 3rem;
+	height: 3rem;
+	flex: none;
+	place-items: center;
+	border: 0;
+	border-radius: 50%;
+	background: var(--amber);
+	color: var(--chestnut);
+	cursor: pointer;
+	transition: transform 300ms var(--ease);
+}
+
+.gv-top:hover {
+	transform: translateY(-3px);
+}
+
+.gv-top svg {
+	width: 1.2rem;
+	height: 1.2rem;
+}
+
+/* ===== Responsive ===== */
+
+/* Phones fold the links into a menu and move the booking pill into the nav. */
+@media (max-width: 720px) {
+	.gv-nav-links {
+		display: none;
+	}
+
+	.gv-nav-toggle {
+		display: inline-flex;
+	}
+
+	.gv-nav.is-open .gv-nav-menu {
+		display: block;
+	}
+
+	.gv-nav .gv-nav-pill {
+		padding-inline: 1.1rem;
+		opacity: 1;
+		visibility: visible;
+	}
+
+	/* The nav pill shortens to "Book | $50" on phones. Screen readers still announce every word. */
+	.gv-nav-pill i {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+		white-space: nowrap;
+	}
+
+	.gv-footer {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	.gv-footer-end {
+		width: 100%;
+		justify-content: space-between;
+	}
+}

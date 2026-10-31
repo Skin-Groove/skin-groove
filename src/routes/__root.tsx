@@ -8,10 +8,12 @@ import {
 
 import { queryClient } from '@/lib/utils/query'
 
+import { siteOrigin } from './-site/meta'
+
 import appCss from '../styles.css?url'
 
 const description =
-	'Virtual skin consultations and curated retail from Skin Groove.'
+	'Thoughtful, curated skincare guidance to help you understand your skin, simplify your routine, and finally find what works for you.'
 
 export const Route = createRootRoute({
 	head: () => ({
@@ -23,6 +25,7 @@ export const Route = createRootRoute({
 			{ property: 'og:title', content: 'Skin Groove' },
 			{ property: 'og:description', content: description },
 			{ property: 'og:type', content: 'website' },
+			{ property: 'og:image', content: `${siteOrigin}/images/og.jpg` },
 			{ name: 'twitter:card', content: 'summary_large_image' },
 			{ name: 'theme-color', content: '#08140f' },
 		],

@@ -26,6 +26,7 @@
 		"dead-code": "fallow dead-code"
 	},
 	"dependencies": {
+		"@calcom/embed-react": "1.5.3",
 		"@fontsource-variable/manrope": "^5.2.8",
 		"@fontsource/caprasimo": "^5.3.0",
 		"@fontsource/dm-serif-display": "5.3.0",

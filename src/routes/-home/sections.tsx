@@ -1,67 +1,45 @@
-import { cn } from '@/lib/utils/ui'
+import { ArrowRightIcon } from '@phosphor-icons/react'
+import { Link } from '@tanstack/react-router'
 
-import { expectations, guides, services } from './content'
-import { EmailPill, FaqList, GalleryRows, Record } from './parts'
+import { BookPill } from '../-site/booking'
+import { Closing } from '../-site/closing'
+import { InstagramLink, Record, Wave } from '../-site/parts'
+import { expectations, pillars, sammyIntro, services } from './content'
+import { FaqList, GalleryRows } from './parts'
 
 import './sections.css'
-
-const rainbowBands = [
-	'var(--garnet)',
-	'var(--burnt)',
-	'var(--amber)',
-	'var(--apricot)',
-	'var(--cream)',
-]
-
-function Wave({ className }: { className?: string }) {
-	return (
-		<svg
-			aria-hidden="true"
-			className={cn('home-wave', className)}
-			preserveAspectRatio="none"
-			viewBox="0 0 1440 80"
-		>
-			<path d="M0 40C240 80 480 0 720 40s480 40 720 0v40H0z" />
-		</svg>
-	)
-}
-
-function Rainbow() {
-	return (
-		<svg aria-hidden="true" className="home-rainbow" viewBox="0 0 400 200">
-			{rainbowBands.map((color, index) => {
-				const radius = 185 - index * 30
-				return (
-					<path
-						d={`M ${200 - radius} 200 A ${radius} ${radius} 0 0 1 ${200 + radius} 200`}
-						fill="none"
-						key={color}
-						stroke={color}
-						strokeWidth="26"
-					/>
-				)
-			})}
-		</svg>
-	)
-}
 
 export function Sections() {
 	return (
 		<>
+			<section className="home-offer" aria-labelledby="home-offer-title">
+				<div className="home-offer-ticket" data-reveal>
+					<div>
+						<h2 id="home-offer-title">
+							<span>$50 consult.</span> <span>$50 shop credit.</span>
+						</h2>
+						<p>
+							After your consult, you get a $50 code for the shop, opening soon.
+						</p>
+					</div>
+					<BookPill />
+				</div>
+			</section>
+
 			<section className="home-meet" aria-labelledby="home-meet-title">
 				<div className="home-meet-head" data-reveal>
 					<Record className="home-meet-record" />
 					<h2 id="home-meet-title">Meet Skin Groove</h2>
 				</div>
 				<div className="home-meet-cards">
-					{guides.map((guide, index) => (
+					{pillars.map((pillar, index) => (
 						<article
 							data-reveal
-							key={guide.title}
+							key={pillar.title}
 							style={{ transitionDelay: `${index * 90}ms` }}
 						>
-							<h3>{guide.title}</h3>
-							{guide.body.map((paragraph) => (
+							<h3>{pillar.title}</h3>
+							{pillar.body.map((paragraph) => (
 								<p key={paragraph}>{paragraph}</p>
 							))}
 						</article>
@@ -82,16 +60,42 @@ export function Sections() {
 								key={item.title}
 								style={{ transitionDelay: `${index * 90}ms` }}
 							>
-								<div className="home-badge">
-									<Record />
-									<h3>{item.title}</h3>
-								</div>
+								<Record className="home-expect-record" />
+								<h3>{item.title}</h3>
 								<p>{item.body}</p>
 							</article>
 						))}
 					</div>
 				</div>
 				<Wave className="is-bottom" />
+			</section>
+
+			<section className="home-sammy" aria-labelledby="home-sammy-title">
+				<figure className="home-sammy-photo" data-reveal>
+					<img
+						alt="Sammy, the founder of Skin Groove, smiling in a black uniform"
+						decoding="async"
+						height="1080"
+						loading="lazy"
+						src="/images/sammy.webp"
+						width="810"
+					/>
+					<Record className="home-sammy-record" />
+				</figure>
+				<div className="home-sammy-copy" data-reveal>
+					<p className="gv-kicker">The founder</p>
+					<h2 id="home-sammy-title">Hi, I’m Sammy!</h2>
+					{sammyIntro.map((paragraph, index) => (
+						<p key={index}>{paragraph}</p>
+					))}
+					<div className="home-sammy-actions">
+						<Link className="gv-pill" to="/about">
+							Meet the founder
+							<ArrowRightIcon aria-hidden="true" weight="bold" />
+						</Link>
+						<InstagramLink />
+					</div>
+				</div>
 			</section>
 
 			<section
@@ -112,6 +116,7 @@ export function Sections() {
 							<figure>
 								<img
 									alt=""
+									decoding="async"
 									height="1400"
 									loading="lazy"
 									src={service.image}
@@ -124,15 +129,16 @@ export function Sections() {
 						</article>
 					))}
 				</div>
+				<div className="home-services-cta" data-reveal>
+					<BookPill />
+				</div>
 			</section>
 
 			<section className="home-room" aria-labelledby="home-room-title">
 				<div className="home-room-head" data-reveal>
 					<h2 id="home-room-title">The Groove Room</h2>
-					<p>
-						Warm light, soft shapes, and spaces that feel like an exhale. A
-						curated shelf of skincare and home finds is coming soon.
-					</p>
+					<p>Warm light, soft shapes, and spaces that feel like an exhale.</p>
+					<InstagramLink />
 				</div>
 				<GalleryRows />
 			</section>
@@ -153,28 +159,7 @@ export function Sections() {
 				</div>
 			</section>
 
-			<section
-				id="contact"
-				className="home-book"
-				aria-labelledby="home-book-title"
-			>
-				<Rainbow />
-				<h2 id="home-book-title" data-reveal>
-					Your next skin chapter starts here
-				</h2>
-				<p data-reveal>Virtual · From home</p>
-				<div data-reveal>
-					<EmailPill />
-				</div>
-			</section>
-
-			<footer className="home-footer">
-				<p className="home-mark">
-					<Record />
-					Skin Groove
-				</p>
-				<p>Virtual care. Warm approach.</p>
-			</footer>
+			<Closing />
 		</>
 	)
 }

@@ -36,9 +36,9 @@ may purchase recommended skincare online.
   takes payment with its Stripe app.
 - After a completed consultation, the client gets a $50 Shopify discount code
   for recommended products.
-- Curated online retail runs on Shopify. The store is not set up yet.
-- Booking and shop controls remain placeholders until those integrations go
-  live.
+- Curated online retail runs on Shopify. The store is not open yet.
+- Booking buttons open the Cal.com event in a popup. Shop controls remain
+  placeholders until Shopify goes live.
 - Railway hosts the site.
 
 ## Brand Commitments
@@ -49,16 +49,21 @@ may purchase recommended skincare online.
   forms.
 - The approved palette centers on apricot, deep brown, burnt orange, avocado
   green, and warm cream.
-- The approved type system uses Righteous, DM Serif Display, and Manrope.
+- The type system uses Caprasimo for display and Manrope for body text.
 - The production domain is https://skingroove.studio.
 - The contact email is sammy@skingroove.studio.
+- The Instagram account is @beautybysmintz.
 
 ## Evidence on Hand
 
 - A user-supplied vision board is stored in `docs/esti_vision_board/`.
 - Existing site photography is stored in `public/images/`.
-- No testimonials, clinical outcome claims, product catalog, product pricing, or
-  founder biography have been provided. Future work must not fabricate them.
+- Sammy, the founder, supplied the site copy and her biography. They live in
+  `src/routes/-home/content.tsx` and `src/routes/-about/content.tsx`. Keep her
+  wording, and do not extend her biography beyond what she wrote.
+- Sammy's portrait is `public/images/sammy.webp`.
+- No testimonials, clinical outcome claims, product catalog, or product pricing
+  have been provided. Future work must not fabricate them.
 
 ## Product Principles
 
