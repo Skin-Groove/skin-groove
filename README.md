@@ -69,7 +69,7 @@ serves `dist/` as static assets. The site has no Worker script, so
 
 `main` is the production branch. Each pull request gets a Preview URL. The E2E
 workflow runs the Playwright smoke tests against the Preview, and against the
-production Worker after a merge.
+live domain after a merge.
 
 To deploy from your machine, run `pnpm exec varlock run -- vp run deploy`. This
 uses the account token in `.env.local`. Do not use `wrangler login`.
@@ -92,11 +92,11 @@ Two limits apply:
 - Previews return a bare `Not found` for a missing page. The production Worker
   serves `dist/404.html`.
 
-The live domain stays on Railway until the custom domain moves to the Worker.
-Until then, site changes reach the production Worker but not the live domain.
-
-Porkbun is the registrar and hosts DNS. The apex domain is an `ALIAS` record to
-the Railway service. Porkbun forwards `www` to the apex domain.
+Porkbun is the registrar, and Cloudflare hosts DNS. `routes` in `wrangler.jsonc`
+attaches the apex domain to the Worker. A Cloudflare redirect rule sends `www`
+to the apex domain with a 301, and keeps the path and query string. Always Use
+HTTPS sends http requests to https with a 301. `shop.skingroove.studio` is a DNS
+only record, because Shopify serves it.
 
 ## Integrations
 
