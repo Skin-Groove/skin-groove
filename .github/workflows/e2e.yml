@@ -1,79 +1,102 @@
 name: E2E
 
-# Railway's GitHub integration posts deployment statuses; this runs the
-# Playwright suite against each successful PR environment deployment.
+# Cloudflare Workers Builds deploys each PR as a Preview and each push to main
+# as production. This workflow waits for that build, then runs Playwright
+# against the deployed site. Playwright starts no local server.
 on:
-  deployment_status:
+  pull_request:
+  push:
+    branches: [main]
   workflow_dispatch:
     inputs:
       base_url:
-        description: >-
-          Public URL of the Railway PR environment to test, e.g.
-          https://service-environment.up.railway.app
+        description: Public URL of the site to test
         required: true
         type: string
 
+permissions:
+  contents: read
+  checks: read
+  pull-requests: read
+
 concurrency:
-  group: e2e-${{ github.event.deployment.environment || inputs.base_url }}
+  group: e2e-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
   e2e:
-    # Railway PR environment names end in "-pr-<n>".
-    if: >-
-      github.event_name == 'workflow_dispatch' ||
-      (github.event.deployment_status.state == 'success' &&
-      contains(github.event.deployment.environment, 'pr-'))
     runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      REPO: ${{ github.repository }}
+      SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+      PR_NUMBER: ${{ github.event.pull_request.number }}
+      EVENT_NAME: ${{ github.event_name }}
+      MANUAL_BASE_URL: ${{ inputs.base_url }}
     steps:
-      # Railway reports dashboard URLs in deployment_status URL fields, and
-      # the environment as "<project> / <environment>". The generated service
-      # domain follows <service>-<environment>.up.railway.app.
-      - name: Resolve deployment URL
-        env:
-          DEPLOYMENT_ENVIRONMENT: ${{ github.event.deployment.environment }}
-          MANUAL_BASE_URL: ${{ inputs.base_url }}
-          RAILWAY_SERVICE: skin-groove
-        run: |
-          if [ -n "$MANUAL_BASE_URL" ]; then
-            url="${MANUAL_BASE_URL%/}"
-          else
-            environment="${DEPLOYMENT_ENVIRONMENT##*/}"
-            environment="${environment//[[:space:]]/}"
-            if [ -z "$environment" ]; then
-              echo "No deployment environment was reported." >&2
-              exit 1
-            fi
-            url="https://${RAILWAY_SERVICE}-${environment}.up.railway.app"
-          fi
-          echo "BASE_URL=$url" >> "$GITHUB_ENV"
-          echo "Will test $url"
+      # The default ref for a pull request is the merge commit, and Workers
+      # Builds deploys the head commit.
       - name: checkout
         uses: actions/checkout@v6
         with:
-          # Manual dispatch: empty ref checks out the branch picked in the UI;
-          # select the PR branch there.
-          ref: ${{ github.event.deployment.sha }}
+          ref: ${{ env.SHA }}
       - name: setup vite+
         uses: voidzero-dev/setup-vp@v1
         with:
           version: '1.1.0'
           node-version-file: .node-version
+          cache: true
       - name: Install Playwright Browsers
         run: vp exec playwright install chromium --with-deps --no-shell
-      # Railway reports success before the edge routes the new domain.
-      - name: Wait for deployment to be reachable
+      - name: Wait for Workers Builds
+        if: github.event_name != 'workflow_dispatch'
+        run: |
+          # Workers Builds posts its check run a few seconds after the push.
+          for attempt in $(seq 1 90); do
+            state=$(gh api "repos/$REPO/commits/$SHA/check-runs" \
+              --jq '.check_runs[] | select(.name | startswith("Workers Builds")) | "\(.status) \(.conclusion)"' | head -n1)
+            echo "attempt $attempt: ${state:-no check run yet}"
+            case "$state" in
+              "completed success") exit 0 ;;
+              completed*) echo "Workers Builds did not succeed." >&2; exit 1 ;;
+            esac
+            sleep 10
+          done
+          echo "Workers Builds never finished." >&2
+          exit 1
+      - name: Resolve site URL
+        run: |
+          if [ -n "$MANUAL_BASE_URL" ]; then
+            url="$MANUAL_BASE_URL"
+          elif [ "$EVENT_NAME" = "push" ]; then
+            # The live domain stays on Railway until the cutover.
+            url="https://skin-groove.sahand775.workers.dev"
+          else
+            # The build for this commit succeeded, so the Preview alias in
+            # Cloudflare's PR comment serves it. The comment's per-commit table
+            # can lag behind the check run.
+            for attempt in $(seq 1 30); do
+              url=$(gh api "repos/$REPO/issues/$PR_NUMBER/comments" --paginate \
+                --jq '.[] | select(.user.login == "cloudflare-workers-and-pages[bot]") | .body' \
+                | grep -oE "Preview URL: https://[^ ]+" \
+                | head -n1 | sed 's/Preview URL: //')
+              [ -n "$url" ] && break
+              echo "attempt $attempt: no Preview URL yet"
+              sleep 10
+            done
+          fi
+          [ -n "$url" ] || { echo "No site URL found." >&2; exit 1; }
+          echo "BASE_URL=${url%/}" >> "$GITHUB_ENV"
+          echo "Testing ${url%/}"
+      - name: Wait for the site
         run: |
           for attempt in $(seq 1 30); do
             status=$(curl -sL -o /dev/null -w '%{http_code}' --max-time 20 "$BASE_URL" || true)
-            if [ "$status" = "200" ]; then
-              echo "Deployment is up (attempt $attempt)"
-              exit 0
-            fi
-            echo "attempt $attempt: HTTP $status"
+            [ "$status" = "200" ] && exit 0
+            echo "attempt $attempt: $BASE_URL returned HTTP $status"
             sleep 10
           done
-          echo "Deployment never became reachable at $BASE_URL" >&2
           exit 1
       - name: Run Playwright tests
         run: vp run e2e

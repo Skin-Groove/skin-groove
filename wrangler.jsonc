@@ -1,0 +1,17 @@
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "skin-groove",
+	"compatibility_date": "2026-10-01",
+	"observability": { "enabled": true },
+	// Custom domains turn workers.dev off unless it is set here.
+	"workers_dev": true,
+	// Workers Builds runs `wrangler preview` for pull request branches, which
+	// needs this block. preview_urls gives each Preview a workers.dev URL.
+	"previews": {},
+	"preview_urls": true,
+	"assets": {
+		"directory": "./dist",
+		"html_handling": "drop-trailing-slash",
+		"not_found_handling": "404-page",
+	},
+}

@@ -44,9 +44,12 @@ jobs:
         run: vp exec playwright install chromium --with-deps --no-shell
       - name: Build the site
         run: vp run build
-      - name: Start the production server
-        run: vp run start > server.log 2>&1 &
-      - name: Wait for the production server
+      # wrangler dev serves dist with the Workers routing rules.
+      - name: Start Wrangler
+        run: vp exec wrangler dev --port 3000 > server.log 2>&1 &
+        env:
+          WRANGLER_SEND_METRICS: 'false'
+      - name: Wait for Wrangler
         run: >-
           curl --fail --silent --output /dev/null --retry 30 --retry-delay 1
           --retry-all-errors http://localhost:3000/

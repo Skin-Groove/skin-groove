@@ -6,11 +6,11 @@ the build. Vite+ owns formatting, lint, and Vitest. Prettier and ESLint check
 that starts and stops when you enter or leave the directory. Run
 `mise run bootstrap` after a fresh clone.
 
-Railway hosts production and PR environments. Railway builds with Railpack and
-runs `pnpm start`, which starts the `@astrojs/node` standalone server from
-`dist/server/entry.mjs`. Varlock manages environment variables; `.env.schema`
-documents each one. See `README.md` for hosting and integration details, and
-`PRODUCT.md` for product context.
+Cloudflare Workers serves `dist/` as static assets. Workers Builds deploys
+`main` and gives each pull request a Preview URL. The site has no Worker script.
+Varlock manages environment variables; `.env.schema` documents each one. See
+`README.md` for hosting and integration details, and `PRODUCT.md` for product
+context.
 
 ## Commands
 
@@ -20,7 +20,10 @@ documents each one. See `README.md` for hosting and integration details, and
 - `vp run check` — run `vp check`, Prettier, ESLint, and `astro check`.
   `vp check` alone skips the `.astro` steps.
 - `vp run build` — build the site. `vp build` does not run Astro.
-- `vp run start` — run the production server after a build
+- `vp run preview` — serve `dist/` with `wrangler dev` after a build. This uses
+  the Workers routing rules.
+- `pnpm exec varlock run -- vp run deploy` — build and deploy with the account
+  token in `.env.local`. Workers Builds usually does this.
 - `vp run test:unit` — run Vitest unit tests (`src/**/*.unit.test.ts`)
 - `BASE_URL=<url> vp run e2e` — run Playwright smoke tests. Playwright starts no
   server.
@@ -52,8 +55,15 @@ Do not reverse these decisions without a request from Sahand.
   stay prerendered. `output: 'static'` makes prerendering the default. Set
   `export const prerender = false` only on a route that needs the server.
 - A future Astro API route receives the Cal.com webhook.
-- Do not port `@astrojs/cloudflare`, `wrangler`, or other Cloudflare parts of
-  the template.
+- `@astrojs/cloudflare` comes with the first server route, not before.
+
+## Workers limits
+
+- The Free plan allows 100,000 Worker requests a day and 10 ms of CPU for each
+  request.
+- Static asset requests do not count toward these limits.
+- `run_worker_first` sends matching asset requests through the Worker, and those
+  requests count. Match only the paths that need the Worker.
 
 ## CSS order
 

@@ -4,7 +4,7 @@ const baseURL = process.env.BASE_URL?.trim()
 
 if (!baseURL) {
 	throw new Error(
-		'Set BASE_URL to the site under test, for example a Railway PR environment URL.',
+		'Set BASE_URL to the site under test, for example a Cloudflare Preview URL.',
 	)
 }
 
