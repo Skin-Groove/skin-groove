@@ -24,6 +24,22 @@ vp run e2e
 vp build
 ```
 
+## Visual baselines
+
+`vp run test:visual` compares `/`, `/about`, and `/logo` with the screenshots in
+`e2e/__screenshots__`. Baselines depend on the OS and fonts, so record them only
+on the `ubuntu-24.04` CI runner. Never commit local screenshots.
+
+If a screenshot is different or missing, the `test-visual` job fails. The job
+then uploads two artifacts:
+
+- `visual-test-report` holds the Playwright report with each image diff.
+- `visual-baselines` holds a full set of new screenshots.
+
+If the change is intentional, extract `visual-baselines` into
+`e2e/__screenshots__`, then commit the result. The artifact already contains the
+`visual.spec.ts` directory.
+
 ## Environment variables
 
 [Varlock](https://varlock.dev) manages environment variables. `.env.schema`

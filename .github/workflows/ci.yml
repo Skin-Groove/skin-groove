@@ -39,16 +39,41 @@ jobs:
           version: '0.2.1'
           cache: true
       - name: Install Playwright Browsers
-        run: vpx playwright install --with-deps --only-shell
-      - name: Run Tests
-        run: vp run test:browser
-      - name: Upload screenshot diff report
+        run: vpx playwright install chromium --with-deps --no-shell
+      - name: Build the site
+        run: vp run build
+      - name: Start the production server
+        run: vp run start > server.log 2>&1 &
+      - name: Wait for the production server
+        run: >-
+          curl --fail --silent --output /dev/null --retry 30 --retry-delay 1
+          --retry-all-errors http://localhost:3000/
+      - name: Run the visual test
+        run: vp run test:visual
+        env:
+          BASE_URL: http://localhost:3000
+      - name: Upload the visual test report
         if: failure()
         uses: actions/upload-artifact@v4
         with:
           name: visual-test-report
           path: |
-            visual-diffs.html
-            html/
-            .vitest-attachments/
+            .playwright/report/
+            .playwright/test-results/
+            server.log
+          include-hidden-files: true
+          retention-days: 14
+      # This step replaces the Playwright report, so it follows the report
+      # upload. See "Visual baselines" in README.md.
+      - name: Record candidate baselines
+        if: failure()
+        run: vp run test:visual:record
+        env:
+          BASE_URL: http://localhost:3000
+      - name: Upload candidate baselines
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-baselines
+          path: e2e/__screenshots__/
           retention-days: 14
