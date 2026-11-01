@@ -7,7 +7,6 @@
 	--line: rgb(58 26 18 / 20%);
 	--pill-bg: var(--amber);
 	--pill-fg: var(--chestnut);
-	--tile-radius: 999px 999px 1rem 1rem;
 	overflow-x: clip;
 	interpolate-size: allow-keywords;
 }

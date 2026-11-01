@@ -1,222 +1,261 @@
 /* Homepage sections below the hero. */
 
-/* ===== Offer ===== */
+/* ===== Services ===== */
 
-.home-offer {
-	width: min(100% - 3rem, 62rem);
-	margin-inline: auto;
-	padding-top: clamp(3rem, 6vw, 4.5rem);
-}
-
-/* A slim coupon: two punched notches and a dashed inner edge. */
-.home-offer-ticket {
-	--pill-bg: var(--chestnut);
-	--pill-fg: var(--cream);
-	position: relative;
+.home-services {
 	display: grid;
-	grid-template-columns: minmax(0, 1fr) auto;
-	gap: 1rem clamp(1.25rem, 3vw, 2.25rem);
-	align-items: center;
-	overflow: hidden;
-	padding: 1.25rem clamp(2.25rem, 4vw, 3rem);
-	border-radius: 1.25rem;
-	background: var(--amber);
-	color: var(--chestnut);
-	outline: 2px dashed rgb(43 17 13 / 35%);
-	outline-offset: -0.5rem;
+	width: min(100% - 3rem, 76rem);
+	grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+	gap: clamp(3rem, 8vw, 7.5rem);
+	align-items: start;
+	margin-inline: auto;
+	padding-block: clamp(4.5rem, 9vw, 7.5rem) clamp(7rem, 12vw, 10rem);
 }
 
-.home-offer-ticket::before,
-.home-offer-ticket::after {
+/* The sleeve holds 80% of the column, so the record has room to slide out to the right. */
+.home-album {
+	position: sticky;
+	top: 7rem;
+	width: 80%;
+	aspect-ratio: 1;
+}
+
+.home-album-sleeve {
+	position: relative;
+	display: block;
+	width: 100%;
+	border-radius: 0.4rem;
+	box-shadow: 0 1.5rem 3rem rgb(58 26 18 / 28%);
+}
+
+.home-album-sleeve text {
+	fill: var(--chestnut);
+	font-family: var(--display);
+	font-size: 84px;
+	letter-spacing: -0.01em;
+	text-anchor: end;
+}
+
+.home-album .home-album-record {
 	position: absolute;
-	top: 50%;
-	width: 1.8rem;
-	height: 1.8rem;
-	border-radius: 50%;
-	background: var(--cream);
-	content: '';
-	transform: translateY(-50%);
+	top: 3%;
+	left: 3%;
+	width: 94%;
+	height: 94%;
+	color: var(--burnt);
+	translate: 24% 0;
+	transition: translate 1400ms 250ms var(--ease);
 }
 
-.home-offer-ticket::before {
-	left: -0.9rem;
+@media (prefers-reduced-motion: no-preference) {
+	[data-reveal-ready] .home-album:not([data-visible]) .home-album-record {
+		translate: 0 0;
+	}
 }
 
-.home-offer-ticket::after {
-	right: -0.9rem;
+.home-services .gv-kicker {
+	margin-bottom: 1rem;
 }
 
-.home-offer h2 {
-	font-size: clamp(1.5rem, 2.8vw, 2.1rem);
-	line-height: 1.05;
+.home-services h2 {
+	color: var(--burnt);
+	font-size: clamp(2.75rem, 5.6vw, 4.75rem);
 }
 
-.home-offer h2 span {
+.home-services h2 span {
 	display: inline-block;
 }
 
-.home-offer-ticket p {
-	margin-top: 0.35rem;
-	font-size: 0.95rem;
-	font-weight: 600;
-	line-height: 1.45;
+.home-services-lead {
+	max-width: 30rem;
+	margin-top: 1.25rem;
+	color: var(--muted);
+	font-size: 1.1rem;
+	line-height: 1.55;
+}
+
+.home-tracks {
+	margin-block: clamp(2rem, 4vw, 3rem);
+	padding: 0;
+	list-style: none;
+}
+
+.home-tracks li {
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr);
+	gap: clamp(1.25rem, 3vw, 2rem);
+	align-items: center;
+	padding-block: 1.5rem;
+	border-top: 1px solid var(--line);
+}
+
+.home-tracks li:last-child {
+	border-bottom: 1px solid var(--line);
+}
+
+/* A 45: the service photo is the record label, ringed by vinyl, with a spindle hole. */
+.home-track-disc {
+	position: relative;
+	width: clamp(5.5rem, 10vw, 7rem);
+	aspect-ratio: 1;
+	padding: 0.7rem;
+	border-radius: 50%;
+	background: #1f0d09;
+}
+
+.gv .home-track-disc img {
+	border-radius: 50%;
+}
+
+.home-track-disc::after {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 0.7rem;
+	height: 0.7rem;
+	border-radius: 50%;
+	background: var(--cream);
+	content: '';
+	transform: translate(-50%, -50%);
+}
+
+.home-tracks h3 {
+	font-family: var(--display);
+	font-size: 1.75rem;
+	font-weight: 400;
+	line-height: 1.1;
+}
+
+.home-track-kind {
+	margin-block: 0.35rem 0.6rem;
+	color: var(--burnt);
+	font-size: 0.74rem;
+	font-weight: 800;
+	letter-spacing: 0.12em;
+	line-height: 1.4;
+	text-transform: uppercase;
+}
+
+.home-tracks p:last-child {
+	color: var(--muted);
+	line-height: 1.6;
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+	.home-tracks li:hover .home-track-disc {
+		animation: gv-spin 6s linear infinite;
+	}
 }
 
 /* ===== Meet ===== */
 
 .home-meet {
-	width: min(100% - 3rem, 72rem);
+	--focus: var(--amber);
+	--line: rgb(251 241 225 / 28%);
+	--wave-fill: var(--avocado);
+	position: relative;
+	background: var(--avocado);
+	color: var(--cream);
+}
+
+.home-meet-inner {
+	display: grid;
+	width: min(100% - 3rem, 76rem);
+	grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
+	gap: clamp(3rem, 8vw, 7.5rem);
+	align-items: start;
 	margin-inline: auto;
-	padding-block: clamp(4rem, 8vw, 6rem) clamp(5rem, 10vw, 8rem);
-	text-align: center;
+	padding-block: clamp(4.5rem, 8vw, 6.5rem);
 }
 
 .home-meet-head {
+	position: sticky;
+	top: 7rem;
 	display: grid;
-	justify-items: center;
-	gap: 1.25rem;
+	justify-items: start;
+	gap: 1.5rem;
 }
 
 .home-meet-record {
-	width: 4.5rem;
-	height: 4.5rem;
-	color: var(--burnt);
+	width: 5rem;
+	height: 5rem;
+	color: var(--amber);
 }
 
 .home-meet h2 {
-	font-size: clamp(3rem, 7vw, 5.5rem);
+	font-size: clamp(3rem, 6.5vw, 5.5rem);
 }
 
-.home-meet-cards {
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	gap: 1.25rem;
-	margin-top: clamp(3rem, 6vw, 4.5rem);
+.home-meet-list article {
+	padding-block: clamp(2rem, 4vw, 2.75rem);
+	border-top: 1px solid var(--line);
 }
 
-.home-meet-cards article {
-	padding: clamp(2.25rem, 4vw, 3.25rem) 1.75rem 2rem;
-	border-radius: 999px 999px 1.5rem 1.5rem;
-	background: #fff8ec;
-	box-shadow: inset 0 0 0 1px rgb(58 26 18 / 8%);
+.home-meet-list article:first-child {
+	padding-top: 0;
+	border-top: 0;
 }
 
-.home-meet-cards h3 {
-	margin: 2.5rem 0 1rem;
-	font-family: var(--display);
-	font-size: 1.4rem;
-	font-weight: 400;
-}
-
-.home-meet-cards p {
-	color: var(--muted);
-	text-align: start;
-	font-size: 0.97rem;
-	line-height: 1.7;
-}
-
-.home-meet-cards p + p {
-	margin-top: 0.9rem;
-}
-
-/* ===== Expect ===== */
-
-.home-expect {
-	position: relative;
-	background: var(--rust);
-	color: var(--cream);
-	--focus: var(--amber);
-}
-
-.home-expect-inner {
-	width: min(100% - 3rem, 66rem);
-	margin-inline: auto;
-	padding-block: clamp(4rem, 8vw, 6rem);
-	text-align: center;
-}
-
-.home-expect h2 {
-	font-size: clamp(2.5rem, 5.5vw, 4.25rem);
-}
-
-.home-expect-grid {
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	gap: 2.5rem;
-	margin-top: clamp(3rem, 6vw, 4rem);
-}
-
-.home-expect-grid article {
-	display: grid;
-	justify-items: center;
-	align-content: start;
-	gap: 1.25rem;
-}
-
-.home-expect-record {
-	width: 8.5rem;
-	height: 8.5rem;
-	margin-bottom: 0.5rem;
-	color: var(--burnt);
-	filter: drop-shadow(0 0.75rem 1.25rem rgb(43 17 13 / 35%));
-}
-
-.home-expect-grid h3 {
-	max-width: 15rem;
+.home-meet-list h3 {
+	margin-bottom: 1rem;
 	color: var(--amber);
 	font-family: var(--display);
-	/* Amber on rust reaches only 3.9:1, so the title must stay large text (24px+) for WCAG AA. */
-	font-size: 1.6rem;
+	/* Amber on avocado reaches only 3.6:1, so the title must stay large text (24px+) for WCAG AA. */
+	font-size: clamp(1.75rem, 3.2vw, 2.5rem);
 	font-weight: 400;
 	line-height: 1.1;
 	text-wrap: balance;
 }
 
-.home-expect-grid p {
-	max-width: 19rem;
-	line-height: 1.65;
+.home-meet-list p {
+	max-width: 38rem;
+	font-size: 1.02rem;
+	line-height: 1.7;
+}
+
+.home-meet-list p + p {
+	margin-top: 0.9rem;
 }
 
 /* ===== Sammy ===== */
 
+/* The doorway stands on the wave of the next section, so the section drops its bottom padding. */
 .home-sammy {
+	--kicker: var(--rust);
 	display: grid;
-	width: min(100% - 3rem, 68rem);
-	grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
-	gap: clamp(2.5rem, 7vw, 6rem);
-	align-items: center;
-	margin-inline: auto;
-	padding-block: clamp(7rem, 13vw, 10rem) clamp(3rem, 6vw, 5rem);
+	grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+	gap: clamp(2.5rem, 7vw, 6.5rem);
+	align-items: end;
+	padding: clamp(6rem, 11vw, 9rem) max(1.5rem, (100% - 72rem) / 2) 0;
+	background: var(--apricot);
 }
 
-.home-sammy-photo {
-	position: relative;
-	aspect-ratio: 3 / 4;
+.home-sammy-door {
+	aspect-ratio: 4 / 5.4;
+	margin-inline: 1.5rem;
 }
 
-.home-sammy-photo img {
-	border-radius: 999px 999px 1.5rem 1.5rem;
-	box-shadow: 0 0 0 0.75rem var(--apricot);
+.gv .home-sammy-door img {
+	border-radius: 999px 999px 0 0;
+	box-shadow:
+		0 0 0 0.65rem var(--cream),
+		0 0 0 1.3rem var(--amber),
+		0 0 0 1.95rem var(--burnt);
 }
 
-.home-sammy-record {
-	position: absolute;
-	right: -1.25rem;
-	bottom: -1.25rem;
-	width: clamp(5rem, 9vw, 7rem);
-	height: clamp(5rem, 9vw, 7rem);
-	color: var(--burnt);
+.home-sammy-copy {
+	padding-bottom: clamp(7rem, 12vw, 9.5rem);
 }
 
 .home-sammy h2 {
 	margin-block: 0.75rem 1.75rem;
-	color: var(--burnt);
+	color: var(--rust);
 	font-size: clamp(3rem, 6.5vw, 5.25rem);
 }
 
 .home-sammy-copy > p:not(.gv-kicker) {
 	max-width: 36rem;
-	color: var(--muted);
+	color: var(--ink);
 	font-size: 1.05rem;
 	line-height: 1.75;
 }
@@ -226,6 +265,8 @@
 }
 
 .home-sammy-actions {
+	--pill-bg: var(--chestnut);
+	--pill-fg: var(--cream);
 	display: flex;
 	flex-wrap: wrap;
 	gap: 1rem 1.75rem;
@@ -233,75 +274,111 @@
 	margin-top: 2.25rem;
 }
 
-/* ===== Services ===== */
+/* ===== Expect ===== */
 
-.home-services {
+.home-expect {
+	--focus: var(--amber);
+	position: relative;
+	background: var(--rust);
+	color: var(--cream);
+}
+
+.home-expect-inner {
 	width: min(100% - 3rem, 76rem);
 	margin-inline: auto;
-	padding-block: clamp(4rem, 8vw, 6rem) clamp(5rem, 10vw, 8rem);
+	padding-block: clamp(4rem, 8vw, 6rem) clamp(5.5rem, 10vw, 8rem);
 }
 
-.home-services h2 {
-	color: var(--burnt);
-	font-size: clamp(3.5rem, 9vw, 7.5rem);
-	text-align: center;
+.home-expect h2 {
+	font-size: clamp(2.75rem, 6vw, 5rem);
 }
 
-.home-service-grid {
+.home-expect-grid {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
-	gap: clamp(1.5rem, 3vw, 2.5rem);
-	margin-top: clamp(3rem, 6vw, 4.5rem);
-}
-
-.home-service-grid figure {
-	height: clamp(20rem, 32vw, 27rem);
-	margin-bottom: 1.75rem;
-	overflow: hidden;
-	border-radius: 999px 999px 1.25rem 1.25rem;
-}
-
-.home-service-grid img {
-	transition: transform 900ms var(--ease);
-}
-
-.home-service-grid article:hover img {
-	transform: scale(1.05);
-}
-
-.home-service-grid h3 {
-	font-family: var(--display);
-	font-size: 1.75rem;
-	font-weight: 400;
-}
-
-.home-service-kind {
-	margin-block: 0.4rem 0.75rem;
-	color: var(--burnt);
-	font-size: 0.78rem;
-	font-weight: 800;
-	letter-spacing: 0.14em;
-	text-transform: uppercase;
-}
-
-.home-services-cta {
-	display: flex;
-	justify-content: center;
+	gap: clamp(1.25rem, 2.5vw, 2rem);
+	align-items: start;
 	margin-top: clamp(2.5rem, 5vw, 3.5rem);
 }
 
-.home-service-grid p:last-child {
-	color: var(--muted);
+/* Each card carries its own wallpaper. The steps down give the row a beat. */
+.home-expect-grid article {
+	--card: var(--cream);
+	--motif-a: var(--burnt);
+	--motif-b: var(--amber);
+	--motif-c: var(--chestnut);
+	overflow: hidden;
+	border-radius: 2rem;
+	background: var(--card);
+	color: var(--chestnut);
+}
+
+.home-expect-grid article:nth-child(2) {
+	--card: var(--apricot);
+	--motif-a: var(--garnet);
+	--motif-b: var(--burnt);
+	--motif-c: var(--cream);
+	margin-top: clamp(0rem, 4vw, 3.5rem);
+}
+
+.home-expect-grid article:nth-child(3) {
+	--card: var(--amber);
+	--motif-a: var(--avocado);
+	--motif-b: var(--cream);
+	margin-top: clamp(0rem, 8vw, 7rem);
+}
+
+.home-motif {
+	display: block;
+	width: 100%;
+	height: 192px;
+}
+
+.home-motif-a {
+	fill: var(--motif-a);
+	stroke: var(--motif-a);
+}
+
+.home-motif-b {
+	fill: var(--motif-b);
+	stroke: var(--motif-b);
+}
+
+.home-motif-c {
+	fill: var(--motif-c);
+	stroke: var(--motif-c);
+}
+
+.home-motif path {
+	fill: none;
+}
+
+.home-expect-grid article > div {
+	padding: clamp(1.5rem, 2.5vw, 2rem);
+}
+
+.home-expect-grid h3 {
+	margin-bottom: 0.9rem;
+	font-family: var(--display);
+	font-size: 1.6rem;
+	font-weight: 400;
+	line-height: 1.1;
+	text-wrap: balance;
+}
+
+.home-expect-grid p {
 	line-height: 1.65;
 }
 
 /* ===== Groove Room ===== */
 
 .home-room {
-	padding-block: clamp(5rem, 10vw, 7rem);
+	--focus: var(--amber);
+	--wave-fill: var(--chestnut);
+	position: relative;
+	padding-block: clamp(6rem, 11vw, 8rem) clamp(5rem, 10vw, 7rem);
 	background: var(--chestnut);
 	color: var(--cream);
-	--focus: var(--amber);
 }
 
 .home-room-head {
@@ -416,15 +493,26 @@
 }
 
 .gv-row {
+	--tile: clamp(10rem, 15vw, 13rem);
 	display: flex;
 	width: max-content;
 	gap: 1rem;
 }
 
+/* Rounded square, stadium, circle. */
 .gv-row img {
-	width: clamp(10rem, 16vw, 14rem);
-	height: clamp(13rem, 21vw, 18.5rem);
-	border-radius: var(--tile-radius, 1rem);
+	width: var(--tile);
+	height: var(--tile);
+	border-radius: 1.5rem;
+}
+
+.gv-row img:nth-child(3n + 2) {
+	width: calc(var(--tile) * 1.5);
+	border-radius: 999px;
+}
+
+.gv-row img:nth-child(3n) {
+	border-radius: 50%;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -468,38 +556,38 @@
 
 /* ===== Responsive ===== */
 
-/* A shadow on a spinning record costs extra GPU work on phones. */
-@media (hover: none) {
-	.home-expect-record {
-		filter: none;
-	}
-}
-
-@media (max-width: 760px) {
-	.home-offer-ticket {
-		grid-template-columns: 1fr;
-		justify-items: center;
-		padding-block: 1.5rem;
-		text-align: center;
-	}
-}
-
 @media (max-width: 900px) {
-	.home-meet-cards,
+	.home-services,
+	.home-meet-inner,
 	.home-expect-grid,
-	.home-service-grid,
 	.home-sammy,
 	.home-faq {
-		grid-template-columns: 1fr;
+		grid-template-columns: minmax(0, 1fr);
 	}
 
-	.home-meet-cards article {
-		border-radius: 12rem 12rem 1.5rem 1.5rem;
+	.home-album,
+	.home-meet-head {
+		position: relative;
+		top: 0;
 	}
 
-	.home-sammy-photo {
-		width: min(100%, 20rem);
+	.home-album {
+		width: min(68%, 22rem);
+	}
+
+	.home-expect-grid article:nth-child(n) {
+		margin-top: 0;
+	}
+
+	.home-sammy-copy {
+		order: -1;
+		padding-bottom: 0;
+	}
+
+	.home-sammy-door {
+		width: min(100% - 3rem, 20rem);
 		justify-self: center;
+		margin-top: 2rem;
 	}
 
 	.home-faq-photo {

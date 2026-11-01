@@ -1,0 +1,29 @@
+---
+import Record from '@/components/site/record.astro'
+
+const bands = [
+	{ color: 'var(--garnet)', radius: 510 },
+	{ color: 'var(--burnt)', radius: 430 },
+	{ color: 'var(--amber)', radius: 350 },
+	{ color: 'var(--cream)', radius: 270 },
+	{ color: 'var(--avocado)', radius: 190 },
+	{ color: 'var(--chestnut)', radius: 110 },
+]
+---
+
+<!-- An LP that slides out of its sleeve when the section scrolls into view. -->
+<div aria-hidden="true" class="home-album" data-reveal>
+	<Record class="home-album-record" />
+	<svg class="home-album-sleeve" viewBox="0 0 600 600">
+		<rect fill="var(--apricot)" height="600" width="600"></rect>
+		{bands.map((band) => (
+			<circle cx="0" cy="600" fill={band.color} r={band.radius} />
+		))}
+		<text x="584" y="84">
+			Skin
+		</text>
+		<text x="584" y="168">
+			Groove
+		</text>
+	</svg>
+</div>

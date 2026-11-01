@@ -1,0 +1,69 @@
+---
+interface Props {
+	name: 'flowers' | 'rings' | 'waves'
+}
+
+const { name } = Astro.props
+
+const petalAngles = [0, 90, 180, 270]
+
+const ringRadii = [44, 33, 22, 11]
+
+const waveOffsets = [0, 16, 32]
+---
+
+<!-- A 1970s wallpaper strip on a 96px tile. Colors come from the card that holds it. -->
+<svg aria-hidden="true" class="home-motif">
+	<defs>
+		{name === 'flowers' && (
+			<pattern
+				height="96"
+				id="motif-flowers"
+				patternUnits="userSpaceOnUse"
+				width="96"
+			>
+				{petalAngles.map((angle) => (
+					<g transform={`rotate(${angle} 48 48)`}>
+						<circle class="home-motif-a" cx="48" cy="24" r="22" />
+						<circle class="home-motif-b" cx="48" cy="26" r="12" />
+					</g>
+				))}
+				<circle class="home-motif-c" cx="48" cy="48" r="9" />
+			</pattern>
+		)}
+		{name === 'rings' && (
+			<pattern
+				height="96"
+				id="motif-rings"
+				patternUnits="userSpaceOnUse"
+				width="96"
+			>
+				{ringRadii.map((radius, index) => (
+					<circle
+						class={index % 2 === 0 ? 'home-motif-a' : 'home-motif-b'}
+						cx="48"
+						cy="48"
+						r={radius}
+					/>
+				))}
+			</pattern>
+		)}
+		{name === 'waves' && (
+			<pattern
+				height="48"
+				id="motif-waves"
+				patternUnits="userSpaceOnUse"
+				width="96"
+			>
+				{waveOffsets.map((offset, index) => (
+					<path
+						class={['home-motif-a', 'home-motif-b', 'home-motif-c'][index]}
+						d={`M-48 ${offset + 8} Q-24 ${offset - 16} 0 ${offset + 8} T48 ${offset + 8} T96 ${offset + 8} T144 ${offset + 8}`}
+						stroke-width="8"
+					/>
+				))}
+			</pattern>
+		)}
+	</defs>
+	<rect fill={`url(#motif-${name})`} height="100%" width="100%"></rect>
+</svg>
