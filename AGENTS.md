@@ -65,6 +65,20 @@ Do not reverse these decisions without a request from Sahand.
 - `run_worker_first` sends matching asset requests through the Worker, and those
   requests count. Match only the paths that need the Worker.
 
+## Hosting notes
+
+- A Cloudflare custom domain cannot replace a web DNS record. If the hostname
+  has an `A`, `AAAA`, or `CNAME` record, `wrangler deploy` fails with error
+  100117, even with `override_existing_dns_record`. Delete only that record
+  first. Keep the `MX` and `TXT` records, because email depends on them.
+- Workers routing uses a 307 for a trailing slash. `public/_redirects` makes
+  `/about/` and `/logo/` use a 301.
+- `_headers` rules match only on the URL, so a 404 under `/_astro/` also gets
+  the one-year cache header.
+- Previews return a bare `Not found` for a missing page. Production serves
+  `dist/404.html`.
+- Do not use `wrangler login`. It cannot create a zone or edit DNS.
+
 ## CSS order
 
 `src/layouts/base.astro` imports the shared stylesheets. Page CSS overrides some
