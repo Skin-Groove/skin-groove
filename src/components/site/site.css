@@ -70,6 +70,15 @@
 	pointer-events: none;
 }
 
+.gv-nav-home {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.65rem;
+	font-family: var(--display);
+	font-size: 1.2rem;
+	white-space: nowrap;
+}
+
 .gv-nav-record {
 	display: block;
 	width: 2.75rem;
@@ -201,7 +210,7 @@
 	left: 0;
 	width: 100%;
 	height: clamp(2rem, 5vw, 4rem);
-	fill: var(--rust);
+	fill: var(--wave-fill, var(--rust));
 }
 
 .gv-wave.is-top {
@@ -371,7 +380,8 @@
 
 /* Phones fold the links into a menu and move the booking pill into the nav. */
 @media (max-width: 720px) {
-	.gv-nav-links {
+	.gv-nav-links,
+	.gv-nav-home span {
 		display: none;
 	}
 
