@@ -1,51 +1,84 @@
 ---
 import BookPill from '@/components/site/book-pill.astro'
+import Icon from '@/components/site/icon.astro'
 import SiteNav from '@/components/site/site-nav.astro'
+import Wave from '@/components/site/wave.astro'
+
+import { wavyOutlinePath } from './wavy-outline'
 
 import './hero.css'
 
-const doorways = [
-	{
-		src: '/images/groove/06-lg.webp',
-		alt: 'A glowing retro bar with amber pendant lights',
-		width: 1170,
-		height: 1169,
-	},
-	{
-		src: '/images/groove/57.webp',
-		alt: 'A sunken lounge under glowing amber arches',
-		width: 736,
-		height: 1104,
-	},
-	{
-		src: '/images/groove/41-lg.webp',
-		alt: 'A bedroom lit by a single orange lamp',
-		width: 736,
-		height: 1104,
-	},
+const mirror = { width: 600, height: 800 }
+
+const outline = wavyOutlinePath({ ...mirror, amplitude: 16, waves: 10 })
+
+// A stroke paints half its width past the outline. The bands stack widest first, so each band shows as one flat ring.
+const ripples = [
+	{ color: 'var(--garnet)', width: 1000 },
+	{ color: 'var(--rust)', width: 760 },
+	{ color: 'var(--burnt)', width: 530 },
+	{ color: 'var(--amber)', width: 300 },
+	{ color: 'var(--apricot)', width: 150 },
+	{ color: 'var(--cream)', width: 26 },
 ]
 
 const scallopAngles = Array.from({ length: 16 }, (_, index) => index * 22.5)
 ---
 
 <header class="hero">
-	<div class="hero-doorways">
-		{doorways.map((image, index) => (
-			<figure>
-				<img
-					alt={image.alt}
-					fetchpriority={index === 1 ? 'high' : undefined}
-					height={image.height}
-					src={image.src}
-					width={image.width}
-				/>
-			</figure>
-		))}
-	</div>
-
 	<SiteNav />
 
 	<div class="hero-copy">
+		<h1>
+			<span class="hero-eyebrow">Skin Groove · Virtual esthetics</span>
+			<span class="hero-title">Find your skincare rhythm.</span>
+		</h1>
+		<p class="hero-lead">
+			Thoughtful, curated skincare guidance to help you understand your skin,
+			simplify your routine, and finally find what works for you.
+		</p>
+		<div class="hero-actions">
+			<BookPill />
+			<a class="gv-text-link" href="#services">
+				See the services
+				<Icon name="arrowRight" />
+			</a>
+		</div>
+	</div>
+
+	<figure class="hero-mirror">
+		<svg
+			aria-hidden="true"
+			class="hero-ripples"
+			viewBox={`0 0 ${mirror.width} ${mirror.height}`}
+		>
+			<defs>
+				<path d={outline} id="hero-outline"></path>
+				<clipPath clipPathUnits="objectBoundingBox" id="hero-mirror-clip">
+					<path
+						d={outline}
+						transform={`scale(${1 / mirror.width} ${1 / mirror.height})`}
+					></path>
+				</clipPath>
+			</defs>
+			{ripples.map((ripple, index) => (
+				<use
+					fill="none"
+					href="#hero-outline"
+					stroke={ripple.color}
+					stroke-width={ripple.width}
+					style={`--ripple:${ripples.length - index}`}
+				/>
+			))}
+		</svg>
+		<img
+			alt="Sammy, the founder of Skin Groove, smiling in a black uniform"
+			fetchpriority="high"
+			height={1080}
+			src="/images/sammy.webp"
+			width={810}
+		/>
+		<figcaption>Sammy · Esthetician and cosmetologist</figcaption>
 		<p class="sr-only">$50 shop credit with every consult.</p>
 		<div aria-hidden="true" class="hero-sticker">
 			<svg viewBox="0 0 100 100">
@@ -58,15 +91,7 @@ const scallopAngles = Array.from({ length: 16 }, (_, index) => index * 22.5)
 				$50<span>shop credit</span>
 			</p>
 		</div>
-		<h1 class="hero-wordmark">Skin Groove</h1>
-		<div class="hero-foot">
-			<p class="hero-tagline">Find your skincare rhythm.</p>
-			<p>
-				Thoughtful, curated skincare guidance to help you understand your skin,
-				simplify your routine, and finally find what works for you.
-			</p>
-			<BookPill />
-		</div>
-	</div>
+	</figure>
+
+	<Wave class="hero-wave" />
 </header>
-<div aria-hidden="true" class="gv-colonnade"></div>

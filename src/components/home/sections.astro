@@ -6,54 +6,72 @@ import InstagramLink from '@/components/site/instagram-link.astro'
 import Record from '@/components/site/record.astro'
 import Wave from '@/components/site/wave.astro'
 
+import AlbumSleeve from './album-sleeve.astro'
 import { expectations, pillars, sammyIntro, services } from './content'
 import FaqList from './faq-list.astro'
 import GalleryRows from './gallery-rows.astro'
+import Motif from './motif.astro'
 
 import './sections.css'
 ---
 
-<section class="home-offer" aria-labelledby="home-offer-title">
-	<div class="home-offer-ticket" data-reveal>
-		<div>
-			<h2 id="home-offer-title">
+<section
+	id="services"
+	class="home-services"
+	aria-labelledby="home-services-title"
+>
+	<AlbumSleeve />
+	<div class="home-services-copy">
+		<div data-reveal>
+			<p class="gv-kicker">Services</p>
+			<h2 id="home-services-title">
 				<span>$50 consult.</span> <span>$50 shop credit.</span>
 			</h2>
-			<p>After your consult, you get a $50 code for the shop, opening soon.</p>
+			<p class="home-services-lead">
+				After your consult, you get a $50 code for the shop, opening soon.
+			</p>
 		</div>
-		<BookPill />
+		<ol class="home-tracks">
+			{services.map((service, index) => (
+				<li data-reveal style={`transition-delay:${index * 90}ms`}>
+					<div class="home-track-disc">
+						<img
+							alt=""
+							decoding="async"
+							height="240"
+							loading="lazy"
+							src={service.image}
+							width="240"
+						/>
+					</div>
+					<div>
+						<h3>{service.name}</h3>
+						<p class="home-track-kind">{service.kind}</p>
+						<p>{service.body}</p>
+					</div>
+				</li>
+			))}
+		</ol>
+		<div data-reveal>
+			<BookPill />
+		</div>
 	</div>
 </section>
 
 <section class="home-meet" aria-labelledby="home-meet-title">
-	<div class="home-meet-head" data-reveal>
-		<Record class="home-meet-record" />
-		<h2 id="home-meet-title">Meet Skin Groove</h2>
-	</div>
-	<div class="home-meet-cards">
-		{pillars.map((pillar, index) => (
-			<article data-reveal style={`transition-delay:${index * 90}ms`}>
-				<h3>{pillar.title}</h3>
-				{pillar.body.map((paragraph) => (
-					<p>{paragraph}</p>
-				))}
-			</article>
-		))}
-	</div>
-</section>
-
-<section class="home-expect" aria-labelledby="home-expect-title">
 	<Wave class="is-top" />
-	<div class="home-expect-inner">
-		<h2 id="home-expect-title" data-reveal>
-			What you can expect
-		</h2>
-		<div class="home-expect-grid">
-			{expectations.map((item, index) => (
-				<article data-reveal style={`transition-delay:${index * 90}ms`}>
-					<Record class="home-expect-record" />
-					<h3>{item.title}</h3>
-					<p set:html={item.body} />
+	<div class="home-meet-inner">
+		<div class="home-meet-head" data-reveal>
+			<Record class="home-meet-record" />
+			<h2 id="home-meet-title">Meet Skin Groove</h2>
+		</div>
+		<div class="home-meet-list">
+			{pillars.map((pillar) => (
+				<article data-reveal>
+					<h3>{pillar.title}</h3>
+					{pillar.body.map((paragraph) => (
+						<p>{paragraph}</p>
+					))}
 				</article>
 			))}
 		</div>
@@ -62,16 +80,15 @@ import './sections.css'
 </section>
 
 <section class="home-sammy" aria-labelledby="home-sammy-title">
-	<figure class="home-sammy-photo" data-reveal>
+	<figure class="home-sammy-door" data-reveal>
 		<img
-			alt="Sammy, the founder of Skin Groove, smiling in a black uniform"
+			alt="A warm lounge lit by a glowing amber table lamp"
 			decoding="async"
-			height="1080"
+			height="1400"
 			loading="lazy"
-			src="/images/sammy.webp"
-			width="810"
+			src="/images/groove/43-lg.webp"
+			width="1000"
 		/>
-		<Record class="home-sammy-record" />
 	</figure>
 	<div class="home-sammy-copy" data-reveal>
 		<p class="gv-kicker">The founder</p>
@@ -89,36 +106,25 @@ import './sections.css'
 	</div>
 </section>
 
-<section
-	id="services"
-	class="home-services"
-	aria-labelledby="home-services-title"
->
-	<h2 id="home-services-title" data-reveal>
-		Services
-	</h2>
-	<div class="home-service-grid">
-		{services.map((service, index) => (
-			<article data-reveal style={`transition-delay:${index * 90}ms`}>
-				<figure>
-					<img
-						alt=""
-						decoding="async"
-						height="1400"
-						loading="lazy"
-						src={service.image}
-						width="1000"
-					/>
-				</figure>
-				<h3>{service.name}</h3>
-				<p class="home-service-kind">{service.kind}</p>
-				<p>{service.body}</p>
-			</article>
-		))}
+<section class="home-expect" aria-labelledby="home-expect-title">
+	<Wave class="is-top" />
+	<div class="home-expect-inner">
+		<h2 id="home-expect-title" data-reveal>
+			What you can expect
+		</h2>
+		<div class="home-expect-grid">
+			{expectations.map((item, index) => (
+				<article data-reveal style={`transition-delay:${index * 90}ms`}>
+					<Motif name={item.motif} />
+					<div>
+						<h3>{item.title}</h3>
+						<p set:html={item.body} />
+					</div>
+				</article>
+			))}
+		</div>
 	</div>
-	<div class="home-services-cta" data-reveal>
-		<BookPill />
-	</div>
+	<Wave class="is-bottom" />
 </section>
 
 <section class="home-room" aria-labelledby="home-room-title">
@@ -128,6 +134,7 @@ import './sections.css'
 		<InstagramLink />
 	</div>
 	<GalleryRows />
+	<Wave class="is-bottom" />
 </section>
 
 <section id="faq" class="home-faq" aria-labelledby="home-faq-title">

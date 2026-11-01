@@ -13,10 +13,12 @@ const menuId = 'gv-nav-menu'
 	<a
 		aria-current={Astro.url.pathname === '/' ? 'page' : undefined}
 		aria-label="Skin Groove home"
+		class="gv-nav-home"
 		data-home-link
 		href="/"
 	>
 		<Record class="gv-nav-record" />
+		<span>Skin Groove</span>
 	</a>
 	<SiteLinks class="gv-nav-links" />
 	<button

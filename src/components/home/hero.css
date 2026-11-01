@@ -1,72 +1,123 @@
-/* Homepage hero: three photo doorways under the site nav. */
+/* Homepage hero: the tagline beside a wavy mirror that sends flat ripple bands across the header. */
 
 /* ===== Hero ===== */
 
 .hero {
 	--focus: var(--amber);
-	--line: rgb(251 241 225 / 16%);
+	--wave-fill: var(--cream);
 	position: relative;
 	display: grid;
 	/* svh, not dvh: dvh changes while the phone address bar collapses, which resizes the page during the first scroll. */
 	min-height: 100svh;
+	grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+	gap: clamp(2rem, 5vw, 5rem);
+	align-items: center;
 	overflow: hidden;
-	background: var(--night-deep);
+	padding: 7rem clamp(1.5rem, 6vw, 6rem) clamp(5rem, 8vw, 7rem);
+	background: var(--chestnut);
 	color: var(--cream);
-}
-
-.hero-doorways {
-	position: absolute;
-	inset: 5.5rem clamp(1rem, 3vw, 2.5rem) 0;
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	gap: clamp(0.75rem, 2vw, 1.5rem);
-}
-
-.hero-doorways figure {
-	overflow: hidden;
-	border-radius: 999px 999px 0 0;
-	outline: 1px solid rgb(242 181 74 / 45%);
-	outline-offset: 0.4rem;
-	box-shadow: 0 0 5rem rgb(242 181 74 / 18%);
-}
-
-.hero::after {
-	position: absolute;
-	inset: 0;
-	background: linear-gradient(
-		180deg,
-		rgb(8 20 15 / 70%) 0%,
-		transparent 22%,
-		transparent 40%,
-		rgb(90 19 34 / 55%) 68%,
-		rgb(8 20 15 / 96%) 100%
-	);
-	content: '';
 }
 
 .hero-copy {
 	position: relative;
 	z-index: 1;
-	align-self: end;
-	padding: 0 clamp(1.5rem, 4vw, 3rem) clamp(2rem, 4vw, 3rem);
+	display: grid;
+	justify-items: start;
+	gap: clamp(1.25rem, 2.5vw, 2rem);
+}
+
+.hero-eyebrow {
+	display: block;
+	margin-bottom: clamp(0.9rem, 1.6vw, 1.4rem);
+	color: var(--amber);
+	font-family: var(--body);
+	font-size: 0.82rem;
+	font-weight: 800;
+	letter-spacing: 0.18em;
+	line-height: 1;
+	text-transform: uppercase;
+}
+
+.hero-title {
+	display: block;
+	max-width: 9.5em;
+	font-family: var(--display);
+	font-size: clamp(3.25rem, 7.4vw, 7.25rem);
+	font-weight: 400;
+	letter-spacing: -0.015em;
+	line-height: 0.96;
+	text-shadow:
+		0.035em 0.035em 0 var(--burnt),
+		0.07em 0.07em 0 var(--garnet);
+	text-wrap: balance;
+}
+
+.hero-lead {
+	/* The width follows the viewport, so the copy stops short of the amber band. */
+	max-width: min(30rem, 34vw);
+	font-size: clamp(1rem, 1.3vw, 1.15rem);
+	line-height: 1.6;
+}
+
+.hero-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem 1.75rem;
+	align-items: center;
+	margin-top: 0.5rem;
+}
+
+/* ===== Mirror ===== */
+
+.hero-mirror {
+	position: relative;
+	width: min(100%, (100svh - 11rem) * 0.75);
+	aspect-ratio: 3 / 4;
+	justify-self: center;
+}
+
+/* The bands paint past the mirror box and stop at the edge of the header. */
+.hero-ripples {
+	position: absolute;
+	inset: 0;
+	overflow: visible;
+}
+
+.gv .hero-mirror img {
+	position: relative;
+	clip-path: url('#hero-mirror-clip');
+	object-position: 50% 20%;
+}
+
+.hero-mirror figcaption {
+	position: absolute;
+	right: -1%;
+	bottom: 13%;
+	padding: 0.45rem 0.9rem;
+	border-radius: 999px;
+	background: var(--cream);
+	color: var(--chestnut);
+	font-size: 0.74rem;
+	font-weight: 750;
+	white-space: nowrap;
 }
 
 .hero-sticker {
 	position: absolute;
-	top: 0;
-	right: clamp(1.5rem, 4vw, 3rem);
+	top: 56%;
+	left: -7%;
 	display: grid;
-	width: clamp(7rem, 12vw, 9rem);
+	width: clamp(6.5rem, 10vw, 8.5rem);
 	aspect-ratio: 1;
 	place-items: center;
-	transform: translateY(-85%) rotate(8deg);
+	transform: rotate(-9deg);
 }
 
 .hero-sticker svg {
 	position: absolute;
 	inset: 0;
 	fill: var(--amber);
-	filter: drop-shadow(0 0.4rem 0.8rem rgb(8 20 15 / 45%));
+	filter: drop-shadow(0 0.4rem 0.8rem rgb(43 17 13 / 45%));
 }
 
 .hero-sticker p {
@@ -75,14 +126,14 @@
 	justify-items: center;
 	color: var(--chestnut);
 	font-family: var(--display);
-	font-size: clamp(2rem, 3.6vw, 2.6rem);
+	font-size: clamp(1.9rem, 3.2vw, 2.5rem);
 	line-height: 0.95;
 }
 
 .hero-sticker span {
 	max-width: 5.5em;
 	font-family: var(--body);
-	font-size: 0.68rem;
+	font-size: 0.64rem;
 	font-weight: 800;
 	letter-spacing: 0.08em;
 	line-height: 1.15;
@@ -90,131 +141,79 @@
 	text-transform: uppercase;
 }
 
-.hero-wordmark {
-	font-family: var(--display);
-	font-size: clamp(4rem, 14vw, 13.5rem);
-	font-weight: 400;
-	letter-spacing: -0.025em;
-	line-height: 0.85;
-	text-shadow: 0 0 4rem rgb(242 181 74 / 35%);
-}
-
-.hero-foot {
-	display: grid;
-	grid-template-columns: auto minmax(0, 26rem) 1fr;
-	gap: 1.5rem 3rem;
-	align-items: end;
-	margin-top: clamp(1.5rem, 3vw, 2.5rem);
-	padding-top: 1.5rem;
-	border-top: 1px solid var(--line);
-	line-height: 1.55;
-}
-
-.hero-tagline {
-	max-width: 13ch;
-	font-family: var(--display);
-	font-size: 1.35rem;
-	line-height: 1.15;
-	text-wrap: balance;
-}
-
-.hero-foot .gv-pill {
-	justify-self: end;
+.gv-wave.hero-wave {
+	bottom: -1px;
 }
 
 /* ===== Motion ===== */
 
 @media (prefers-reduced-motion: no-preference) {
-	.hero-doorways img {
-		animation: gv-settle 2600ms var(--ease) both;
+	.hero-ripples use {
+		animation: hero-ripple 1500ms calc(var(--ripple) * 110ms) var(--ease) both;
 	}
 
-	.hero-doorways figure:nth-child(2) img {
-		animation-delay: 120ms;
+	.hero-mirror img,
+	.hero-mirror figcaption {
+		animation: gv-rise 1100ms var(--ease) both;
 	}
 
-	.hero-doorways figure:nth-child(3) img {
-		animation-delay: 240ms;
+	.hero-sticker {
+		animation: hero-stamp 700ms 900ms var(--ease) both;
 	}
 
-	.hero-wordmark {
-		animation: gv-rise 1200ms 200ms var(--ease) both;
+	.hero-copy {
+		animation: gv-rise 1100ms 120ms var(--ease) both;
+	}
+}
+
+@keyframes hero-ripple {
+	from {
+		stroke-width: 0;
+	}
+}
+
+@keyframes hero-stamp {
+	from {
+		opacity: 0;
+		transform: rotate(-30deg) scale(1.5);
 	}
 }
 
 /* ===== Responsive ===== */
 
-@media (max-width: 900px) {
-	.hero-foot {
-		grid-template-columns: 1fr;
+/* Phones stack the tagline over the mirror. The mirror runs off the bottom of the header, so the page keeps moving. */
+@media (max-width: 860px) {
+	.hero {
+		grid-template-columns: minmax(0, 1fr);
+		gap: 6.5rem;
+		align-items: start;
+		align-content: start;
+		padding-block: 6rem 0;
 	}
 
-	.hero-foot .gv-pill {
-		justify-self: start;
+	.hero-lead {
+		max-width: 34rem;
+	}
+
+	.hero-mirror {
+		width: min(78%, 22rem);
+		margin-bottom: -20%;
+	}
+
+	.hero-sticker {
+		top: 40%;
+		left: -13%;
+	}
+
+	.hero-mirror figcaption {
+		right: -9%;
+		bottom: 29%;
 	}
 }
 
-/* Phones stack the three photos in one frame and fade between them. */
+/* Phones move the booking pill from the hero into the nav. */
 @media (max-width: 720px) {
-	.hero-doorways {
-		inset: 5.5rem 1.5rem 0;
-		grid-template-columns: 1fr;
-	}
-
-	.hero-doorways figure {
-		grid-area: 1 / 1;
-	}
-
-	/* Phones move the booking pill from the hero foot into the nav. */
-	.hero-foot .gv-pill {
+	.hero-actions {
 		display: none;
-	}
-
-	.hero-foot {
-		gap: 1rem;
-	}
-
-	.hero-doorways figure {
-		box-shadow: none;
-	}
-}
-
-@media (max-width: 720px) and (prefers-reduced-motion: no-preference) {
-	.hero-doorways img {
-		animation: none;
-	}
-
-	.hero-doorways figure {
-		animation: hero-cycle 18s linear infinite;
-	}
-
-	.hero-doorways figure:nth-child(1) {
-		animation-delay: -6s;
-	}
-
-	.hero-doorways figure:nth-child(3) {
-		animation-delay: -12s;
-	}
-}
-
-@media (max-width: 720px) and (prefers-reduced-motion: reduce) {
-	.hero-doorways figure:not(:nth-child(2)) {
-		display: none;
-	}
-}
-
-@keyframes hero-cycle {
-	0%,
-	30% {
-		opacity: 1;
-	}
-
-	36%,
-	94% {
-		opacity: 0;
-	}
-
-	100% {
-		opacity: 1;
 	}
 }

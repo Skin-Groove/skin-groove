@@ -27,17 +27,20 @@ export const pillars = [
 export const expectations = [
 	{
 		title: 'A routine that feels uniquely yours',
+		motif: 'flowers',
 		body: 'Your routine recommendations are made based on your individual skin concerns, history, current routine, and goals. Not a trend or template, and definitely not someone else’s routine.',
 	},
 	{
 		title: 'Education without the overwhelm',
+		motif: 'waves',
 		body: 'You deserve to know <em>why</em> something is in your routine. Education is a huge part of my approach, so you’ll never leave with a list of products and no understanding of what they’re doing. I want you to understand what you’re using, why you’re using it, and what it’s actually doing for your skin.',
 	},
 	{
 		title: 'A reason behind every recommendation',
+		motif: 'rings',
 		body: 'If something you already own is a great fit for your skin and goals, there’s no reason to replace it. We’ll keep what makes sense, rethink what doesn’t, and fill in the gaps where needed.',
 	},
-]
+] as const
 
 export const sammyIntro = [
 	'I’m an esthetician and cosmetologist with a deep love for skincare, ingredient knowledge, and figuring out the <em>why</em> behind what’s happening on the surface.',
@@ -90,43 +93,8 @@ export const questions = [
 ]
 
 // Mood photography from docs/esti_vision_board, resized into public/images/groove.
+// Each row holds 12 images. The tile shapes repeat every 3 images, so both copies of a row in the marquee match.
 export const galleryRows = [
-	[
-		'01',
-		'13',
-		'37',
-		'05',
-		'41',
-		'49',
-		'43',
-		'02',
-		'50',
-		'27',
-		'15',
-		'53',
-		'39',
-		'56',
-		'06',
-		'moodboard',
-	],
-	[
-		'44',
-		'03',
-		'47',
-		'52',
-		'16',
-		'38',
-		'11',
-		'42',
-		'55',
-		'25',
-		'14',
-		'66',
-		'04',
-		'48',
-		'17',
-		'40',
-		'36',
-		'59',
-	],
+	['01', '13', '37', '05', '41', '49', '43', '02', '50', '27', '15', '53'],
+	['44', '03', '47', '52', '16', '38', '11', '42', '55', '25', '14', '66'],
 ]
