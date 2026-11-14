@@ -1,0 +1,76 @@
+/* Privacy policy: a dark header and a single readable column of policy text. */
+
+/* ===== Header ===== */
+
+.privacy-hero {
+	--focus: var(--amber);
+	--kicker: var(--amber);
+	background:
+		radial-gradient(ellipse at 20% 120%, rgb(184 70 27 / 40%), transparent 60%),
+		var(--night-deep);
+	color: var(--cream);
+}
+
+.privacy-hero-inner {
+	width: min(100% - 3rem, 44rem);
+	margin-inline: auto;
+	padding-block: clamp(7rem, 12vw, 9rem) clamp(3rem, 6vw, 4.5rem);
+}
+
+.privacy-hero h1 {
+	margin-block: 1rem;
+	font-family: var(--display);
+	font-size: clamp(3rem, 8vw, 5.5rem);
+	font-weight: 400;
+	letter-spacing: -0.02em;
+	line-height: 0.95;
+	text-wrap: balance;
+}
+
+.privacy-hero p:last-child {
+	font-size: 1.05rem;
+	opacity: 0.85;
+}
+
+/* ===== Policy ===== */
+
+.privacy-policy {
+	width: min(100% - 3rem, 44rem);
+	margin-inline: auto;
+	padding-block: clamp(3.5rem, 8vw, 6rem) clamp(5rem, 10vw, 8rem);
+	font-size: 1.05rem;
+	line-height: 1.75;
+}
+
+.privacy-policy h2 {
+	margin-block: 3rem 1rem;
+	color: var(--burnt);
+	font-size: clamp(1.7rem, 4vw, 2.3rem);
+}
+
+.privacy-policy h3 {
+	margin-block: 2rem 0.5rem;
+	font-size: 1.1rem;
+	font-weight: 800;
+}
+
+.privacy-policy p + p,
+.privacy-policy p + ul,
+.privacy-policy ul + p {
+	margin-top: 1rem;
+}
+
+.privacy-policy ul {
+	padding-left: 1.25rem;
+}
+
+.privacy-policy li + li {
+	margin-top: 0.5rem;
+}
+
+.privacy-policy a {
+	color: var(--rust);
+	font-weight: 700;
+	text-decoration-thickness: 1px;
+	text-underline-offset: 0.2em;
+}

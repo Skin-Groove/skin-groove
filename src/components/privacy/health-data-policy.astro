@@ -1,0 +1,115 @@
+---
+import { contactEmail } from '@/components/site/links'
+
+import './privacy.css'
+
+const mailto = `mailto:${contactEmail}`
+
+// MHMDA requires the Washington complaint route in an appeal denial.
+const washingtonComplaint = 'https://www.atg.wa.gov/file-complaint'
+---
+
+<!-- Washington's MHMDA wants this policy on its own page, with only the items that the Act requires. See docs/privacy-and-intake.md. -->
+<article class="privacy-policy">
+	<p>
+		This policy covers the consumer health data that Skin Groove LLC (“Skin
+		Groove”, “we”, “us”) collects. It applies to each client, wherever you live.
+		Our <a href="/privacy">privacy policy</a> covers the rest of the information
+		that we collect.
+	</p>
+
+	<h2>What we collect, and why</h2>
+	<p>
+		When you book, Cal.com records the consultation that you book, for example
+		an acne consultation, with your name and contact details. We collect that
+		because we need it to hold the consultation that you ask for. We collect the
+		rest only after you consent in our intake form. The intake form and the
+		check-in form before a follow-up collect:
+	</p>
+	<ul>
+		<li>Your skin concerns, skin history, and diagnosed skin conditions.</li>
+		<li>Your medications, allergies, and pregnancy status.</li>
+		<li>
+			Your skincare routine, past treatments, and habits such as sun exposure
+			and sleep.
+		</li>
+		<li>Photos of your skin.</li>
+	</ul>
+	<p>
+		We use this data only to prepare for and hold your consultations, to give
+		you skincare guidance and product recommendations, and to track your
+		progress. We use a photo in our marketing only with your separate, optional
+		permission. That permission can allow photos with identifiable features, or
+		only photos with those features removed or hidden.
+	</p>
+
+	<h2>Where it comes from</h2>
+	<p>
+		You give it to us directly, in our forms, and in your emails, text messages,
+		and consultations. For a client under 18, a parent or legal guardian also
+		gives their consent in the intake form.
+	</p>
+
+	<h2>What we share, and with whom</h2>
+	<p>
+		We do not sell consumer health data. We share it with no affiliates, and
+		with two third parties only:
+	</p>
+	<ul>
+		<li>
+			Stripe, which processes the payment for your booking. It receives your
+			name, your email address, and the consultation that you book. Stripe also
+			uses payment data for its own purposes, such as fraud prevention and legal
+			compliance, under its own privacy policy. We share this data because you
+			need it to pay for the consultation that you ask for.
+		</li>
+		<li>
+			The public, for a photo of your skin that you give us separate, optional
+			permission to use in our marketing. We publish that photo only where your
+			permission allows: our Instagram, our website, or our emails. There, the
+			public can see it, and so can Meta, which runs Instagram.
+		</li>
+	</ul>
+	<p>These service providers process this data only for us, under contract:</p>
+	<ul>
+		<li>Tally, which stores our forms and your photos.</li>
+		<li>
+			Google Workspace, which carries our email and our calendar. Tally emails
+			us a copy of each form submission.
+		</li>
+		<li>Cal.com, which runs our booking.</li>
+	</ul>
+	<p>
+		Text messages that you send us, and their photos, travel through mobile
+		carriers, and through Apple if you use iMessage, to reach Sammy’s phone.
+	</p>
+	<p>
+		We disclose consumer health data only when the law requires it, for example
+		a valid court order. Before we share it for any other reason, we ask for
+		your separate consent.
+	</p>
+
+	<h2>Your rights, and how to use them</h2>
+	<ul>
+		<li>Confirm whether we collect your consumer health data.</li>
+		<li>
+			Get a copy of it, and a list of each service provider and third party that
+			receives it, with an email address or an online contact for each.
+		</li>
+		<li>
+			Withdraw your consent. We then stop collecting your data and delete the
+			data that we hold, unless the law requires us to keep it.
+		</li>
+		<li>Ask us to delete it.</li>
+	</ul>
+	<p>
+		Email <a href={mailto}>{contactEmail}</a> to use these rights. A parent or
+		guardian can use them for a client under 18. We answer within 45 days of
+		receiving your request, and the time that we take to confirm your identity
+		counts toward those 45 days. If we need more time, we tell you why within
+		those 45 days, and we answer within 45 more days. If we refuse a request,
+		you can appeal by a reply to our decision. If we deny your appeal, you can
+		contact the attorney general of your state, or file a complaint with the{' '}
+		<a href={washingtonComplaint}>Washington attorney general</a>.
+	</p>
+</article>

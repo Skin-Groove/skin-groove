@@ -57,6 +57,21 @@ const rainbowBands = [
 			<Icon name="arrowUp" />
 		</button>
 	</div>
+	<p class="gv-footer-legal">
+		<span>© Skin Groove LLC</span>
+		<a
+			aria-current={Astro.url.pathname === '/privacy' ? 'page' : undefined}
+			href="/privacy"
+		>
+			Privacy policy
+		</a>
+		<a
+			aria-current={Astro.url.pathname === '/health-data' ? 'page' : undefined}
+			href="/health-data"
+		>
+			Consumer health data privacy policy
+		</a>
+	</p>
 </footer>
 
 <script>

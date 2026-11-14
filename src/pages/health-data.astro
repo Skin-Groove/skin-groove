@@ -1,0 +1,22 @@
+---
+import Base from '@/layouts/base.astro'
+import HealthDataPolicy from '@/components/privacy/health-data-policy.astro'
+import PrivacyHeader from '@/components/privacy/privacy-header.astro'
+import Closing from '@/components/site/closing.astro'
+---
+
+<Base
+	canonicalPath="/health-data"
+	description="How Skin Groove collects, uses, and shares the consumer health data in our intake forms, and how to use your rights."
+	ogTitle="Consumer health data privacy policy | Skin Groove"
+	title="Consumer health data privacy policy | Skin Groove"
+>
+	<main class="gv">
+		<PrivacyHeader title="Consumer health data privacy policy" />
+		<HealthDataPolicy />
+		<Closing />
+	</main>
+	<script>
+		import '@/scripts/reveal'
+	</script>
+</Base>
