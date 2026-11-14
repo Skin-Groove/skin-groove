@@ -42,7 +42,16 @@ Do not reverse these decisions without a request from Sahand.
 - Skin Groove is a virtual esthetics practice. The site is mostly static
   marketing pages. Cal.com handles booking and payment. Shopify handles the shop
   and checkout.
-- The site uses no database. Shopify and Cal.com hold all data.
+- The site uses no database. Shopify, Cal.com, and the intake form tool hold all
+  data.
+- Clients send health data and skin photos in an external intake form after
+  booking. Cal.com has no file-upload field. Read `docs/privacy-and-intake.md`
+  before you change booking, intake, analytics, or legal pages.
+- HIPAA does not apply. Design for Washington's My Health My Data Act, which
+  lets clients sue.
+- Keep health data out of Cal.com booking questions.
+- Add no analytics, ad pixels, or session replay to the site, the booking flow,
+  or the intake form.
 - The site has no custom user accounts or auth. Clients use guest checkout and
   Cal.com email links. If order history is needed, use Shopify hosted customer
   accounts.
