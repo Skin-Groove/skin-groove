@@ -49,7 +49,7 @@ export const services = [
 	{
 		name: 'The consult',
 		image: '/images/groove/37-lg.webp',
-		kind: '$50 · 45-minute virtual consult',
+		kind: '45-minute virtual consult',
 		body: 'A one-on-one virtual consultation about your skin, your current routine, your history, and your goals.',
 	},
 	{
@@ -61,17 +61,12 @@ export const services = [
 	{
 		name: 'The shelf',
 		image: '/images/groove/06-lg.webp',
-		kind: '$50 shop credit after your consult · Opening soon',
+		kind: 'Opening soon',
 		body: 'A small, considered product edit chosen to support your routine without adding clutter.',
 	},
 ]
 
 export const questions = [
-	{
-		question: 'How much does it cost?',
-		answer:
-			'A consultation is $50. Afterward, you get a $50 code for the Skin Groove shop. The shop opens soon.',
-	},
 	{
 		question: 'How does a virtual consultation work?',
 		answer:

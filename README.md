@@ -83,8 +83,6 @@ If the change is intentional, extract `visual-baselines` into
 
 - **Booking:**
   [Cal.com](https://cal.com/sammymintzer/virtual-skin-consultation). The Cal.com
-  Stripe app takes the $50 consultation payment.
+  Stripe app takes the consultation payment.
 - **Shop:** Shopify. The store exists, but the site does not connect to it yet.
-  After a consultation, a Cal.com webhook will give the client a $50 Shopify
-  discount code.
 - **Email:** Google Workspace, `sammy@skingroove.studio`.
