@@ -609,7 +609,7 @@ abuse it and its duration was not known.
   data privacy policy (`/health-data`), and the form text
   (https://tally.so/r/lae2yB, https://tally.so/r/M1NW5M, and
   https://tally.so/r/RWMe0d). Include the parent or guardian consent for clients
-  13 to 17.
+  13 to 17, and the texting with clients.
 - Make the Cal.com cancellation and refund settings match the policies in the
   form: 24 hours of notice, and no refund after a completed consultation.
 - Open the follow-up and acne events in Cal.com once, and make sure that Google

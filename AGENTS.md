@@ -24,11 +24,13 @@ context.
   the Workers routing rules.
 - `pnpm exec varlock run -- vp run deploy` — build and deploy with the account
   token in `.env.local`. Workers Builds usually does this.
-- `vp run test:unit` — run Vitest unit tests (`src/**/*.unit.test.ts`)
+- `vp run test:unit` — run Vitest unit tests (`{src,scripts}/**/*.unit.test.ts`)
 - `BASE_URL=<url> vp run e2e` — run Playwright smoke tests. Playwright starts no
   server.
 - `BASE_URL=<url> vp run test:visual` — compare the site with the CI baselines
 - `vp run dead-code` — find unused exports with fallow
+- `pnpm exec varlock run -- node scripts/intake/sync-forms.ts` — push the intake
+  forms in `scripts/intake/forms.ts` to Tally
 
 Use `pnpm` through Vite+ (`vp i`, `vp run <script>`).
 

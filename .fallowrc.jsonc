@@ -1,4 +1,6 @@
 {
+	// Node runs these scripts directly. See docs/privacy-and-intake.md.
+	"entry": ["scripts/intake/sync-forms.ts"],
 	"ignoreDependencies": [
 		// CSS imports these font files with url(), and fallow reads only JS imports.
 		"@fontsource-variable/manrope",
@@ -10,5 +12,8 @@
 		"@tailwindcss/vite",
 		"@varlock/astro-integration",
 		"astro",
+		// The intake form sync parses Tally responses with zod. It runs locally, so
+		// zod stays a dev dependency, but fallow counts the scripts as production.
+		"zod",
 	],
 }
