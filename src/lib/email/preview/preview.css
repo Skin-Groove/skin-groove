@@ -1,0 +1,92 @@
+/* The email preview page. The dev server serves it at /emails. */
+
+:root {
+	--night: #08140f;
+	--cream: #fbf1e1;
+	--apricot: #f4b98e;
+	--amber: #f2b54a;
+	--ink: #3a1a12;
+	font-family: 'Manrope Variable', system-ui, sans-serif;
+}
+body {
+	margin: 0;
+	background: #1a2520;
+	color: var(--cream);
+}
+.preview-bar {
+	position: sticky;
+	top: 0;
+	z-index: 1;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	align-items: center;
+	justify-content: center;
+	padding: 12px 16px;
+	background: var(--night);
+	border-bottom: 1px solid rgb(242 181 74 / 30%);
+}
+button {
+	padding: 8px 14px;
+	border: 1px solid rgb(244 185 142 / 40%);
+	border-radius: 999px;
+	background: transparent;
+	color: var(--apricot);
+	font: 600 14px/1 inherit;
+	font-family: inherit;
+	cursor: pointer;
+}
+button[aria-pressed='true'] {
+	border-color: var(--amber);
+	background: var(--amber);
+	color: var(--ink);
+}
+.preview-sep {
+	width: 1px;
+	height: 24px;
+	background: rgb(244 185 142 / 30%);
+}
+.preview-inbox {
+	max-width: 600px;
+	margin: 20px auto 12px;
+	padding: 12px 16px;
+	border-radius: 12px;
+	background: #fff;
+	color: #222;
+	font-size: 14px;
+	line-height: 1.4;
+}
+.preview-inbox b {
+	display: block;
+}
+.preview-inbox span {
+	color: #666;
+}
+.preview-inbox small {
+	display: block;
+	margin-top: 6px;
+	color: #8a5a2b;
+}
+iframe {
+	display: block;
+	width: 100%;
+	max-width: 680px;
+	height: calc(100svh - 190px);
+	min-height: 600px;
+	margin: 0 auto 24px;
+	border: 0;
+	border-radius: 12px;
+	background: var(--night);
+	transition: max-width 0.2s;
+}
+iframe.phone {
+	max-width: 390px;
+}
+@media (max-width: 640px) {
+	.preview-inbox {
+		margin-inline: 16px;
+	}
+	iframe {
+		width: calc(100% - 32px);
+	}
+}

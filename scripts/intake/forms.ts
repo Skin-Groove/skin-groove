@@ -15,8 +15,8 @@ const healthDataLink =
 
 const healthDataDisclosure = `My answers and photos include health information. Skin Groove collects it only to prepare for and hold my consultations, never sells it, and shares it only with the companies in the ${healthDataLink}. It uses a photo of me for marketing only with my separate permission. I can withdraw this consent or ask Skin Groove to delete my information at any time by email.`
 
-// Prefill parameters, named as Cal.com forwards them on a booking redirect. That
-// redirect needs a paid Cal.com plan, so no link sends them yet. See
+// Prefill parameters, named as Cal.com forwards them on a booking redirect. The
+// client emails send them through `intakeFormUrl` in src/lib/intake.ts. See
 // https://cal.com/help/event-types/booking-success-page-query-params
 function identity(form: FormBuilder) {
 	const hidden = form.hiddenFields(['attendeeName', 'email', 'uid'])

@@ -22,6 +22,10 @@ export const consults = [
 	},
 ] as const
 
+/** The hidden follow-up event. Only past clients get this link. */
+export const followUpBookingUrl =
+	'https://cal.com/sammymintzer/virtual-skin-follow-up'
+
 export const contactEmail = 'sammy@skingroove.studio'
 
 export const instagramHandle = 'beautybysmintz'

@@ -93,3 +93,9 @@ If the change is intentional, extract `visual-baselines` into
   forms, and Tally emails each submission to the account address. See
   [docs/privacy-and-intake.md](docs/privacy-and-intake.md).
 - **Email:** Google Workspace, `sammy@skingroove.studio`.
+- **Client emails:** [Resend](https://resend.com), from
+  `hello@skingroove.studio` with replies to Sammy. A Cal.com webhook calls
+  `/api/cal-webhook`, which sends the intake form after a confirmed consultation
+  or acne consultation, the check-in form after a confirmed follow-up, and a
+  thank-you after a consultation ends. `src/lib/email` holds the templates. The
+  Worker secrets are `CALCOM_WEBHOOK_SECRET` and `RESEND_API_KEY`.
