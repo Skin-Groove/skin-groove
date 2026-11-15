@@ -28,6 +28,9 @@
 /* The bar keeps one size, and only its backdrop fades in. Resizing it on scroll forces a layout on every frame, which stutters on phones. */
 .gv-nav {
 	--focus: var(--amber);
+	--bar: var(--avocado);
+	--bar-ink: var(--cream);
+	--bar-accent: var(--amber);
 	position: fixed;
 	top: 0.75rem;
 	right: 0;
@@ -42,16 +45,17 @@
 	margin-inline: auto;
 	padding: 0.45rem 0.6rem 0.45rem 0.75rem;
 	color: var(--cream);
+	transition: color 300ms var(--ease);
 }
 
 .gv-nav::before {
 	position: absolute;
 	z-index: -1;
 	border-radius: 999px;
-	background: var(--night-deep);
+	background: var(--bar);
 	box-shadow:
 		0 0 0 1px rgb(242 181 74 / 40%),
-		0 0.75rem 2rem rgb(8 20 15 / 35%);
+		0 0.75rem 2rem rgb(79 20 32 / 35%);
 	content: '';
 	inset: 0;
 	opacity: 0;
@@ -60,6 +64,11 @@
 
 .gv-nav[data-solid]::before {
 	opacity: 1;
+}
+
+/* Over the dark header the text stays cream. On the bar it takes the bar's ink. */
+.gv-nav[data-solid] {
+	color: var(--bar-ink);
 }
 
 .gv-nav-sentinel {
@@ -135,7 +144,7 @@
 	gap: 0.45rem;
 	min-height: 2.6rem;
 	padding: 0 0.9rem;
-	border: 1px solid rgb(251 241 225 / 35%);
+	border: 1px solid color-mix(in srgb, currentcolor 35%, transparent);
 	border-radius: 999px;
 	background: transparent;
 	color: inherit;
@@ -158,8 +167,9 @@
 	padding: 0.75rem 1.5rem;
 	border: 1px solid rgb(242 181 74 / 45%);
 	border-radius: 1.5rem;
-	background: var(--night-deep);
-	box-shadow: 0 1.5rem 3rem rgb(0 0 0 / 45%);
+	background: var(--bar);
+	box-shadow: 0 1.5rem 3rem rgb(43 17 13 / 45%);
+	color: var(--bar-ink);
 }
 
 .gv-nav-menu .gv-links {
@@ -176,11 +186,11 @@
 }
 
 .gv-nav-menu .gv-links a + a {
-	border-top: 1px solid rgb(251 241 225 / 14%);
+	border-top: 1px solid color-mix(in srgb, currentcolor 14%, transparent);
 }
 
 .gv-nav-menu .gv-links a[aria-current='page'] {
-	color: var(--amber);
+	color: var(--bar-accent);
 }
 
 /* ===== Links ===== */
