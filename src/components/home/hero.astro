@@ -1,5 +1,6 @@
 ---
 import BookPill from '@/components/site/book-pill.astro'
+import ShopPill from '@/components/site/shop-pill.astro'
 import SiteNav from '@/components/site/site-nav.astro'
 
 import './hero.css'
@@ -51,7 +52,10 @@ const doorways = [
 				Thoughtful, curated skincare guidance to help you understand your skin,
 				simplify your routine, and finally find what works for you.
 			</p>
-			<BookPill />
+			<div class="hero-actions">
+				<BookPill />
+				<ShopPill />
+			</div>
 		</div>
 	</div>
 </header>

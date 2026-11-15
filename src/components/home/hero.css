@@ -79,7 +79,10 @@
 	text-wrap: balance;
 }
 
-.hero-foot .gv-pill {
+.hero-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem;
 	justify-self: end;
 }
 
@@ -110,7 +113,7 @@
 		grid-template-columns: 1fr;
 	}
 
-	.hero-foot .gv-pill {
+	.hero-actions {
 		justify-self: start;
 	}
 }
@@ -126,13 +129,25 @@
 		grid-area: 1 / 1;
 	}
 
-	/* Phones move the booking pill from the hero foot into the nav. */
-	.hero-foot .gv-pill {
-		display: none;
+	/* Phones put the pills beside the tagline, so Book shows without a scroll. */
+	.hero-foot {
+		grid-template-columns: minmax(0, 1fr) auto;
+		gap: 1rem;
 	}
 
-	.hero-foot {
-		gap: 1rem;
+	.hero-foot > p:not(.hero-tagline) {
+		grid-column: 1 / -1;
+	}
+
+	.hero-actions {
+		flex-direction: column;
+		grid-area: 1 / 2;
+		align-self: center;
+		justify-self: end;
+	}
+
+	.hero-actions .gv-pill {
+		padding-inline: 1.4rem;
 	}
 
 	.hero-doorways figure {

@@ -1,0 +1,14 @@
+---
+import { cn } from '@/lib/utils/ui'
+
+interface Props {
+	class?: string
+}
+
+const { class: className } = Astro.props
+---
+
+<!-- A placeholder until the Shopify store opens. It has no href, so it goes nowhere. -->
+<a aria-disabled="true" class={cn('gv-pill', 'gv-shop', className)}>
+	Shop
+</a>

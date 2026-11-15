@@ -33,10 +33,11 @@
 	right: 0;
 	left: 0;
 	z-index: 20;
-	display: flex;
+	/* Equal side columns keep the links centered, whatever the pills measure. */
+	display: grid;
 	width: min(100% - 1.5rem, 88rem);
+	grid-template-columns: 1fr auto 1fr;
 	align-items: center;
-	justify-content: space-between;
 	gap: 1rem;
 	margin-inline: auto;
 	padding: 0.45rem 0.6rem 0.45rem 0.75rem;
@@ -68,6 +69,10 @@
 	width: 1px;
 	height: 5rem;
 	pointer-events: none;
+}
+
+.gv-nav > [data-home-link] {
+	justify-self: start;
 }
 
 .gv-nav-record {
@@ -102,11 +107,11 @@
 	display: none;
 }
 
-/* The hero has its own pill, so the nav pill waits until the hero scrolls away. */
-.gv-nav .gv-nav-pill {
-	min-height: 2.6rem;
-	padding-inline: 1.3rem;
-	font-size: 0.82rem;
+/* The hero has its own pills, so the nav pills wait until the hero scrolls away. */
+.gv-nav-actions {
+	display: flex;
+	justify-self: end;
+	gap: 0.5rem;
 	opacity: 0;
 	visibility: hidden;
 	transition:
@@ -114,16 +119,21 @@
 		visibility 300ms;
 }
 
-.gv-nav[data-solid] .gv-nav-pill {
+.gv-nav[data-solid] .gv-nav-actions {
 	opacity: 1;
 	visibility: visible;
+}
+
+.gv-nav .gv-nav-pill {
+	min-height: 2.6rem;
+	padding-inline: 1.3rem;
+	font-size: 0.82rem;
 }
 
 .gv-nav-toggle {
 	align-items: center;
 	gap: 0.45rem;
 	min-height: 2.6rem;
-	margin-left: auto;
 	padding: 0 0.9rem;
 	border: 1px solid rgb(251 241 225 / 35%);
 	border-radius: 999px;
@@ -547,7 +557,19 @@
 
 /* ===== Responsive ===== */
 
-/* Phones fold the links into a menu and move the booking pill into the nav. */
+/* The nav pill shortens to "Book" next to the links on tablets and phones. Screen readers still announce every word. */
+@media (max-width: 1000px) {
+	.gv-nav-pill i {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+		white-space: nowrap;
+	}
+}
+
+/* Phones fold the links into a menu. */
 @media (max-width: 720px) {
 	.gv-nav-links {
 		display: none;
@@ -561,20 +583,19 @@
 		display: block;
 	}
 
-	.gv-nav .gv-nav-pill {
-		padding-inline: 1.1rem;
-		opacity: 1;
-		visibility: visible;
+	.gv-nav {
+		display: flex;
 	}
 
-	/* The nav pill shortens to "Book" on phones. Screen readers still announce every word. */
-	.gv-nav-pill i {
-		position: absolute;
-		width: 1px;
-		height: 1px;
-		overflow: hidden;
-		clip-path: inset(50%);
-		white-space: nowrap;
+	/* The pills sit just left of the menu button, which stays at the far right. */
+	.gv-nav-actions {
+		gap: 0.4rem;
+		margin-left: auto;
+	}
+
+	.gv-nav .gv-nav-pill {
+		gap: 0.4rem;
+		padding-inline: 1rem;
 	}
 
 	.gv-footer {
@@ -611,5 +632,27 @@
 	.gv-picker .gv-picker-record {
 		width: 3rem;
 		height: 3rem;
+	}
+}
+
+/* Narrow phones fit Book, Shop, and the menu button only when the button shows just its icon. */
+@media (max-width: 380px) {
+	.gv-nav {
+		gap: 0.5rem;
+	}
+
+	.gv-nav-toggle {
+		width: 2.6rem;
+		justify-content: center;
+		padding: 0;
+	}
+
+	.gv-nav-toggle-label {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+		white-space: nowrap;
 	}
 }
