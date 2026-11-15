@@ -367,6 +367,184 @@
 	height: 1.2rem;
 }
 
+/* ===== Consult picker ===== */
+
+.gv-picker {
+	width: min(32rem, calc(100% - 2rem));
+	max-height: calc(100dvh - 2rem);
+	margin: auto;
+	padding: 2.25rem 1.75rem 1.75rem;
+	overflow-y: auto;
+	border: 0;
+	border-radius: 2rem;
+	background: var(--cream);
+	box-shadow: 0 1.5rem 4rem rgb(43 17 13 / 35%);
+	color: var(--ink);
+	opacity: 0;
+	transform: translateY(1.5rem) scale(0.97);
+	transition:
+		opacity 300ms var(--ease),
+		transform 400ms var(--ease),
+		overlay 400ms allow-discrete,
+		display 400ms allow-discrete;
+}
+
+.gv-picker[open] {
+	opacity: 1;
+	transform: none;
+}
+
+@starting-style {
+	.gv-picker[open] {
+		opacity: 0;
+		transform: translateY(1.5rem) scale(0.97);
+	}
+}
+
+.gv-picker::backdrop {
+	background: rgb(43 17 13 / 0%);
+	backdrop-filter: blur(0);
+	transition:
+		background-color 300ms var(--ease),
+		backdrop-filter 300ms var(--ease),
+		overlay 400ms allow-discrete,
+		display 400ms allow-discrete;
+}
+
+.gv-picker[open]::backdrop {
+	background: rgb(43 17 13 / 55%);
+	backdrop-filter: blur(4px);
+}
+
+@starting-style {
+	.gv-picker[open]::backdrop {
+		background: rgb(43 17 13 / 0%);
+		backdrop-filter: blur(0);
+	}
+}
+
+.gv-picker h2 {
+	padding-right: 2.5rem;
+	color: var(--garnet);
+	font-size: clamp(1.9rem, 6vw, 2.4rem);
+}
+
+.gv-picker-lede {
+	margin-top: 0.6rem;
+	color: var(--muted);
+	line-height: 1.6;
+}
+
+.gv-picker ul {
+	display: grid;
+	gap: 0.85rem;
+	margin: 1.5rem 0 0;
+	padding: 0;
+	list-style: none;
+}
+
+.gv-picker-option {
+	display: flex;
+	align-items: center;
+	gap: 1.1rem;
+	padding: 1.1rem 1.25rem;
+	border: 2px solid var(--line);
+	border-radius: 1.5rem;
+	background: rgb(255 255 255 / 45%);
+	color: inherit;
+	text-decoration: none;
+	transition:
+		background-color 300ms var(--ease),
+		border-color 300ms var(--ease),
+		transform 300ms var(--ease);
+}
+
+.gv-picker-option:hover {
+	border-color: var(--amber);
+	background: rgb(242 181 74 / 30%);
+	transform: translateY(-2px);
+}
+
+.gv-picker .gv-picker-record {
+	flex: none;
+	width: 3.75rem;
+	height: 3.75rem;
+	color: var(--burnt);
+	animation-play-state: paused;
+}
+
+/* Side B gets an amber label. */
+.gv-picker li + li .gv-picker-record {
+	color: var(--amber);
+}
+
+.gv-picker-option:hover .gv-picker-record,
+.gv-picker-option:focus-visible .gv-picker-record {
+	animation-play-state: running;
+}
+
+.gv-picker-text {
+	display: grid;
+	gap: 0.2rem;
+}
+
+.gv-picker-text small {
+	color: var(--burnt);
+	font-size: 0.72rem;
+	font-weight: 800;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+}
+
+.gv-picker-text b {
+	font-family: var(--display);
+	font-size: 1.35rem;
+	font-weight: 400;
+	line-height: 1.1;
+}
+
+.gv-picker-text span {
+	color: var(--muted);
+	font-size: 0.92rem;
+	line-height: 1.5;
+}
+
+.gv-picker-close {
+	position: absolute;
+	top: 1.1rem;
+	right: 1.1rem;
+	display: grid;
+	width: 2.5rem;
+	height: 2.5rem;
+	place-items: center;
+	border: 0;
+	border-radius: 999px;
+	background: rgb(79 20 32 / 8%);
+	color: var(--garnet);
+	cursor: pointer;
+	transition: background-color 300ms var(--ease);
+}
+
+.gv-picker-close:hover {
+	background: rgb(79 20 32 / 16%);
+}
+
+.gv-picker-close svg {
+	width: 1.1rem;
+	height: 1.1rem;
+	fill: none;
+	stroke: currentcolor;
+	stroke-linecap: round;
+	stroke-width: 2.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.gv-picker,
+	.gv-picker::backdrop {
+		transition: none;
+	}
+}
+
 /* ===== Responsive ===== */
 
 /* Phones fold the links into a menu and move the booking pill into the nav. */
@@ -407,5 +585,31 @@
 	.gv-footer-end {
 		width: 100%;
 		justify-content: space-between;
+	}
+
+	/* Phones show the picker as a sheet at the bottom of the screen. */
+	.gv-picker {
+		width: 100%;
+		max-width: none;
+		margin: auto 0 0;
+		padding: 2rem 1rem calc(1.25rem + env(safe-area-inset-bottom));
+		border-radius: 2rem 2rem 0 0;
+		transform: translateY(100%);
+	}
+
+	@starting-style {
+		.gv-picker[open] {
+			transform: translateY(100%);
+		}
+	}
+
+	.gv-picker-option {
+		gap: 0.9rem;
+		padding: 1rem;
+	}
+
+	.gv-picker .gv-picker-record {
+		width: 3rem;
+		height: 3rem;
 	}
 }

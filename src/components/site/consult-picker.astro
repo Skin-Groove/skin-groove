@@ -1,0 +1,41 @@
+---
+import Record from './record.astro'
+import { consults } from './links'
+---
+
+<!-- Book pills open this picker. Each choice opens its own Cal.com popup. -->
+<dialog class="gv-picker" aria-labelledby="gv-picker-title" closedby="any">
+	<form method="dialog">
+		<button class="gv-picker-close" aria-label="Close" type="submit">
+			<svg aria-hidden="true" viewBox="0 0 24 24">
+				<path d="M6 6l12 12M18 6L6 18"></path>
+			</svg>
+		</button>
+	</form>
+	<h2 id="gv-picker-title">Pick your consult</h2>
+	<p class="gv-picker-lede">Both happen over video, one on one with Sammy.</p>
+	<ul>
+		{consults.map((consult) => (
+			<li>
+				<a
+					class="gv-picker-option"
+					data-consult={consult.key}
+					href={`https://cal.com/${consult.calLink}`}
+				>
+					<Record class="gv-picker-record" />
+					<span class="gv-picker-text">
+						<small>
+							{consult.side} · {consult.minutes} min
+						</small>
+						<b>{consult.name}</b>
+						<span>{consult.body}</span>
+					</span>
+				</a>
+			</li>
+		))}
+	</ul>
+</dialog>
+
+<script>
+	import '@/scripts/booking'
+</script>

@@ -39,8 +39,9 @@ may purchase recommended skincare online.
   known.
 - Curated online retail runs on Shopify. The store exists, but the site
   integration does not exist yet, and the store is not open.
-- Booking buttons open the Cal.com event in a popup. Shop controls remain
-  placeholders until the Shopify integration goes live.
+- Booking buttons open a picker with the skin and acne consultations. Each
+  choice opens its Cal.com event in a popup. Shop controls remain placeholders
+  until the Shopify integration goes live.
 - Cloudflare Workers hosts the site.
 
 ## Brand Commitments

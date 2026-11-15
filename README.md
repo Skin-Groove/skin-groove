@@ -81,8 +81,8 @@ If the change is intentional, extract `visual-baselines` into
 
 ## Integrations
 
-- **Booking:**
-  [Cal.com](https://cal.com/sammymintzer/virtual-skin-consultation). The Cal.com
-  Stripe app takes the consultation payment.
+- **Booking:** [Cal.com](https://cal.com/sammymintzer). The Book buttons open a
+  picker with the skin and acne consultations. The Cal.com Stripe app takes the
+  consultation payment.
 - **Shop:** Shopify. The store exists, but the site does not connect to it yet.
 - **Email:** Google Workspace, `sammy@skingroove.studio`.

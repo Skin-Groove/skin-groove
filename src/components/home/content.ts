@@ -49,7 +49,7 @@ export const services = [
 	{
 		name: 'The consult',
 		image: '/images/groove/37-lg.webp',
-		kind: '45-minute virtual consult',
+		kind: 'Virtual, one on one',
 		body: 'A one-on-one virtual consultation about your skin, your current routine, your history, and your goals.',
 	},
 	{
@@ -70,7 +70,7 @@ export const questions = [
 	{
 		question: 'How does a virtual consultation work?',
 		answer:
-			'Book a 45-minute time online, and we’ll meet virtually from wherever you are. We’ll look closely and thoroughly at your skin, your current routine, your history, your concerns, and what you actually want to accomplish.',
+			'Book a time online, and we’ll meet virtually from wherever you are. We’ll look closely and thoroughly at your skin, your current routine, your history, your concerns, and what you actually want to accomplish.',
 	},
 	{
 		question: 'Do I need to overhaul my entire routine?',

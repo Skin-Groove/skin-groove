@@ -1,4 +1,16 @@
-import { expect, test } from '@playwright/test'
+import { expect, type Page, test } from '@playwright/test'
+
+/** Opens the consult picker from the first Book pill and picks a consult. */
+async function bookConsult(page: Page, name: RegExp) {
+	await page
+		.getByRole('link', { name: /Book a consult/ })
+		.first()
+		.click()
+	await page
+		.getByRole('dialog', { name: 'Pick your consult' })
+		.getByRole('link', { name })
+		.click()
+}
 
 test('home page renders its primary content', async ({ page }) => {
 	await page.goto('/')
@@ -36,11 +48,10 @@ test('booking falls back to Cal.com when the embed is blocked', async ({
 		route.fulfill({ body: 'Cal.com', contentType: 'text/html' }),
 	)
 	await page.goto('/')
-	await page
-		.getByRole('link', { name: /Book a consult/ })
-		.first()
-		.click()
-	await expect(page).toHaveURL(/cal\.com\/sammymintzer/)
+	await bookConsult(page, /Acne consultation/)
+	await expect(page).toHaveURL(
+		/cal\.com\/sammymintzer\/virtual-acne-consultation/,
+	)
 })
 
 test('booking falls back to Cal.com when the popup fails to load', async ({
@@ -61,11 +72,11 @@ document.getElementById('failed-modal').setAttribute('state', 'failed')`,
 		.locator('[data-reveal-ready]')
 		.first()
 		.waitFor({ state: 'attached' })
-	await page
-		.getByRole('link', { name: /Book a consult/ })
-		.first()
-		.click()
-	await expect(page).toHaveURL(/cal\.com\/sammymintzer/, { timeout: 12_000 })
+	await bookConsult(page, /Skin consultation/)
+	await expect(page).toHaveURL(
+		/cal\.com\/sammymintzer\/virtual-skin-consultation/,
+		{ timeout: 12_000 },
+	)
 })
 
 test('booking falls back to Cal.com when the embed throws', async ({
@@ -73,7 +84,7 @@ test('booking falls back to Cal.com when the embed throws', async ({
 }) => {
 	await page.route('**/embed/embed.js', (route) =>
 		route.fulfill({
-			body: `window.Cal.ns.consult.q.push = () => { throw new Error('embed failed') }
+			body: `window.Cal.ns.skin.q.push = () => { throw new Error('embed failed') }
 window.embedReady = true`,
 			contentType: 'text/javascript',
 		}),
@@ -85,8 +96,26 @@ window.embedReady = true`,
 	const book = page.getByRole('link', { name: /Book a consult/ }).first()
 	await book.hover()
 	await page.waitForFunction(() => 'embedReady' in window)
-	await book.click()
-	await expect(page).toHaveURL(/cal\.com\/sammymintzer/, { timeout: 2000 })
+	await bookConsult(page, /Skin consultation/)
+	await expect(page).toHaveURL(
+		/cal\.com\/sammymintzer\/virtual-skin-consultation/,
+		{ timeout: 2000 },
+	)
+})
+
+test('the Book pill opens a picker with each consult', async ({ page }) => {
+	await page.goto('/')
+	await page
+		.getByRole('link', { name: /Book a consult/ })
+		.first()
+		.click()
+	const picker = page.getByRole('dialog', { name: 'Pick your consult' })
+	await expect(picker.getByRole('link')).toHaveText([
+		/Skin consultation/,
+		/Acne consultation/,
+	])
+	await page.keyboard.press('Escape')
+	await expect(picker).toBeHidden()
 })
 
 test('the home link returns to the top of the home page', async ({ page }) => {
