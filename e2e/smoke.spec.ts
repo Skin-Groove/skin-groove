@@ -208,6 +208,39 @@ test('the FAQ page groups the questions by topic', async ({ page }) => {
 test.describe('on a narrow screen', () => {
 	test.use({ viewport: { width: 320, height: 800 } })
 
+	// `.gv` clips horizontal overflow, so a broken layout cuts text off
+	// instead of adding a scrollbar. Decorative rows are aria-hidden.
+	for (const path of ['/', '/about', '/faq']) {
+		test(`no text runs off the screen on ${path}`, async ({ page }) => {
+			await page.goto(path)
+
+			const cutOff = await page.evaluate(() =>
+				[
+					...document.querySelectorAll('h1, h2, h3, p, li, summary, a, button'),
+				].flatMap((element) => {
+					const box = element.getBoundingClientRect()
+
+					// A long word can also spill out of a box that fits the screen.
+					// Screen-reader text clips itself on purpose, so skip clipped boxes.
+					const spills =
+						element.textContent?.trim() !== '' &&
+						getComputedStyle(element).overflowX === 'visible' &&
+						element.scrollWidth > element.clientWidth + 1
+
+					const offScreen =
+						box.width > 1 &&
+						(box.left < -1 || box.right > window.innerWidth + 1 || spills)
+
+					return offScreen && !element.closest('[aria-hidden="true"]')
+						? [element.textContent?.trim().slice(0, 40)]
+						: []
+				}),
+			)
+
+			expect(cutOff).toEqual([])
+		})
+	}
+
 	test('the menu opens, and each way out closes it', async ({ page }) => {
 		await page.goto('/')
 		const toggle = page.getByRole('button', { name: 'Menu' })
