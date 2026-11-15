@@ -1,0 +1,29 @@
+---
+import BookPill from '@/components/site/book-pill.astro'
+import SiteNav from '@/components/site/site-nav.astro'
+
+import { faqIntro } from './content'
+
+import './faq.css'
+---
+
+<header class="faq-hero">
+	<SiteNav />
+	<div class="faq-hero-inner">
+		<div class="faq-hero-copy">
+			<h1>Frequently asked questions</h1>
+			<p class="faq-hero-lead">{faqIntro}</p>
+			<BookPill />
+		</div>
+		<figure class="faq-hero-photo">
+			<img
+				alt="A row of glowing lava lamps"
+				fetchpriority="high"
+				height="1277"
+				src="/images/groove/61.webp"
+				width="1800"
+			/>
+		</figure>
+	</div>
+</header>
+<div aria-hidden="true" class="gv-colonnade"></div>

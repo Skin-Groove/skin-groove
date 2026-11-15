@@ -62,8 +62,9 @@ may purchase recommended skincare online.
 - A user-supplied vision board is stored in `docs/esti_vision_board/`.
 - Existing site photography is stored in `public/images/`.
 - Sammy, the founder, supplied the site copy and her biography. They live in
-  `src/components/home/content.ts` and `src/components/about/content.ts`. Keep
-  her wording, and do not extend her biography beyond what she wrote.
+  `src/components/home/content.ts`, `src/components/about/content.ts`, and
+  `src/components/faq/content.ts`. Keep her wording, and do not extend her
+  biography beyond what she wrote.
 - Sammy's portrait is `public/images/sammy.webp`.
 - No testimonials, clinical outcome claims, product catalog, or product pricing
   have been provided. Future work must not fabricate them.

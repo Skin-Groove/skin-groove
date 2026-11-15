@@ -29,6 +29,7 @@ export default defineConfig({
 			{
 				allow: [
 					'about-*',
+					'faq-*',
 					'gv',
 					'gv-*',
 					'hero',

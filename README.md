@@ -67,9 +67,10 @@ documents each one. Local secrets live in `.env.local`, encrypted with
 
 ## Visual baselines
 
-`vp run test:visual` compares `/`, `/about`, and `/logo` with the screenshots in
-`e2e/__screenshots__`. Screenshots depend on the OS and fonts, so record them
-only on the `ubuntu-24.04` CI runner. Never commit local screenshots.
+`vp run test:visual` compares `/`, `/about`, `/faq`, and `/logo` with the
+screenshots in `e2e/__screenshots__`. Screenshots depend on the OS and fonts, so
+record them only on the `ubuntu-24.04` CI runner. Never commit local
+screenshots.
 
 If a screenshot changes, the `test-visual` job fails and uploads two artifacts:
 

@@ -1,0 +1,25 @@
+---
+import { faqGroups } from './content'
+import FaqList from './faq-list.astro'
+
+import './faq.css'
+---
+
+<div class="faq-body">
+	<nav class="faq-topics" aria-label="FAQ topics" data-reveal>
+		{faqGroups.map((group) => (
+			<a href={`#${group.id}`}>{group.topic}</a>
+		))}
+	</nav>
+	{faqGroups.map((group) => (
+		<section
+			id={group.id}
+			class="faq-group"
+			aria-labelledby={`${group.id}-title`}
+			data-reveal
+		>
+			<h2 id={`${group.id}-title`}>{group.title}</h2>
+			<FaqList questions={group.questions} />
+		</section>
+	))}
+</div>

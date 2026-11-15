@@ -66,24 +66,6 @@ export const services = [
 	},
 ]
 
-export const questions = [
-	{
-		question: 'How does a virtual consultation work?',
-		answer:
-			'Book a time online, and we’ll meet virtually from wherever you are. We’ll look closely and thoroughly at your skin, your current routine, your history, your concerns, and what you actually want to accomplish.',
-	},
-	{
-		question: 'Do I need to overhaul my entire routine?',
-		answer:
-			'Probably not. If something you already own is a great fit for your skin and goals, there’s no reason to replace it. No starting over just for the sake of starting over.',
-	},
-	{
-		question: 'What do I leave with?',
-		answer:
-			'A routine you can feel confident in, plus an understanding of what each product is doing and why it’s there.',
-	},
-]
-
 // Mood photography from docs/esti_vision_board, resized into public/images/groove.
 export const galleryRows = [
 	[

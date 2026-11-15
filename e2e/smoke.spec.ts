@@ -177,16 +177,32 @@ test('the back to top button returns to the top of the page', async ({
 })
 
 test('a hash link reads as current only on its own hash', async ({ page }) => {
-	await page.goto('/#faq')
+	await page.goto('/#services')
 	const footer = page.getByRole('navigation', { name: 'Footer navigation' })
-	const faq = footer.getByRole('link', { name: 'FAQ' })
-	await expect(faq).toHaveAttribute('aria-current', 'page')
-	await expect(
-		footer.getByRole('link', { name: 'Services' }),
-	).not.toHaveAttribute('aria-current')
+	const services = footer.getByRole('link', { name: 'Services' })
+	await expect(services).toHaveAttribute('aria-current', 'page')
+	await expect(footer.getByRole('link', { name: 'FAQ' })).not.toHaveAttribute(
+		'aria-current',
+	)
 	await page.getByRole('link', { name: 'Skin Groove home' }).click()
 	await expect(page).toHaveURL(/\/$/)
-	await expect(faq).not.toHaveAttribute('aria-current')
+	await expect(services).not.toHaveAttribute('aria-current')
+})
+
+test('the FAQ page groups the questions by topic', async ({ page }) => {
+	await page.goto('/faq')
+	await expect(page.getByRole('link', { name: 'FAQ' }).first()).toHaveAttribute(
+		'aria-current',
+		'page',
+	)
+	await page
+		.getByRole('navigation', { name: 'FAQ topics' })
+		.getByRole('link', { name: 'Getting started' })
+		.click()
+	await expect(page).toHaveURL(/\/faq#getting-started$/)
+	const question = page.getByText('I have no idea where to start.')
+	await question.click()
+	await expect(page.getByText('More than okay.')).toBeVisible()
 })
 
 test.describe('on a narrow screen', () => {
@@ -206,8 +222,8 @@ test.describe('on a narrow screen', () => {
 		await expect(menu).toBeHidden()
 
 		await toggle.click()
-		await menu.getByRole('link', { name: 'FAQ' }).click()
-		await expect(page).toHaveURL(/#faq$/)
+		await menu.getByRole('link', { name: 'Services' }).click()
+		await expect(page).toHaveURL(/#services$/)
 		await expect(toggle).toHaveAttribute('aria-expanded', 'false')
 	})
 })

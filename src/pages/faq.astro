@@ -1,0 +1,24 @@
+---
+import Base from '@/layouts/base.astro'
+import FaqGroups from '@/components/faq/faq-groups.astro'
+import FaqHeader from '@/components/faq/faq-header.astro'
+import Closing from '@/components/site/closing.astro'
+import ConsultPicker from '@/components/site/consult-picker.astro'
+---
+
+<Base
+	canonicalPath="/faq"
+	description="Answers about virtual skincare consultations, acne support, and getting started with Skin Groove."
+	ogTitle="FAQ | Skin Groove"
+	title="FAQ | Skin Groove"
+>
+	<main class="gv">
+		<FaqHeader />
+		<FaqGroups />
+		<Closing />
+		<ConsultPicker />
+	</main>
+	<script>
+		import '@/scripts/reveal'
+	</script>
+</Base>

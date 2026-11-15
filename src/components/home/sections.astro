@@ -7,7 +7,6 @@ import Record from '@/components/site/record.astro'
 import Wave from '@/components/site/wave.astro'
 
 import { expectations, pillars, sammyIntro, services } from './content'
-import FaqList from './faq-list.astro'
 import GalleryRows from './gallery-rows.astro'
 
 import './sections.css'
@@ -116,22 +115,6 @@ import './sections.css'
 		<InstagramLink />
 	</div>
 	<GalleryRows />
-</section>
-
-<section id="faq" class="home-faq" aria-labelledby="home-faq-title">
-	<figure class="home-faq-photo" data-reveal>
-		<img
-			alt="A row of glowing lava lamps"
-			height="1277"
-			loading="lazy"
-			src="/images/groove/61.webp"
-			width="1800"
-		/>
-	</figure>
-	<div class="home-faq-copy" data-reveal>
-		<h2 id="home-faq-title">Before you book</h2>
-		<FaqList />
-	</div>
 </section>
 
 <Closing />
