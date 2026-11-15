@@ -233,20 +233,32 @@
 	transform: scaleY(-1);
 }
 
-/* ===== Colonnade ===== */
+/* ===== Header edge ===== */
 
-/* Cream arches rise out of a dark header, so the header meets the cream page on an arched edge. */
-.gv-colonnade {
-	--arch: clamp(4.5rem, 9vw, 8rem);
-	height: calc(var(--arch) / 2);
-	background:
-		radial-gradient(
-				circle at 50% 100%,
-				var(--cream) calc(var(--arch) / 2 - 1px),
-				transparent calc(var(--arch) / 2)
-			)
-			50% 100% / var(--arch) calc(var(--arch) / 2) repeat-x,
-		var(--night-deep);
+/* A wave of cream covers the bottom of a dark header, so the header meets the page on a curve. The header keeps room for it with padding. */
+:has(+ .gv-edge.is-wave) {
+	padding-bottom: var(--edge-wave);
+}
+
+.gv-edge.is-wave {
+	position: relative;
+	z-index: 1;
+	height: var(--edge-wave);
+	margin-top: calc(-1 * var(--edge-wave));
+	background: var(--cream);
+	mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 80' preserveAspectRatio='none'%3E%3Cpath d='M0 40C240 80 480 0 720 40s480 40 720 0v40H0z'/%3E%3C/svg%3E")
+		0 100% / 100% 100% no-repeat;
+}
+
+/* Four warm stripes close the home hero, like the stripes in the client emails. */
+.gv-edge.is-stripes {
+	height: 1.6rem;
+	background: linear-gradient(
+		var(--rust) 0 25%,
+		var(--burnt) 0 50%,
+		var(--amber) 0 75%,
+		var(--apricot) 0
+	);
 }
 
 /* ===== Closing ===== */

@@ -8,6 +8,7 @@
 	--pill-bg: var(--amber);
 	--pill-fg: var(--chestnut);
 	--tile-radius: 999px 999px 1rem 1rem;
+	--edge-wave: clamp(2.5rem, 6vw, 5rem);
 	overflow-x: clip;
 	interpolate-size: allow-keywords;
 }
