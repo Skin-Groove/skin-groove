@@ -1,6 +1,13 @@
-[post-create]
+[pre-start]
+# The command -v guard keeps wt working on a machine without these dotfiles.
+register-url = "command -v pitchfork-register >/dev/null && pitchfork-register {{ repo }}-{{ branch }} --dir {{ worktree_path }} || echo 'pitchfork-register failed or is missing; no dev URL created' >&2"
+
+# The blocks run in order, so bootstrap finishes before the daemon starts.
+[[post-start]]
 bootstrap = "mise run bootstrap"
+
+[[post-start]]
 start-pitchfork = "pitchfork start -l"
 
 [pre-remove]
-stop-pitchfork = "pitchfork stop -l || true"
+stop-pitchfork = "pitchfork stop -l || true; command -v pitchfork-register >/dev/null && pitchfork-register --remove --dir {{ worktree_path }} || echo 'pitchfork-register failed or is missing; dev URL not removed' >&2"
