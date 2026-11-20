@@ -7,6 +7,8 @@ export default defineConfig(
 		{
 			fmt,
 			lint: lint('astro'),
+			// Tests import modules that use the `@/` path alias from tsconfig.json.
+			resolve: { tsconfigPaths: true },
 			test: { include: ['{src,scripts}/**/*.unit.test.ts'] },
 		},
 		{

@@ -60,9 +60,9 @@ export type CoercedEnvSchema = {
   
   /**
    * **CALCOM_WEBHOOK_SECRET** 🔐 _sensitive_  
-   * Not set up yet. Signs the booking webhooks that Cal.com sends to the site.  
-   * Cal.com's Stripe app takes payments and refunds, so the app needs no Stripe  
-   * keys.  
+   * Worker secret. Signs the BOOKING_CREATED and MEETING_ENDED webhooks that  
+   * send client emails. Cal.com's Stripe app takes payments and refunds, so the  
+   * app needs no Stripe keys.  
    * ![icon](data:image/svg+xml;utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2032%2032%22%3E%3Cpath%20fill%3D%22%23808080%22%20d%3D%22M29%2022h-5a2.003%202.003%200%200%201-2-2v-6a2%202%200%200%201%202-2h5v2h-5v6h5ZM18%2012h-4V8h-2v14h6a2.003%202.003%200%200%200%202-2v-6a2%202%200%200%200-2-2m-4%208v-6h4v6Zm-6-8H3v2h5v2H4a2%202%200%200%200-2%202v2a2%202%200%200%200%202%202h6v-8a2%202%200%200%200-2-2m0%208H4v-2h4Z%22%2F%3E%3C%2Fsvg%3E)   
    *   
    * 📚 {@link https://cal.com/docs/developing/guides/automation/webhooks}  
@@ -116,7 +116,8 @@ export type CoercedEnvSchema = {
   
   /**
    * **RESEND_API_KEY** 🔐 _sensitive_  
-   * Sends transactional email from skingroove.studio.  
+   * Worker secret. Sends client email from skingroove.studio. The key can only  
+   * send.  
    * ![icon](data:image/svg+xml;utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2032%2032%22%3E%3Cpath%20fill%3D%22%23808080%22%20d%3D%22M29%2022h-5a2.003%202.003%200%200%201-2-2v-6a2%202%200%200%201%202-2h5v2h-5v6h5ZM18%2012h-4V8h-2v14h6a2.003%202.003%200%200%200%202-2v-6a2%202%200%200%200-2-2m-4%208v-6h4v6Zm-6-8H3v2h5v2H4a2%202%200%200%200-2%202v2a2%202%200%200%200%202%202h6v-8a2%202%200%200%200-2-2m0%208H4v-2h4Z%22%2F%3E%3C%2Fsvg%3E)   
    *   
    * 📚 {@link https://resend.com/docs/api-reference/introduction}  

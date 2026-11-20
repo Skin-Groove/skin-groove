@@ -1,13 +1,20 @@
+import cloudflare from '@astrojs/cloudflare'
 import tailwindcss from '@tailwindcss/vite'
-import varlock from '@varlock/astro-integration'
 import { defineConfig } from 'astro/config'
+
+import { emailPreview } from './src/lib/email/preview/integration'
 
 export default defineConfig({
 	site: 'https://skingroove.studio',
 	output: 'static',
+	// The Cal.com webhook route runs on the Worker. Every other page stays
+	// prerendered. The site keeps no sessions and transforms no images, so the
+	// adapter provisions no KV namespace and no Images binding.
+	adapter: cloudflare({ imageService: 'passthrough' }),
+	session: false,
 	trailingSlash: 'never',
 	devToolbar: { enabled: true, placement: 'bottom-right' },
-	integrations: [varlock()],
+	integrations: [emailPreview()],
 	// Pages may load scripts and frames only from these origins, so a tracker
 	// cannot slip into the page. A Cal.com or Tally frame follows its own policy,
 	// so provider settings keep trackers out of those frames. See "Site rules" in docs/privacy-and-intake.md. After a

@@ -1,0 +1,89 @@
+---
+import { samples } from './samples'
+
+import './preview.css'
+
+const emails = Object.entries(samples).map(([name, sample]) => {
+	const { subject, preheader } = sample.email
+
+	return {
+		name,
+		label: sample.label,
+		trigger: sample.trigger,
+		subject,
+		preheader,
+	}
+})
+
+const [first] = emails
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Email preview · Skin Groove</title>
+	</head>
+	<body>
+		<nav class="preview-bar" aria-label="Emails">
+			{emails.map((email) => (
+				<button
+					aria-pressed={email === first ? 'true' : 'false'}
+					data-email={email.name}
+					type="button"
+				>
+					{email.label}
+				</button>
+			))}
+			<span class="preview-sep"></span>
+			<button aria-pressed="false" data-width="phone" type="button">
+				Phone
+			</button>
+			<button aria-pressed="true" data-width="desktop" type="button">
+				Desktop
+			</button>
+		</nav>
+		<div class="preview-inbox">
+			<b data-subject>{first?.subject}</b>
+			<span data-preheader>{first?.preheader}</span>
+			<small data-trigger>Sends when: {first?.trigger}</small>
+		</div>
+		<iframe src={`/emails/${first?.name}`} title="Email preview"></iframe>
+
+		<script is:inline define:vars={{ emails }}>
+			const frame = document.querySelector('iframe')
+
+			const press = (selector, active) =>
+				document.querySelectorAll(selector).forEach((button) => {
+					button.setAttribute('aria-pressed', String(button === active))
+				})
+
+			function show(name) {
+				const email = emails.find((item) => item.name === name)
+
+				if (!email) return
+				frame.src = `/emails/${email.name}`
+				document.querySelector('[data-subject]').textContent = email.subject
+				document.querySelector('[data-preheader]').textContent = email.preheader
+				document.querySelector('[data-trigger]').textContent =
+					`Sends when: ${email.trigger}`
+				press('[data-email]', document.querySelector(`[data-email="${name}"]`))
+				history.replaceState(null, '', `#${name}`)
+			}
+
+			document.querySelectorAll('[data-email]').forEach((button) => {
+				button.addEventListener('click', () => show(button.dataset.email))
+			})
+
+			document.querySelectorAll('[data-width]').forEach((button) => {
+				button.addEventListener('click', () => {
+					frame.classList.toggle('phone', button.dataset.width === 'phone')
+					press('[data-width]', button)
+				})
+			})
+
+			if (location.hash) show(location.hash.slice(1))
+		</script>
+	</body>
+</html>

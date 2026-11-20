@@ -6,11 +6,11 @@ the build. Vite+ owns formatting, lint, and Vitest. Prettier and ESLint check
 that starts and stops when you enter or leave the directory. Run
 `mise run bootstrap` after a fresh clone.
 
-Cloudflare Workers serves `dist/` as static assets. Workers Builds deploys
-`main` and gives each pull request a Preview URL. The site has no Worker script.
-Varlock manages environment variables; `.env.schema` documents each one. See
-`README.md` for hosting and integration details, and `PRODUCT.md` for product
-context.
+Cloudflare Workers serves `dist/client` as static assets. One route,
+`/api/cal-webhook`, runs on the Worker. Workers Builds deploys `main` and gives
+each pull request a Preview URL. Varlock manages environment variables;
+`.env.schema` documents each one. See `README.md` for hosting and integration
+details, and `PRODUCT.md` for product context.
 
 ## Commands
 
@@ -20,8 +20,8 @@ context.
 - `vp run check` — run `vp check`, Prettier, ESLint, and `astro check`.
   `vp check` alone skips the `.astro` steps.
 - `vp run build` — build the site. `vp build` does not run Astro.
-- `vp run preview` — serve `dist/` with `wrangler dev` after a build. This uses
-  the Workers routing rules.
+- `vp run preview` — serve the build with `wrangler dev`. This uses the Workers
+  routing rules and runs the webhook route.
 - `pnpm exec varlock run -- vp run deploy` — build and deploy with the account
   token in `.env.local`. Workers Builds usually does this.
 - `vp run test:unit` — run Vitest unit tests (`{src,scripts}/**/*.unit.test.ts`)
@@ -31,6 +31,8 @@ context.
 - `vp run dead-code` — find unused exports with fallow
 - `pnpm exec varlock run -- node scripts/intake/sync-forms.ts` — push the intake
   forms in `scripts/intake/forms.ts` to Tally
+- `node scripts/email/render-assets.ts` — render the email images into
+  `public/email`. The dev server previews each client email at `/emails`.
 
 Use `pnpm` through Vite+ (`vp i`, `vp run <script>`).
 
@@ -65,8 +67,14 @@ Do not reverse these decisions without a request from Sahand.
 - Future product pages render on the server with a short cache. All other pages
   stay prerendered. `output: 'static'` makes prerendering the default. Set
   `export const prerender = false` only on a route that needs the server.
-- A future Astro API route receives the Cal.com webhook.
-- `@astrojs/cloudflare` comes with the first server route, not before.
+- The Astro API route `src/pages/api/cal-webhook.ts` receives the Cal.com
+  webhook and sends client emails through Resend. `@astrojs/cloudflare` builds
+  it into the Worker.
+- The Worker reads its secrets from `cloudflare:workers`, and
+  `wrangler secret put` sets them. The site does not use the varlock Astro
+  integration. Its Cloudflare deploy replaces every Worker secret from local
+  files, and Workers Builds has no local files.
+- Client emails use no black or near-black. Garnet takes the place of ink.
 
 ## Workers limits
 

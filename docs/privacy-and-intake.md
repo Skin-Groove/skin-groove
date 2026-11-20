@@ -335,12 +335,13 @@ To delete the data of a client:
    a form that was not submitted. Tally receives a photo when the client picks
    it, and Tally does not document what it keeps from a form that is not sent.
    Send Cal.com support a written request to delete each booking from step 3.
-   For Google Workspace, delete the calendar events of the client, then remove
-   them from the Calendar trash, which keeps them for 30 days. That deletion and
-   the ones in step 5 are the instruction under its data processing terms. Send
-   Stripe support the same notice. Stripe and Skin Groove keep the payment
-   records that tax and payment law require. If the client allowed marketing
-   photos, remove the posts that Sammy controls. Record each notice in the log.
+   Send Resend support the same notice for the emails to the client. For Google
+   Workspace, delete the calendar events of the client, then remove them from
+   the Calendar trash, which keeps them for 30 days. That deletion and the ones
+   in step 5 are the instruction under its data processing terms. Send Stripe
+   support the same notice. Stripe and Skin Groove keep the payment records that
+   tax and payment law require. If the client allowed marketing photos, remove
+   the posts that Sammy controls. Record each notice in the log.
 8. Finish steps 3 to 7 within 30 days of the identity check in step 2. Nevada
    law sets this deadline for the deletion and the notices, and an extension of
    the answer does not move it. Wait for Cal.com support to confirm the deletion
@@ -378,12 +379,13 @@ or guardian on the form can ask too. To answer an access request:
 2. Confirm the identity of the requester, as in step 2 of the deletion steps.
    Log the check.
 3. Collect the data: each Tally submission of the client with its photos, the
-   emails and texts with the client, the Cal.com bookings of the client, and the
-   Cal.com emails about those bookings. Also collect each saved copy of a
-   marketing photo of the client, each edited version, and the links to its
-   posts. Download the files to one folder on Sammy's computer, and upload them
-   from there. Use a folder that the computer does not back up, such as one
-   outside iCloud Drive that Time Machine excludes.
+   emails and texts with the client, the Cal.com bookings of the client, the
+   Cal.com emails about those bookings, and the Resend emails to the client.
+   Also collect each saved copy of a marketing photo of the client, each edited
+   version, and the links to its posts. Download the files to one folder on
+   Sammy's computer, and upload them from there. Use a folder that the computer
+   does not back up, such as one outside iCloud Drive that Time Machine
+   excludes.
 4. Share the copy in a Google Drive folder that only the verified requester can
    open: the email address of the client, or of the parent or guardian on the
    form. Do not attach health data or photos to an email. A requester without a
@@ -397,9 +399,9 @@ or guardian on the form can ask too. To answer an access request:
 5. Add the list of recipients, with the privacy contact of each from its privacy
    policy. Name only the companies that received data of this client: Tally for
    a form that the client sent or started, and Google Workspace for the emails
-   and calendar events. Name Cal.com and Stripe for a booking. Name the public
-   posts and Meta only if Sammy posted a photo of the client. Name the mobile
-   carriers, and Apple for iMessage, if the client sent texts.
+   and calendar events. Name Cal.com, Stripe, and Resend for a booking. Name the
+   public posts and Meta only if Sammy posted a photo of the client. Name the
+   mobile carriers, and Apple for iMessage, if the client sent texts.
 6. Answer the requester within 45 days of step 1. If more time is necessary,
    tell the requester why before day 45. The deadline then moves out by 45 more
    days. Log the answer.
@@ -460,10 +462,14 @@ and deletes the data. Sahand decided this on 2026-11-19.
    the description on the booking page, in the confirmation email, and in the
    calendar invite.
 3. Sammy confirms the booking. Both events require confirmation.
-4. Sammy reads submissions only in the Tally dashboard.
+4. The site emails the client a form link that fills in the name and the email.
+   See "Client emails".
+5. Sammy reads submissions only in the Tally dashboard.
 
-The forms keep the hidden fields `uid`, `email`, and `attendeeName`. A link with
-these URL parameters fills in the name and the email. No link sends them yet.
+The forms keep the hidden fields `uid`, `email`, and `attendeeName`. The client
+emails send them as URL parameters, so a submission from an email link carries
+its booking UID. The bare links in the Cal.com event descriptions carry no UID,
+so match those submissions by name and email.
 
 The site has no hand-off script. Cal.com fires `bookingSuccessfulV2` before
 payment and sends no event after payment, so a script could cover the Stripe
@@ -547,6 +553,48 @@ optional (decided 2026-11-18):
 - If the client changes their mind, remove the posts that Sammy controls. Sent
   newsletters cannot be recalled.
 
+## Client emails
+
+The site sends client emails through Resend, from `hello@skingroove.studio`.
+Replies go to `sammy@skingroove.studio`. Cal.com webhooks call
+`/api/cal-webhook` on the Worker:
+
+| Trigger           | Event        | Email                                                                     |
+| ----------------- | ------------ | ------------------------------------------------------------------------- |
+| `BOOKING_CREATED` | Consultation | The intake form link, the time, and the Meet link                         |
+| `BOOKING_CREATED` | Follow-up    | The check-in form link, the time, and the Meet link                       |
+| `MEETING_ENDED`   | Consultation | A thank-you and the follow-up booking link                                |
+| `BOOKING_CREATED` | Acne         | The acne intake form link, the time, and the Meet link                    |
+| `MEETING_ENDED`   | Acne         | A thank-you with the follow-up booking link, in case it is not booked yet |
+
+- All events require confirmation, so `BOOKING_CREATED` fires when Sammy
+  confirms. A request sends no email.
+- `MEETING_ENDED` fires at the end time, whether or not the client attended. Its
+  body puts the booking fields at the top level, with no `payload` wrapper, and
+  its attendees can lack a time zone. Make sure that the test booking also gets
+  the thank-you email. After a no-show, the client still gets the thank-you.
+- A pending, declined, or cancelled booking gets no email. Cal.com sends its own
+  notice for those. A reschedule fires `BOOKING_RESCHEDULED`, which sends
+  nothing, because Cal.com emails the new time and the form link stays valid.
+- The route checks the `x-cal-signature-256` HMAC. It accepts a video link only
+  from `meet.google.com`. Without one, the email points to the calendar invite.
+- Resend drops a repeated send with the same idempotency key for 24 hours, so a
+  repeated webhook in that window sends one email. A manual resend after 24
+  hours sends a second email.
+- The route retries a Resend rate limit, outage, concurrent request with the
+  same key, stalled request, or network error twice, after 1 and 3 seconds. Each
+  attempt stops after 10 seconds. Cal.com does not promise to resend a failed
+  webhook.
+- The route refuses a body over 64 KB with a 413 before it checks the signature.
+  Cal.com payloads are a few kilobytes.
+- Resend receives the client name, the email address, the appointment time, the
+  Meet link, and the form link. Each consult has its own form link, so an email
+  shows which consult the client booked. Resend therefore holds booking data.
+  Both policies name Resend. It receives no intake answers.
+- Keep open and click tracking off for the domain in Resend.
+- `src/lib/email/templates.ts` holds the copy. The dev server previews each
+  email at `/emails`.
+
 ## Site rules
 
 - Keep intake answers out of Cal.com. Booking questions collect the name, the
@@ -571,6 +619,7 @@ Done:
 - The footer, with the privacy link and "© Skin Groove LLC".
 - The Content Security Policy.
 - Both intake forms, with consent text, as code.
+- Client emails through Resend.
 
 Not done:
 
