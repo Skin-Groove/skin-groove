@@ -32,10 +32,11 @@ may purchase recommended skincare online.
 
 ## Capabilities and Constraints
 
-- Virtual consultations cost $50. Clients book and pay through Cal.com, which
-  takes payment with its Stripe app.
-- After a completed consultation, the client gets a $50 Shopify discount code
-  for recommended products.
+- Clients book and pay through Cal.com, which takes payment with its Stripe app.
+  The site shows no prices. Cal.com shows the price at booking.
+- The site makes no shop credit or discount offer. Sammy dropped the $50 shop
+  credit on 2026-11-14, because clients could abuse it and its duration was not
+  known.
 - Curated online retail runs on Shopify. The store exists, but the site
   integration does not exist yet, and the store is not open.
 - Booking buttons open the Cal.com event in a popup. Shop controls remain

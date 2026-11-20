@@ -389,7 +389,7 @@
 		visibility: visible;
 	}
 
-	/* The nav pill shortens to "Book | $50" on phones. Screen readers still announce every word. */
+	/* The nav pill shortens to "Book" on phones. Screen readers still announce every word. */
 	.gv-nav-pill i {
 		position: absolute;
 		width: 1px;

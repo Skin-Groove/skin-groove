@@ -51,45 +51,6 @@
 	padding: 0 clamp(1.5rem, 4vw, 3rem) clamp(2rem, 4vw, 3rem);
 }
 
-.hero-sticker {
-	position: absolute;
-	top: 0;
-	right: clamp(1.5rem, 4vw, 3rem);
-	display: grid;
-	width: clamp(7rem, 12vw, 9rem);
-	aspect-ratio: 1;
-	place-items: center;
-	transform: translateY(-85%) rotate(8deg);
-}
-
-.hero-sticker svg {
-	position: absolute;
-	inset: 0;
-	fill: var(--amber);
-	filter: drop-shadow(0 0.4rem 0.8rem rgb(8 20 15 / 45%));
-}
-
-.hero-sticker p {
-	position: relative;
-	display: grid;
-	justify-items: center;
-	color: var(--chestnut);
-	font-family: var(--display);
-	font-size: clamp(2rem, 3.6vw, 2.6rem);
-	line-height: 0.95;
-}
-
-.hero-sticker span {
-	max-width: 5.5em;
-	font-family: var(--body);
-	font-size: 0.68rem;
-	font-weight: 800;
-	letter-spacing: 0.08em;
-	line-height: 1.15;
-	text-align: center;
-	text-transform: uppercase;
-}
-
 .hero-wordmark {
 	font-family: var(--display);
 	font-size: clamp(4rem, 14vw, 13.5rem);

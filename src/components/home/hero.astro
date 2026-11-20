@@ -24,8 +24,6 @@ const doorways = [
 		height: 1104,
 	},
 ]
-
-const scallopAngles = Array.from({ length: 16 }, (_, index) => index * 22.5)
 ---
 
 <header class="hero">
@@ -46,18 +44,6 @@ const scallopAngles = Array.from({ length: 16 }, (_, index) => index * 22.5)
 	<SiteNav />
 
 	<div class="hero-copy">
-		<p class="sr-only">$50 shop credit with every consult.</p>
-		<div aria-hidden="true" class="hero-sticker">
-			<svg viewBox="0 0 100 100">
-				<circle cx="50" cy="50" r="40"></circle>
-				{scallopAngles.map((angle) => (
-					<circle cx="50" cy="9.5" r="9" transform={`rotate(${angle} 50 50)`} />
-				))}
-			</svg>
-			<p>
-				$50<span>shop credit</span>
-			</p>
-		</div>
 		<h1 class="hero-wordmark">Skin Groove</h1>
 		<div class="hero-foot">
 			<p class="hero-tagline">Find your skincare rhythm.</p>
