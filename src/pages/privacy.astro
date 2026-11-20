@@ -1,0 +1,22 @@
+---
+import Base from '@/layouts/base.astro'
+import PrivacyHeader from '@/components/privacy/privacy-header.astro'
+import PrivacyPolicy from '@/components/privacy/privacy-policy.astro'
+import Closing from '@/components/site/closing.astro'
+---
+
+<Base
+	canonicalPath="/privacy"
+	description="How Skin Groove collects, uses, and protects your information."
+	ogTitle="Privacy policy | Skin Groove"
+	title="Privacy policy | Skin Groove"
+>
+	<main class="gv">
+		<PrivacyHeader title="Privacy policy" />
+		<PrivacyPolicy />
+		<Closing />
+	</main>
+	<script>
+		import '@/scripts/reveal'
+	</script>
+</Base>

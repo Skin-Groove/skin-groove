@@ -7,7 +7,7 @@ export default defineConfig(
 		{
 			fmt,
 			lint: lint('astro'),
-			test: { include: ['src/**/*.unit.test.ts'] },
+			test: { include: ['{src,scripts}/**/*.unit.test.ts'] },
 		},
 		{
 			staged: {

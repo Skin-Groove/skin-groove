@@ -37,6 +37,7 @@ export default defineConfig({
 					'home-*',
 					'is-*',
 					'lg-*',
+					'privacy-*',
 				],
 			},
 		],

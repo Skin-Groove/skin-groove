@@ -37,12 +37,27 @@ may purchase recommended skincare online.
 - The site makes no shop credit or discount offer. Sammy dropped the $50 shop
   credit on 2026-11-14, because clients could abuse it and its duration was not
   known.
+- Returning clients book a 30-minute follow-up for $25. The follow-up event is
+  hidden from the public site. Sammy gives its link to each client at the end of
+  the consultation.
+- The acne consultation is 60 minutes for $75. Its intake adds the breakout
+  questions. Acne follow-ups use the same follow-up event, and Sammy books the
+  next one with the client during the call.
+- Clients are 13 or older. A parent or guardian consents for a client under 18.
 - Curated online retail runs on Shopify. The store exists, but the site
   integration does not exist yet, and the store is not open.
 - Booking buttons open a picker with the skin and acne consultations. Each
   choice opens its Cal.com event in a popup. Shop controls remain placeholders
   until the Shopify integration goes live.
 - Cloudflare Workers hosts the site.
+- Skin Groove LLC owns the practice. Sammy holds esthetician licenses in
+  Pennsylvania and Louisiana and works from Pennsylvania. She works
+  independently and does not prescribe.
+- After booking, clients complete an intake form with skin photos and consent
+  forms. An external form tool holds the submissions. See
+  `docs/privacy-and-intake.md`.
+- Client health data needs explicit consent. The site never shares it with
+  advertisers or analytics tools.
 
 ## Brand Commitments
 

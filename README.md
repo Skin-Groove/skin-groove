@@ -86,4 +86,10 @@ If the change is intentional, extract `visual-baselines` into
   picker with the skin and acne consultations. The Cal.com Stripe app takes the
   consultation payment.
 - **Shop:** Shopify. The store exists, but the site does not connect to it yet.
+- **Intake:** Tally Free. The description of each Cal.com event links to the
+  [full intake](https://tally.so/r/lae2yB), the
+  [acne intake](https://tally.so/r/M1NW5M), or the
+  [check-in](https://tally.so/r/RWMe0d). `scripts/intake/forms.ts` defines the
+  forms, and Tally emails each submission to the account address. See
+  [docs/privacy-and-intake.md](docs/privacy-and-intake.md).
 - **Email:** Google Workspace, `sammy@skingroove.studio`.
