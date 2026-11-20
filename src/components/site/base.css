@@ -8,6 +8,7 @@
 	--pill-bg: var(--amber);
 	--pill-fg: var(--chestnut);
 	--tile-radius: 999px 999px 1rem 1rem;
+	--edge-wave: clamp(2.5rem, 6vw, 5rem);
 	overflow-x: clip;
 	interpolate-size: allow-keywords;
 }
@@ -94,6 +95,18 @@ a.gv-pill:hover {
 .gv-book i {
 	font-style: normal;
 	font-weight: inherit;
+}
+
+.gv-shop {
+	box-shadow: inset 0 0 0 2px color-mix(in srgb, currentcolor 40%, transparent);
+	background: transparent;
+	color: inherit;
+	cursor: default;
+}
+
+a.gv-shop:hover {
+	filter: none;
+	transform: none;
 }
 
 .gv-pill svg {

@@ -2,6 +2,7 @@
 import BookPill from './book-pill.astro'
 import Icon from './icon.astro'
 import Record from './record.astro'
+import ShopPill from './shop-pill.astro'
 import SiteLinks from './site-links.astro'
 
 const menuId = 'gv-nav-menu'
@@ -19,6 +20,10 @@ const menuId = 'gv-nav-menu'
 		<Record class="gv-nav-record" />
 	</a>
 	<SiteLinks class="gv-nav-links" />
+	<div class="gv-nav-actions">
+		<BookPill class="gv-nav-pill" />
+		<ShopPill class="gv-nav-pill" />
+	</div>
 	<button
 		aria-controls={menuId}
 		aria-expanded="false"
@@ -27,12 +32,11 @@ const menuId = 'gv-nav-menu'
 	>
 		<Icon name="list" />
 		<Icon hidden name="x" />
-		Menu
+		<span class="gv-nav-toggle-label">Menu</span>
 	</button>
 	<div class="gv-nav-menu" id={menuId}>
 		<SiteLinks />
 	</div>
-	<BookPill class="gv-nav-pill" />
 </nav>
 
 <script>

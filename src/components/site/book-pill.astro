@@ -10,7 +10,7 @@ interface Props {
 const { class: className } = Astro.props
 ---
 
-<!-- Opens the Cal.com popup. The link still works in a new tab or without JavaScript. -->
+<!-- Opens the consult picker on the page. The link still works in a new tab or without JavaScript. -->
 <a
 	aria-haspopup="dialog"
 	class={cn('gv-pill', 'gv-book', className)}
@@ -20,7 +20,3 @@ const { class: className } = Astro.props
 		Book<i> a consult</i>
 	</b>
 </a>
-
-<script>
-	import '@/scripts/booking'
-</script>

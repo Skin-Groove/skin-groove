@@ -9,6 +9,7 @@ test.use({ contextOptions: { reducedMotion: 'reduce' } })
 const pages = [
 	{ name: 'home', path: '/' },
 	{ name: 'about', path: '/about' },
+	{ name: 'faq', path: '/faq' },
 	{ name: 'logo', path: '/logo' },
 ]
 

@@ -1,7 +1,11 @@
 ---
 import Icon from '@/components/site/icon.astro'
 
-import { questions } from './content'
+interface Props {
+	questions: readonly { question: string; answer: string }[]
+}
+
+const { questions } = Astro.props
 ---
 
 <div class="gv-faq">
@@ -11,7 +15,7 @@ import { questions } from './content'
 				{item.question}
 				<Icon name="plus" />
 			</summary>
-			<p>{item.answer}</p>
+			<p set:html={item.answer} />
 		</details>
 	))}
 </div>
