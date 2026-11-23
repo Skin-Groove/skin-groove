@@ -489,9 +489,15 @@ Sammy uses the Cal.com Free plan. These limits shape the flow:
 
 ### Cal.com event settings
 
-All events use Google Meet, require confirmation, need 24 hours of notice, and
-add a 15-minute buffer after the event. All write to the
-`sammy@skingroove.studio` Google calendar and hide the guests field.
+All events use Google Meet, require confirmation, need 17 hours of notice, offer
+a start time every 30 minutes, and add a 15-minute buffer after the event. All
+write to the `sammy@skingroove.studio` Google calendar and hide the guests
+field.
+
+Cal.com counts notice in hours, not calendar days. With hours from 9:00 to
+17:00, 17 hours of notice blocks a booking on the same day, and a 9:00 slot
+stays open until 16:00 the day before. If the hours change, check the notice
+again. Sahand set the notice and the 30-minute steps on 2026-11-23.
 
 | Event                     | Slug                        | ID      | Visibility | Form link in the description |
 | ------------------------- | --------------------------- | ------- | ---------- | ---------------------------- |
@@ -594,6 +600,10 @@ Replies go to `sammy@skingroove.studio`. Cal.com webhooks call
 - Keep open and click tracking off for the domain in Resend.
 - `src/lib/email/templates.ts` holds the copy. The dev server previews each
   email at `/emails`.
+- The webhook belongs to Sammy's Cal.com account and sends `BOOKING_CREATED` and
+  `MEETING_ENDED`. Sahand keeps its secret in Bitwarden. The Worker secret
+  `CALCOM_WEBHOOK_SECRET` holds the same value. A test booking on 2026-11-23
+  sent the intake email, and its form carried the booking UID.
 
 ## Site rules
 
@@ -638,9 +648,10 @@ abuse it and its duration was not known.
   consultation. The site shows no prices.
 - Attach no analytics apps to the Cal.com events.
 - Run the remaining acceptance tests.
-- Before #13 merges, turn on two-factor login for Tally, Cal.com, Google
-  Workspace, Stripe, Shopify, and Resend. `/privacy` says that each account uses
-  it, and the merge publishes that page.
+- Turn on two-factor login for Stripe when the account exists. `/privacy` says
+  that each account uses it. Tally, Google Workspace, and Resend use it. Cal.com
+  signs in through Google Workspace. Shopify asks for a passkey, or for an email
+  code after the password.
 - Ask Tally support how long it keeps a photo from a form that is not submitted,
   and how to delete it. Record the answer in this document.
 - Turn on Drive visitor sharing in the Google Admin console before the first
@@ -663,8 +674,6 @@ abuse it and its duration was not known.
   form: 24 hours of notice, and no refund after a completed consultation.
 - Open the follow-up and acne events in Cal.com once, and make sure that Google
   Meet is their location.
-- Decide whether the site shows the acne consultation. Cal.com lists it on the
-  profile page, but the site links only the regular consultation.
 - Edit the wording of the form links in the event descriptions if needed.
 - Supply booking copy about the intake for the site.
 - Before the shop opens, read the online resale policy of each brand. Many

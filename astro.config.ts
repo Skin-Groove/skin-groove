@@ -20,10 +20,10 @@ export default defineConfig({
 	integrations: [emailPreview()],
 	// Pages may load scripts and frames only from these origins, so a tracker
 	// cannot slip into the page. A Cal.com or Tally frame follows its own policy,
-	// so provider settings keep trackers out of those frames. See "Site rules" in docs/privacy-and-intake.md. After a
-	// booking, Cal.com can send its frame to the Tally intake form. The Cal.com
-	// embed injects styles, so style-src allows inline styles and Astro emits no
-	// style hashes.
+	// so provider settings keep trackers out of those frames. See "Site rules" in
+	// docs/privacy-and-intake.md. After a booking, Cal.com can send its frame to
+	// the Tally intake form. The Cal.com embed injects styles, so style-src allows
+	// inline styles and Astro emits no style hashes.
 	security: {
 		csp: {
 			directives: [

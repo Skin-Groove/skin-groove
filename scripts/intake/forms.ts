@@ -13,7 +13,7 @@ const privacyLink =
 const healthDataLink =
 	'<a href="https://skingroove.studio/health-data">consumer health data privacy policy</a>'
 
-const healthDataDisclosure = `My answers and photos include health information. Skin Groove collects it only to prepare for and hold my consultations, never sells it, and shares it only with the companies in the ${healthDataLink}. It uses a photo of me for marketing only with my separate permission. I can withdraw this consent or ask Skin Groove to delete my information at any time by email.`
+const healthDataDisclosure = `My answers and photos include health information. Skin Groove collects it only to prepare for and hold my consultations, never sells it, and shares it only with the companies in the ${healthDataLink}. It uses a photo of me for marketing only with my separate permission. I can withdraw this consent or ask Skin Groove to delete my information at any time.`
 
 // Prefill parameters, named as Cal.com forwards them on a booking redirect. The
 // client emails send them through `intakeFormUrl` in src/lib/intake.ts. See
