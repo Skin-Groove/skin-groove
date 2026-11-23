@@ -97,6 +97,9 @@ Do not reverse these decisions without a request from Sahand.
 - Previews return a bare `Not found` for a missing page. Production serves
   `dist/404.html`.
 - Do not use `wrangler login`. It cannot create a zone or edit DNS.
+- A Worker version with no script drops every Worker secret. A static-only
+  deploy on 2026-11-20 deleted both secrets. If the site ever ships without the
+  webhook route, set the secrets again after the next deploy that adds a script.
 
 ## CSS order
 
