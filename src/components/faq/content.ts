@@ -79,7 +79,7 @@ export const faqGroups = [
 			{
 				question: 'Can I book if I’m under 18?',
 				answer:
-					'Yes, if you’re 13 or older. A parent or guardian completes a short consent section of the intake form with you.',
+					'Yes, if you’re 13 or older. A parent or guardian books for you, using your name. You fill out the intake form yourself, and they complete a short consent section of it with you.',
 			},
 			{
 				question: 'Is my information private?',
