@@ -53,6 +53,9 @@ Do not reverse these decisions without a request from Sahand.
   before you change booking, intake, analytics, or legal pages.
 - HIPAA does not apply. Design for Washington's My Health My Data Act, which
   lets clients sue.
+- The Tally forms do not deploy with the site. After a PR that changes
+  `scripts/intake/` or `src/lib/intake.ts` merges, run the form sync from `main`
+  without a prompt. Until the sync runs, clients see the old forms.
 - Keep health data out of Cal.com booking questions.
 - Add no analytics, ad pixels, or session replay to the site, the booking flow,
   or the intake form.

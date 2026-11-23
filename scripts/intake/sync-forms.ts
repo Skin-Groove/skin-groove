@@ -19,8 +19,8 @@ function git(...args: string[]): string {
 	}).trim()
 }
 
-// The log names a commit as the consent text that went live, so that commit
-// must hold the forms that the script publishes.
+// The git history is the record of each consent text that went live, so the
+// forms that the script publishes must match a commit.
 if (
 	git('status', '--porcelain', '--', ':/scripts/intake', ':/src/lib/intake.ts')
 ) {
@@ -39,8 +39,6 @@ const forms = intakeFormKeys.map((key) => ({
 
 const client = new TallyClient(apiKey)
 
-// Each form goes live when its own request succeeds, so each line records that
-// time. The consent log needs it, also after a run that stops early.
 function live(key: string, formId: string): string {
 	return `${key} ${formId} live at ${new Date().toISOString()}, commit ${commit}`
 }
