@@ -196,11 +196,12 @@ option that has answers. Add a new option instead.
 
 A consent text in a form is part of the record of what a client agreed to. The
 git history of `scripts/intake/forms.ts` keeps each consent text, and each
-submission has its submission time. So merge a consent change before the sync.
-The script prints a line for each form when that form goes live, with the time
-and the commit. Copy each line to the log, also after a run that stops early. A
-client who opened the form before that time can still send it after that time,
-so the submission time does not prove which text the client saw. A minor consent
+submission has its submission time. So merge a consent change first, then run
+the sync from `main` right after the merge. The merge time in the git history
+then marks when the new text went live. If the sync stops with an error, fix the
+cause and run it again, so that each form matches `main`. A client who opened
+the form before the sync can still send it after the sync, so a submission sent
+close to that time does not prove which text the client saw. A minor consent
 change that adds no use, recipient, or retention can still update the form in
 place. A consent change that adds a use or a recipient of health data, or keeps
 health data longer, goes in a new form instead:
@@ -218,7 +219,7 @@ health data longer, goes in a new form instead:
    calendar invite hold the old link.
 6. Close each old form in Tally, and never sync it again. A submission to it
    then keeps the old text.
-7. Add each old form ID and its last commit to the log.
+7. Add each old form ID and the date that it closed to this section.
 
 The form ID of a submission then names the text that the client saw. The same
 change to `/privacy` or `/health-data` also needs new consent. Ask each
@@ -313,10 +314,10 @@ To delete the data of a client:
    the client asks for that, and notify only the companies that hold the named
    items.
 4. Delete each of their submissions to the `consult`, `acne`, and `followUp`
-   forms in the Tally dashboard, and to each closed form in the log. Deleted
-   submissions stay recoverable in the Tally Trash for 90 days. Tally can only
-   empty the whole Trash, so first look at what else it holds. Restore each
-   other item that Sammy wants to keep. Then empty the Trash.
+   forms in the Tally dashboard, and to each closed form that this document
+   lists. Deleted submissions stay recoverable in the Tally Trash for 90 days.
+   Tally can only empty the whole Trash, so first look at what else it holds.
+   Restore each other item that Sammy wants to keep. Then empty the Trash.
 5. In Gmail, delete each Tally notification email for those submissions. Also
    delete each email from the client, each reply to the client, and each Cal.com
    email about a booking from step 3, including the cancellation emails, in the
